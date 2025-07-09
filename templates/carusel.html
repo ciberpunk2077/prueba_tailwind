@@ -1,0 +1,78 @@
+{% load static %}
+<section class="relative">
+    <div class="carousel relative overflow-hidden h-96 md:h-screen/2">
+        <!-- Slide 1 -->
+        <div class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100">
+            <div class="absolute inset-0 bg-black/30"></div>
+            <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                alt="Plantas medicinales" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                <div class="text-white max-w-2xl">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Explora Nuestra Colección Botánica</h2>
+                    <p class="text-lg md:text-xl mb-6">Descubre más de 500 especies de plantas nativas y sus
+                        propiedades medicinales.</p>
+                    <button
+                        class="bg-primary hover:bg-dark text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                        Ver Catálogo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0">
+            <div class="absolute inset-0 bg-black/30"></div>
+            <img src="https://images.unsplash.com/photo-1534710961216-75c88202f43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+                alt="Investigación botánica" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                <div class="text-white max-w-2xl">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Investigación y Conservación</h2>
+                    <p class="text-lg md:text-xl mb-6">Contribuimos a la preservación de la biodiversidad vegetal de
+                        nuestra región.</p>
+                    <button
+                        class="bg-primary hover:bg-dark text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                        Conoce Nuestro Trabajo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0">
+            <div class="absolute inset-0 bg-black/30"></div>
+            <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80"
+                alt="Talleres educativos" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center text-center px-4">
+                <div class="text-white max-w-2xl">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-4">Talleres y Educación</h2>
+                    <p class="text-lg md:text-xl mb-6">Aprende sobre botánica, herbolaria y conservación con
+                        nuestros expertos.</p>
+                    <button
+                        class="bg-primary hover:bg-dark text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                        Próximos Eventos
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button
+            class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 z-10 transition duration-300">
+            <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button
+            class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 z-10 transition duration-300">
+            <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+            <button
+                class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition duration-300"></button>
+            <button
+                class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition duration-300"></button>
+            <button
+                class="carousel-indicator w-3 h-3 rounded-full bg-white/50 hover:bg-white transition duration-300"></button>
+        </div>
+    </div>
+</section>

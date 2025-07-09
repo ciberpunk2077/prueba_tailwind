@@ -1,0 +1,28 @@
+<!-- Modal para agregar Familia -->
+<div class="modal fade" id="addFamiliaModal" tabindex="-1" aria-labelledby="addFamiliaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addFamiliaModalLabel">Agregar Nueva Familia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="familiaForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="nombre_familia" class="form-label">Nombre de la Familia</label>
+                        <input type="text" class="form-control" id="nombre_familia" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion_familia" class="form-label">Descripción (opcional)</label>
+                        <textarea class="form-control" id="descripcion_familia" name="descripcion" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveFamiliaBtn">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

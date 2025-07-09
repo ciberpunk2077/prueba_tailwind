@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Prueba Subida</title>
+</head>
+
+<body>
+    <h1>Prueba de Subida de Imagen</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Campo de imagen simple -->
+        <div>
+            <label for="id_imagen">Imagen:</label>
+            <input type="file" name="imagen" id="id_imagen" required>
+        </div>
+
+        <!-- Campo adicional para probar -->
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" required>
+        </div>
+
+        <button type="submit">Enviar Prueba</button>
+    </form>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>

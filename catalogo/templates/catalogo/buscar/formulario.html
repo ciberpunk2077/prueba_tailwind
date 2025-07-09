@@ -1,0 +1,48 @@
+<form id="search-form" method="get" action="{% url 'catalogo:buscar_muestras' %}">
+    <div class="input-group mb-3">
+        <input type="text" name="q" class="form-control" placeholder="Buscar por nombre científico, común, familia..."
+            aria-label="Buscar" id="search-input">
+        <button class="btn btn-primary" type="submit">Buscar</button>
+    </div>
+</form>
+
+<div id="search-results">
+    <!-- Aquí se cargarán los resultados -->
+    {% include 'catalogo/buscar/resultados.html' %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        // Manejar el evento submit del formulario
+        searchForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevenir el comportamiento por defecto
+            performSearch();
+        });
+
+        // Manejar la tecla Enter en el campo de búsqueda
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                fetch(`${searchForm.action}?q=${encodeURIComponent(query)}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        searchResults.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+    });
+</script>

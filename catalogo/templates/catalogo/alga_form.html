@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div
+    class="flex flex-col lg:flex-row min-h-screen items-start justify-center bg-gradient-to-br from-cyan-50 to-blue-100 py-8">
+    <div class="w-full max-w-2xl mx-auto lg:w-[45%] flex-shrink-0 flex-grow-0">
+        <div class="bg-white/90 rounded-2xl shadow-xl p-8">
+            <h2 class="text-3xl font-extrabold text-blue-900 mb-8 text-center tracking-tight">
+                {% if object %}Editar{% else %}Nueva{% endif %} Alga
+            </h2>
+            <div class="mb-8">
+                <h3 class="text-lg font-bold text-blue-800 mb-2 border-b border-blue-100 pb-1">Datos generales</h3>
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data" id="algaForm" class="space-y-5">
+                {% csrf_token %}
+                {{ form.tipo_muestra }}
+                {% if form.errors %}
+                <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded mb-2 text-sm">
+                    {% for field, errors in form.errors.items %}
+                    <strong>{{ field|capfirst }}:</strong> {{ errors|join:", " }}<br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div>
+                    <label for="{{ form.nombre_cientifico.id_for_label }}"
+                        class="block text-blue-900 font-semibold mb-1">Nombre Científico</label>
+                    {% render_field form.nombre_cientifico class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    {% if form.nombre_cientifico.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.nombre_cientifico.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.imagen.id_for_label }}"
+                        class="block text-blue-900 font-semibold mb-1">Imagen de la muestra</label>
+                    {% render_field form.imagen class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    <small class="text-gray-500">Formatos soportados: JPG, PNG, GIF</small>
+                    {% if form.imagen.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.imagen.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.nombre_comun.id_for_label }}"
+                        class="block text-blue-900 font-semibold mb-1">Nombre Común</label>
+                    {% render_field form.nombre_comun class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    {% if form.nombre_comun.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.nombre_comun.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.fecha.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Fecha
+                            de Recolección</label>
+                        {% render_field form.fecha class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.numero_recolecta.id_for_label }}"
+                            class="block text-blue-900 font-semibold mb-1">Número de Recolecta</label>
+                        {% render_field form.numero_recolecta class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                        {% if form.numero_recolecta.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.numero_recolecta.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.colonia.id_for_label }}"
+                            class="block text-blue-900 font-semibold mb-1">Colonia</label>
+                        {% render_field form.colonia class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.localidad.id_for_label }}"
+                            class="block text-blue-900 font-semibold mb-1">Localidad</label>
+                        {% render_field form.localidad class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.latitud.id_for_label }}"
+                            class="block text-blue-900 font-semibold mb-1">Latitud</label>
+                        {% render_field form.latitud class="form-control px-3 py-2 rounded-lg border border-blue-200  focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.longitud.id_for_label }}"
+                            class="block text-blue-900 font-semibold mb-1">Longitud</label>
+                        {% render_field form.longitud class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.descripcion.id_for_label }}"
+                        class="block text-blue-900 font-semibold mb-1">Descripción</label>
+                    {% render_field form.descripcion class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                </div>
+                <div>
+                    <label for="{{ form.nombre_colector.id_for_label }}"
+                        class="block text-blue-900 font-semibold mb-1">Nombre del Recolector</label>
+                    {% render_field form.nombre_colector class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_familia" class="block text-blue-900 font-semibold mb-1">Familia</label>
+                        <div class="flex gap-2">
+                            {% render_field form.familia class="form-select px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#addFamiliaModal" title="Agregar nueva familia">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        {% if form.familia.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.familia.errors }}</div>
+                        {% endif %}
+                        {% if object and object.familia %}
+                        <small class="text-gray-500">Familia actual: {{ object.familia.nombre }}</small>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="id_especie" class="block text-blue-900 font-semibold mb-1">Especie</label>
+                        <div class="flex gap-2">
+                            {% render_field form.especie class="form-select w-full px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#addEspecieModal" title="Agregar nueva especie">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        {% if form.especie.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.especie.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <label for="id_municipio" class="block text-blue-900 font-semibold mb-1">Municipio</label>
+                    {% render_field form.municipio class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
+                    {% if form.municipio.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.municipio.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="my-8">
+                    <h3 class="text-lg font-bold text-blue-800 mb-2 border-b border-blue-100 pb-1">Ubicación y colecta
+                    </h3>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between gap-4 mt-10">
+                    <a href="{% url 'catalogo:alga-list' %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-red-400 text-red-700 bg-white hover:bg-red-50 font-semibold gap-2 transition">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center px-6 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold gap-2 shadow transition">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modales para agregar Familia y Especie -->
+    {% include 'catalogo/modal_familia.html' %}
+    {% include 'catalogo/modal_especie.html' %}
+    <!-- Columna de imagen y mapa -->
+    <div class="w-full max-w-lg mx-auto mt-4 lg:mt-0 lg:ml-4 lg:w-[40%] flex-shrink-0 flex-grow-0">
+        <div class="bg-white/90 rounded-2xl shadow-xl mb-4 p-4">
+            <h3 class="text-xl font-bold text-blue-800 mb-4">Fotografías</h3>
+            <div id="imagePreviewContainer" class="border-2 border-blue-200 rounded-xl p-4 text-center bg-blue-50" style="min-height: 300px;">
+                <div class="flex items-center justify-center h-full">
+                    <img id="imagePreview"
+                        src="{% if object and object.imagen %}{{ object.imagen.url }}{% else %}{% static 'catalogo/img/placeholder-plant.jpeg' %}{% endif %}"
+                        class="rounded-lg shadow-lg w-auto object-contain" style="max-height: 300px;">
+                </div>
+            </div>
+        </div>
+        <div class="bg-white/90 rounded-2xl shadow-xl p-4">
+            <h3 class="text-xl font-bold text-blue-800 mb-4">Ubicación</h3>
+            <div id="map" class="rounded-xl border-2 border-blue-200 bg-blue-50 shadow-lg"
+                style="width: 100%; height: 250px; position: relative;"></div>
+            <div class="mt-4 flex gap-3">
+                <button type="button" id="locateBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Marcar ubicación</span>
+                </button>
+                <button type="button" id="resetMapBtn" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Reiniciar</span>
+                </button>
+            </div>
+        </div>
+       
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Vista previa de imagen
+    const inputImagen = document.querySelector('input[type="file"]');
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    if (inputImagen) {
+        inputImagen.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    imagePreview.src = ev.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Mapa interactivo
+    const mapDiv = document.getElementById('map');
+    const latInput = document.getElementById('id_latitud');
+    const lngInput = document.getElementById('id_longitud');
+    let map, marker;
+
+    if (latInput && lngInput) {
+        function getLatLng() {
+            const lat = parseFloat(latInput.value);
+            const lng = parseFloat(lngInput.value);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                return [lat, lng];
+            }
+            return null;
+        }
+
+        function setMarker(lat, lng) {
+            if (!map) return;
+            if (marker) {
+                marker.setLatLng([lat, lng]);
+            } else {
+                marker = L.marker([lat, lng], {draggable: true}).addTo(map);
+                marker.on('dragend', function(e) {
+                    const pos = marker.getLatLng();
+                    latInput.value = pos.lat.toFixed(8);
+                    lngInput.value = pos.lng.toFixed(8);
+                });
+            }
+            map.setView([lat, lng], 15);
+        }
+
+        function initMap() {
+            map = L.map('map').setView([18.0, -92.9], 7); // Centro por defecto
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            // Si hay lat/lng, coloca el marcador
+            const latlng = getLatLng();
+            if (latlng) {
+                setMarker(latlng[0], latlng[1]);
+            }
+            // Click en el mapa para mover el marcador
+            map.on('click', function(e) {
+                latInput.value = e.latlng.lat.toFixed(8);
+                lngInput.value = e.latlng.lng.toFixed(8);
+                setMarker(e.latlng.lat, e.latlng.lng);
+            });
+        }
+
+        // Actualiza el marcador cuando cambian los campos
+        latInput.addEventListener('change', function() {
+            const latlng = getLatLng();
+            if (latlng) setMarker(latlng[0], latlng[1]);
+        });
+        lngInput.addEventListener('change', function() {
+            const latlng = getLatLng();
+            if (latlng) setMarker(latlng[0], latlng[1]);
+        });
+
+        // Inicializa el mapa
+        if (mapDiv) {
+            initMap();
+        }
+
+        // Funcionalidad de los botones del mapa
+        const locateBtn = document.getElementById('locateBtn');
+        const resetMapBtn = document.getElementById('resetMapBtn');
+
+        if (locateBtn) {
+            locateBtn.addEventListener('click', function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        latInput.value = lat.toFixed(8);
+                        lngInput.value = lng.toFixed(8);
+                        setMarker(lat, lng);
+                        
+                        // Mostrar mensaje de éxito
+                        alert('Ubicación actual marcada en el mapa');
+                    }, function(error) {
+                        alert('Error al obtener la ubicación: ' + error.message);
+                    });
+                } else {
+                    alert('La geolocalización no está soportada en este navegador');
+                }
+            });
+        }
+
+        if (resetMapBtn) {
+            resetMapBtn.addEventListener('click', function() {
+                // Limpiar campos de latitud y longitud
+                latInput.value = '';
+                lngInput.value = '';
+                
+                // Remover marcador si existe
+                if (marker) {
+                    map.removeLayer(marker);
+                    marker = null;
+                }
+                
+                // Centrar el mapa en la vista por defecto
+                map.setView([18.0, -92.9], 7);
+                
+                alert('Mapa reiniciado');
+            });
+        }
+    }
+
+    // Funcionalidad de modales para Familia y Especie
+    const saveFamiliaBtn = document.getElementById('saveFamiliaBtn');
+    const saveEspecieBtn = document.getElementById('saveEspecieBtn');
+    const familiaSelect = document.getElementById('id_familia');
+    const especieSelect = document.getElementById('id_especie');
+
+    // Modal para agregar Familia
+    if (saveFamiliaBtn) {
+        saveFamiliaBtn.addEventListener('click', function() {
+            const nombre = document.getElementById('nombre_familia').value;
+            const descripcion = document.getElementById('descripcion_familia').value;
+            
+            if (!nombre.trim()) {
+                alert('Por favor ingrese un nombre para la familia');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('descripcion', descripcion);
+            formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+            fetch('/catalogo/ajax/add-familia/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Agregar la nueva familia al select
+                    const option = new Option(data.nombre, data.id, true, true);
+                    familiaSelect.add(option);
+                    
+                    // Cerrar el modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addFamiliaModal'));
+                    modal.hide();
+                    
+                    // Limpiar el formulario
+                    document.getElementById('familiaForm').reset();
+                    
+                    // Mostrar mensaje de éxito
+                    alert('Familia agregada exitosamente');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar la familia');
+            });
+        });
+    }
+
+    // Modal para agregar Especie
+    if (saveEspecieBtn) {
+        saveEspecieBtn.addEventListener('click', function() {
+            const nombre = document.getElementById('nombre_especie').value;
+            const familiaId = document.getElementById('familia_especie').value;
+            const descripcion = document.getElementById('descripcion_especie').value;
+            
+            if (!nombre.trim() || !familiaId) {
+                alert('Por favor complete todos los campos requeridos');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('familia_id', familiaId);
+            formData.append('descripcion', descripcion);
+            formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+            fetch('/catalogo/ajax/add-especie/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Agregar la nueva especie al select
+                    const option = new Option(data.nombre, data.id, true, true);
+                    especieSelect.add(option);
+                    
+                    // Cerrar el modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addEspecieModal'));
+                    modal.hide();
+                    
+                    // Limpiar el formulario
+                    document.getElementById('especieForm').reset();
+                    
+                    // Mostrar mensaje de éxito
+                    alert('Especie agregada exitosamente');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al agregar la especie');
+            });
+        });
+    }
+
+    // Actualizar el select de familia en el modal de especie cuando se agrega una nueva familia
+    if (familiaSelect && document.getElementById('familia_especie')) {
+        const originalChangeEvent = familiaSelect.onchange;
+        familiaSelect.addEventListener('change', function() {
+            // Llamar al evento original si existe
+            if (originalChangeEvent) {
+                originalChangeEvent.call(this);
+            }
+            
+            // Actualizar el select de familia en el modal de especie
+            const modalFamiliaSelect = document.getElementById('familia_especie');
+            if (modalFamiliaSelect) {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption && selectedOption.value) {
+                    // Buscar si ya existe la opción
+                    let exists = false;
+                    for (let i = 0; i < modalFamiliaSelect.options.length; i++) {
+                        if (modalFamiliaSelect.options[i].value === selectedOption.value) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    
+                    // Si no existe, agregarla
+                    if (!exists) {
+                        const newOption = new Option(selectedOption.text, selectedOption.value);
+                        modalFamiliaSelect.add(newOption);
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,193 @@
+{% load static %}
+
+<main>
+    <!-- head -->
+    {% include 'head.html' %}
+
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Especies Destacadas</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explora algunas de las plantas más interesantes de
+                    nuestra
+                    colección.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Plant 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80"
+                            alt="Aloe vera" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Plantas</h3>
+                            <span
+                                class="bg-primary/10 text-primary text-sm font-medium px-2 py-1 rounded">Medicinal</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Conocida por sus propiedades curativas para la piel y el
+                            sistema
+                            digestivo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-seedling mr-1"></i>
+                                Liliáceas</span>
+                            <a href="#" class="text-primary hover:text-dark font-medium text-sm">Más información <i
+                                    class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plant 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580229083753-66fb347d0ec9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt="Menta" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Menta piperita</h3>
+                            <span
+                                class="bg-secondary/10 text-secondary text-sm font-medium px-2 py-1 rounded">Aromática</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Utilizada en infusiones y como remedio para problemas
+                            digestivos y
+                            respiratorios.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-seedling mr-1"></i>
+                                Lamiaceae</span>
+                            <a href="#" class="text-primary hover:text-dark font-medium text-sm">Más información <i
+                                    class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plant 3 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583337130410-0d7c951daf5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Romero" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Romero</h3>
+                            <span
+                                class="bg-accent/10 text-accent text-sm font-medium px-2 py-1 rounded">Culinaria</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Estimulante circulatorio y memoria, ampliamente utilizado en
+                            la
+                            cocina mediterránea.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500"><i class="fas fa-seedling mr-1"></i>
+                                Lamiaceae</span>
+                            <a href="#" class="text-primary hover:text-dark font-medium text-sm">Más información <i
+                                    class="fas fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <button
+                    class="bg-primary hover:bg-dark text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                    Ver Todas las Especies
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-xl overflow-hidden h-64">
+                            <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+                                alt="Investigación en herbario"
+                                class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="rounded-xl overflow-hidden h-64">
+                            <img src="https://images.unsplash.com/photo-1583337130410-0d7c951daf5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                                alt="Plantas secas"
+                                class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="rounded-xl overflow-hidden h-64 col-span-2">
+                            <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1527&q=80"
+                                alt="Herbario científico"
+                                class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Nuestro Herbario</h2>
+                    <p class="text-gray-600 mb-4">Fundado en 1985, nuestro herbario alberga una colección de más de
+                        10,000 especímenes botánicos, con especial énfasis en la flora nativa y sus usos
+                        tradicionales.
+                    </p>
+                    <p class="text-gray-600 mb-6">Nuestro equipo de botánicos y expertos en herbolaria trabaja
+                        constantemente en la identificación, clasificación y estudio de propiedades medicinales de
+                        las
+                        plantas.</p>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start">
+                            <div class="bg-primary/10 p-2 rounded-full mr-4">
+                                <i class="fas fa-microscope text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Investigación Científica</h4>
+                                <p class="text-gray-600">Colaboramos con universidades y centros de investigación en
+                                    proyectos de conservación.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-primary/10 p-2 rounded-full mr-4">
+                                <i class="fas fa-book text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Documentación</h4>
+                                <p class="text-gray-600">Mantenemos registros detallados de cada espécimen para
+                                    futuras
+                                    generaciones.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-primary/10 p-2 rounded-full mr-4">
+                                <i class="fas fa-users text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Educación</h4>
+                                <p class="text-gray-600">Ofrecemos talleres y visitas guiadas para promover el
+                                    conocimiento botánico.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="bg-primary hover:bg-dark text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                        Conoce Nuestra Historia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Mantente Informado</h2>
+            <p class="max-w-2xl mx-auto mb-8">Suscríbete a nuestro boletín para recibir actualizaciones sobre nuevas
+                especies, eventos y talleres.</p>
+
+            <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="Tu correo electrónico"
+                    class="flex-grow px-4 py-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-accent">
+                <button type="submit"
+                    class="bg-accent hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full transition duration-300 whitespace-nowrap">
+                    Suscribirse
+                </button>
+            </form>
+        </div>
+    </section>
+</main>

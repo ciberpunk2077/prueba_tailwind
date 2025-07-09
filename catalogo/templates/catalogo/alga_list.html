@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* Estilos para el modal de imagen */
+    #imageModal {
+        backdrop-filter: blur(4px);
+    }
+    
+    #modalImage {
+        transition: all 0.3s ease;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Animación de entrada para el modal */
+    #imageModal:not(.hidden) {
+        animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    /* Mejorar la presentación de imágenes pequeñas */
+    #modalImage {
+        background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Funcionalidad del filtro por familia
+    const familiaFilter = document.getElementById('familia-filter');
+    if (familiaFilter) {
+        familiaFilter.addEventListener('change', function() {
+            const selectedFamilia = this.value;
+            const currentUrl = new URL(window.location);
+            
+            if (selectedFamilia) {
+                currentUrl.searchParams.set('familia', selectedFamilia);
+            } else {
+                currentUrl.searchParams.delete('familia');
+            }
+            
+            // Mantener la página actual si existe
+            const currentPage = currentUrl.searchParams.get('page');
+            if (currentPage) {
+                currentUrl.searchParams.set('page', '1'); // Resetear a la primera página
+            }
+            
+            window.location.href = currentUrl.toString();
+        });
+    }
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <i class="fas fa-water text-blue-600"></i>
+                        Catálogo de Algas
+                    </h1>
+                    <p class="text-gray-600 text-lg">Explora nuestra colección de especies acuáticas</p>
+                </div>
+
+        <!-- Menú de Categorías -->
+        {% include 'catalogo/partials/catalogo_components.html' %}
+                <a href="{% url 'catalogo:alga-create' %}"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <i class="fas fa-plus"></i>
+                    Nueva Alga
+                </a>
+            </div>
+        </div>
+        <!-- Menú de Categorías -->
+        <div class="flex justify-end mb-6">
+            <div class="relative inline-block text-left">
+                <button onclick="toggleDropdown()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+                    Categorías <i class="fas fa-chevron-down ml-2"></i>
+                </button>
+                <div id="dropdown"
+                    class="hidden absolute z-10 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <a href="{% url 'catalogo:planta-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-seedling mr-2"></i>Plantas
+                    </a>
+                    <a href="{% url 'catalogo:alga-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-water mr-2"></i>Algas
+                    </a>
+                    <a href="{% url 'catalogo:fruto-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-apple-alt mr-2"></i>Frutos
+                    </a>
+                    <a href="{% url 'catalogo:polen-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-wind mr-2"></i>Polen
+                    </a>
+                    <a href="{% url 'catalogo:helecho-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-leaf mr-2"></i>Helechos
+                    </a>
+                    <a href="{% url 'catalogo:hongo-list' %}"
+                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                        <i class="fas fa-mushroom mr-2"></i>Hongos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-xl">
+                        <i class="fas fa-water text-2xl text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Total Algas</p>
+                        <p class="text-3xl font-bold text-gray-900">{{ object_list.count }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-cyan-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-cyan-100 rounded-xl">
+                        <i class="fas fa-leaf text-2xl text-cyan-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Familias</p>
+                        <p class="text-3xl font-bold text-gray-900">20+</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-teal-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-teal-100 rounded-xl">
+                        <i class="fas fa-map-marker-alt text-2xl text-teal-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Hábitats</p>
+                        <p class="text-3xl font-bold text-gray-900">15</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-100">
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <label for="familia-filter" class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                        <i class="fas fa-filter text-blue-600"></i>
+                        Filtrar por Familia:
+                    </label>
+                    <select id="familia-filter" name="familia" class="form-select px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                        <option value="">Todas las familias</option>
+                        {% for familia in familias %}
+                        <option value="{{ familia.id }}" {% if familia_seleccionada == familia.id|stringformat:"s" %}selected{% endif %}>
+                            {{ familia.nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle text-blue-500"></i>
+                        {{ object_list.count }} algas encontradas
+                    </span>
+                    {% if familia_seleccionada %}
+                    <a href="{% url 'catalogo:alga-list' %}" class="text-sm text-red-600 hover:text-red-800 flex items-center gap-1">
+                        <i class="fas fa-times"></i>
+                        Limpiar filtro
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Algas Table -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            {% if object_list %}
+            <!-- Desktop Table -->
+            <div class="hidden lg:block">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-blue-600 to-cyan-600">
+                            <tr>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-image mr-2"></i>Imagen
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-microscope mr-2"></i>Nombre Científico
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-tag mr-2"></i>Nombre Común
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-sitemap mr-2"></i>Familia
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-cogs mr-2"></i>Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for alga in object_list %}
+                            <tr class="hover:bg-blue-50 transition duration-200 group">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if alga.imagen %}
+                                    <div class="flex-shrink-0 h-20 w-20 relative group">
+                                        <img class="h-20 w-20 rounded-xl object-cover shadow-md border-2 border-blue-200 group-hover:border-blue-400 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50 cursor-pointer"
+                                            src="{{ alga.imagen.url }}" alt="{{ alga.nombre_cientifico }}"
+                                            onclick="openImageModal('{{ alga.imagen.url }}')"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="h-20 w-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center border-2 border-blue-200 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50"
+                                            style="display: none;">
+                                            <i class="fas fa-water text-blue-500 text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div
+                                        class="flex-shrink-0 h-20 w-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center border-2 border-blue-200 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50">
+                                        <i class="fas fa-water text-blue-500 text-2xl"></i>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div
+                                        class="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition duration-200">
+                                        {{ alga.nombre_cientifico|default:"Sin nombre científico" }}
+                                    </div>
+                                    <div class="text-xs text-gray-500 italic">{{ alga.especie.nombre|default:"Sin familia" }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                        {{ alga.nombre_comun|default:"Sin nombre común" }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800 border border-cyan-200">
+                                        <i class="fas fa-sitemap mr-1"></i>
+                                        {{ alga.especie.familia.nombre|default:"Sin familia" }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="{% url 'catalogo:alga-detail' alga.pk %}"
+                                            class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-100 transition duration-200 transform hover:scale-110"
+                                            title="Ver detalles">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:alga-update' alga.pk %}"
+                                            class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition duration-200 transform hover:scale-110"
+                                            title="Editar">
+                                            <i class="fas fa-edit text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:alga-delete' alga.pk %}"
+                                            class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
+                                            title="Eliminar">
+                                            <i class="fas fa-trash text-lg"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="lg:hidden">
+                <div class="p-4 space-y-4">
+                    {% for alga in object_list %}
+                    <div
+                        class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition duration-200 group">
+                        <div class="flex items-start space-x-4">
+                            {% if alga.imagen %}
+                            <div class="flex-shrink-0 relative group">
+                                <img class="h-24 w-24 rounded-xl object-cover border-2 border-blue-200 group-hover:border-blue-400 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50 cursor-pointer"
+                                    src="{{ alga.imagen.url }}" alt="{{ alga.nombre_cientifico }}"
+                                    onclick="openImageModal('{{ alga.imagen.url }}')"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="h-24 w-24 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center border-2 border-blue-200 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50"
+                                    style="display: none;">
+                                    <i class="fas fa-water text-blue-500 text-3xl"></i>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div
+                                class="flex-shrink-0 h-24 w-24 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center border-2 border-blue-200 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50">
+                                <i class="fas fa-water text-blue-500 text-3xl"></i>
+                            </div>
+                            {% endif %}
+
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3
+                                            class="text-lg font-semibold text-gray-900 truncate group-hover:text-blue-700 transition duration-200">
+                                            {{ alga.nombre_cientifico|default:"Sin nombre científico" }}
+                                        </h3>
+                                        <p class="text-sm text-gray-600 mt-1">
+                                            {{ alga.nombre_comun }}
+                                        </p>
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-100 text-cyan-800 border border-cyan-200 mt-2">
+                                            <i class="fas fa-sitemap mr-1"></i>
+                                            {{ alga.especie.familia.nombre|default:"Sin familia" }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex space-x-1">
+                                        <a href="{% url 'catalogo:alga-detail' alga.pk %}"
+                                            class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-100 transition duration-200 transform hover:scale-110"
+                                            title="Ver detalles">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:alga-update' alga.pk %}"
+                                            class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition duration-200 transform hover:scale-110"
+                                            title="Editar">
+                                            <i class="fas fa-edit text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:alga-delete' alga.pk %}"
+                                            class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
+                                            title="Eliminar">
+                                            <i class="fas fa-trash text-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-blue-50 transition duration-200">
+                            <i class="fas fa-chevron-left mr-2"></i>Anterior
+                        </a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}"
+                            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-blue-50 transition duration-200">
+                            Siguiente<i class="fas fa-chevron-right ml-2"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Mostrando <span class="font-medium">{{ page_obj.start_index }}</span> a
+                                <span class="font-medium">{{ page_obj.end_index }}</span> de
+                                <span class="font-medium">{{ page_obj.paginator.count }}</span> resultados
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px"
+                                aria-label="Pagination">
+                                {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-blue-50 transition duration-200">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                <a href="?page={{ num }}"
+                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {% if page_obj.number == num %}z-10 bg-blue-600 border-blue-600 text-white{% else %}bg-white border-gray-300 text-gray-500 hover:bg-blue-50{% endif %} transition duration-200">
+                                    {{ num }}
+                                </a>
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-blue-50 transition duration-200">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="mx-auto h-32 w-32 text-gray-400 mb-6">
+                    <i class="fas fa-water text-8xl text-blue-300"></i>
+                </div>
+                <h3 class="mt-2 text-xl font-semibold text-gray-900 mb-2">No hay algas registradas</h3>
+                <p class="mt-1 text-gray-500 mb-6">Comienza agregando la primera alga a tu colección acuática.</p>
+                <div class="mt-6">
+                    <a href="{% url 'catalogo:alga-create' %}"
+                        class="inline-flex items-center px-6 py-3 border border-transparent shadow-lg text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 transform hover:scale-105">
+                        <i class="fas fa-plus mr-2"></i>
+                        Agregar Primera Alga
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Imágenes -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="relative max-w-4xl max-h-full mx-4">
+        <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl z-10">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" alt="Imagen ampliada" class="max-w-full max-h-full object-contain rounded-lg">
+    </div>
+</div>
+{% endblock %}

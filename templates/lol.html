@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block title %}Herbario Digital - Inicio{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="herbario-gradient text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg flex items-center justify-center">
+                <i class="fas fa-seedling mr-4"></i>
+                Herbario Digital
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-herbario-cream drop-shadow">
+                Descubre la biodiversidad vegetal a través de nuestra colección digital
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'catalogo:alga-list' %}"
+                    class="btn-primary text-lg px-8 py-3 shadow-lg hover:scale-105 transition-transform">
+                    <i class="fas fa-search mr-2"></i>
+                    Explorar Catálogo
+                </a>
+                <a href="#" class="btn-secondary text-lg px-8 py-3 shadow-lg hover:scale-105 transition-transform">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Conoce Más
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-2 bg-gradient-to-r from-herbario-green to-herbario-cream my-8 rounded"></div>
+
+<!-- Features Section -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-herbario-green mb-4">¿Por qué elegir nuestro herbario?</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Nuestra plataforma digital ofrece herramientas avanzadas para la catalogación y estudio de plantas
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Tarjeta 1 -->
+            <div class="card p-8 text-center bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="text-herbario-green text-4xl mb-4">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-herbario-green mb-4">Base de Datos Completa</h3>
+                <p class="text-gray-600">
+                    Accede a una extensa colección de especímenes botánicos con información detallada y fotografías de
+                    alta calidad.
+                </p>
+            </div>
+            <!-- Tarjeta 2 -->
+            <div class="card p-8 text-center bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="text-herbario-green text-4xl mb-4">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-herbario-green mb-4">Búsqueda Avanzada</h3>
+                <p class="text-gray-600">
+                    Encuentra rápidamente las plantas que buscas con nuestro sistema de búsqueda inteligente y filtros
+                    especializados.
+                </p>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="card p-8 text-center bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="text-herbario-green text-4xl mb-4">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-herbario-green mb-4">Comunidad Científica</h3>
+                <p class="text-gray-600">
+                    Conecta con investigadores, estudiantes y entusiastas de la botánica de todo el mundo.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-2 bg-gradient-to-r from-herbario-green to-herbario-cream my-8 rounded"></div>
+
+<!-- Statistics Section -->
+<section class="py-16 herbario-gradient text-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold mb-4">Nuestros Números</h2>
+            <p class="text-xl text-herbario-cream">
+                El impacto de nuestro herbario en la comunidad científica
+            </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">1,500+</div>
+                <div class="text-herbario-cream">Especímenes</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">500+</div>
+                <div class="text-herbario-cream">Especies</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">50+</div>
+                <div class="text-herbario-cream">Investigadores</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">10,000+</div>
+                <div class="text-herbario-cream">Visitas</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-2 bg-gradient-to-r from-herbario-green to-herbario-cream my-8 rounded"></div>
+
+<!-- Recent Specimens Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-herbario-green mb-4">Especímenes Recientes</h2>
+            <p class="text-xl text-gray-600">
+                Descubre las últimas adiciones a nuestra colección
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Tarjeta de Ejemplo 1 -->
+            <div class="card overflow-hidden bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                    <i class="fas fa-leaf text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-herbario-green mb-2">Orquídea Silvestre</h3>
+                    <p class="text-gray-600 mb-4">Especie endémica encontrada en los bosques nublados de la región.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Agregado hace 2 días</span>
+                        <a href="#" class="btn-primary text-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Ejemplo 2 -->
+            <div class="card overflow-hidden bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center">
+                    <i class="fas fa-seedling text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-herbario-green mb-2">Bromelia Gigante</h3>
+                    <p class="text-gray-600 mb-4">Planta epífita de gran tamaño con flores espectaculares.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Agregado hace 5 días</span>
+                        <a href="#" class="btn-primary text-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta de Ejemplo 3 -->
+            <div class="card overflow-hidden bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                    <i class="fas fa-flower text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-herbario-green mb-2">Heliconia Rara</h3>
+                    <p class="text-gray-600 mb-4">Especie poco común con inflorescencias únicas.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Agregado hace 1 semana</span>
+                        <a href="#" class="btn-primary text-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12">
+            <a href="{% url 'catalogo:alga-list' %}"
+                class="btn-primary text-lg px-8 py-3 shadow-lg hover:scale-105 transition-transform">
+                <i class="fas fa-arrow-right mr-2"></i>
+                Ver Todo el Catálogo
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-2 bg-gradient-to-r from-herbario-green to-herbario-cream my-8 rounded"></div>
+
+<!-- Call to Action Section -->
+<section class="py-16 herbario-gradient text-white">
+    <div class="container mx-auto px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-6">¿Listo para explorar?</h2>
+            <p class="text-xl mb-8 text-herbario-cream">
+                Únete a nuestra comunidad y contribuye al conocimiento de la biodiversidad vegetal
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'catalogo:alga-list' %}"
+                    class="bg-white text-herbario-green hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:scale-105 transition-transform">
+                    <i class="fas fa-search mr-2"></i>
+                    Explorar Ahora
+                </a>
+                <a href="#"
+                    class="border-2 border-white text-white hover:bg-white hover:text-herbario-green font-bold py-3 px-8 rounded-lg transition-colors duration-200 shadow-lg hover:scale-105 transition-transform">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Contactar
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

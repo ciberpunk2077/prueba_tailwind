@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- <h2>Resultados para "{{ query }}"</h2> -->
+
+<main class="main-content" id="mainContent" style="margin-top: 70px;">
+
+    <div class="container">
+        <h2>Resultados para "{{ query }}"</h2>
+
+
+        <div id="resultados">
+            {% include 'catalogo/buscar/partials/lista_resultados.html' %}
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('#sidebar-search input[name="q"]');  // Selecciona el input del sidebar
+        const familiaSelect = document.getElementById('id_familia');
+        const especieSelect = document.getElementById('id_especie');
+        const tipoSelect = document.getElementById('id_tipo');
+
+        // Actualizar especies cuando cambia la familia
+        familiaSelect.addEventListener('change', function () {
+            const familiaId = this.value;
+            if (familiaId) {
+                fetch(`/catalogo/get_especies/?familia_id=${familiaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        especieSelect.innerHTML = '<option value="">---------</option>';
+                        data.forEach(especie => {
+                            const option = document.createElement('option');
+                            option.value = especie.id;
+                            option.textContent = especie.nombre;
+                            especieSelect.appendChild(option);
+                        });
+                    });
+            } else {
+                especieSelect.innerHTML = '<option value="">---------</option>';
+            }
+            realizarBusqueda();
+        });
+
+        // Función para búsqueda en tiempo real
+        function realizarBusqueda() {
+            const params = new URLSearchParams({
+                q: searchInput ? searchInput.value : '',
+                familia: familiaSelect.value,
+                especie: especieSelect.value,
+                tipo: tipoSelect.value
+            });
+
+            fetch(`{% url 'catalogo:buscar_muestras' %}?${params}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('resultados').innerHTML = html;
+                });
+        }
+
+        // Eventos para búsqueda en tiempo real
+        if (searchInput) {
+            searchInput.addEventListener('input', realizarBusqueda);
+        }
+        especieSelect.addEventListener('change', realizarBusqueda);
+        tipoSelect.addEventListener('change', realizarBusqueda);
+    });
+</script>
+{% endblock %}

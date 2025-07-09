@@ -1,0 +1,57 @@
+<!-- Menú de Categorías -->
+<div class="flex justify-end mb-6">
+    <div class="relative inline-block text-left">
+        <button onclick="toggleDropdown()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
+            Categorías <i class="fas fa-chevron-down ml-2"></i>
+        </button>
+        <div id="dropdown"
+            class="hidden absolute z-10 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
+            <a href="{% url 'catalogo:planta-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-seedling mr-2"></i>Plantas
+            </a>
+            <a href="{% url 'catalogo:alga-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-water mr-2"></i>Algas
+            </a>
+            <a href="{% url 'catalogo:fruto-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-apple-alt mr-2"></i>Frutos
+            </a>
+            <a href="{% url 'catalogo:polen-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-wind mr-2"></i>Polen
+            </a>
+            <a href="{% url 'catalogo:helecho-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-leaf mr-2"></i>Helechos
+            </a>
+            <a href="{% url 'catalogo:hongo-list' %}"
+                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
+                <i class="fas fa-mushroom mr-2"></i>Hongos
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar imagen en pantalla completa -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+    <div class="relative w-full h-full flex items-center justify-center">
+        <!-- Botón de cerrar -->
+        <button id="closeModal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2 transition duration-200">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        
+        <!-- Contenedor de la imagen con tamaño fijo -->
+        <div class="relative w-full h-full flex items-center justify-center p-8">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" style="min-height: 400px; min-width: 400px;">
+        </div>
+        
+        <!-- Información de la imagen -->
+        <div id="modalInfo" class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-75 text-white p-4 rounded-lg">
+            <h3 id="modalTitle" class="text-lg font-semibold mb-1"></h3>
+            <p id="modalSubtitle" class="text-sm opacity-90"></p>
+        </div>
+    </div>
+</div> 

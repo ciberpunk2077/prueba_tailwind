@@ -1,0 +1,101 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% tailwind_css %}
+    <title>Herbario Moderno | Flora Nativa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-light font-sans">
+    <!-- Header -->
+    {% include 'navbar.html' %}
+    <!-- Hero Section with Carousel -->
+    {% include 'carusel.html' %}
+
+    <!-- Featured Plants -->
+    {% include 'main.html' %}
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <!-- Carousel Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carousel = document.querySelector('.carousel');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            // Function to update carousel display
+            function updateCarousel() {
+                slides.forEach((slide, index) => {
+                    slide.style.opacity = index === currentIndex ? '1' : '0';
+                });
+
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('bg-white', index === currentIndex);
+                    indicator.classList.toggle('bg-white/50', index !== currentIndex);
+                });
+            }
+
+            // Next slide function
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            // Previous slide function
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+
+            // Auto-advance carousel
+            let interval = setInterval(nextSlide, 5000);
+
+            // Pause on hover
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+            });
+
+            carousel.addEventListener('mouseleave', () => {
+                interval = setInterval(nextSlide, 5000);
+            });
+
+            // Button controls
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                clearInterval(interval);
+                interval = setInterval(nextSlide, 5000);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                clearInterval(interval);
+                interval = setInterval(nextSlide, 5000);
+            });
+
+            // Indicator controls
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                    clearInterval(interval);
+                    interval = setInterval(nextSlide, 5000);
+                });
+            });
+
+            // Initialize carousel
+            updateCarousel();
+        });
+    </script>
+</body>
+
+</html>

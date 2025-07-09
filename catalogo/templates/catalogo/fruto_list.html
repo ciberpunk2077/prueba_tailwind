@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-orange-50 to-red-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <i class="fas fa-apple-alt text-orange-600"></i>
+                        Catálogo de Frutos y Semillas
+                    </h1>
+                    <p class="text-gray-600 text-lg">Explora nuestra colección de frutos y semillas</p>
+                </div>
+                <a href="{% url 'catalogo:fruto-create' %}"
+                    class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <i class="fas fa-plus"></i>
+                    Nuevo Fruto
+                </a>
+            </div>
+        </div>
+
+        <!-- Menú de Categorías -->
+        {% include 'catalogo/partials/catalogo_components.html' %}
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-orange-100 rounded-xl">
+                        <i class="fas fa-apple-alt text-2xl text-orange-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Total Frutos</p>
+                        <p class="text-3xl font-bold text-gray-900">{{ object_list.count }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-red-100 rounded-xl">
+                        <i class="fas fa-seedling text-2xl text-red-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Familias</p>
+                        <p class="text-3xl font-bold text-gray-900">18+</p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-amber-500 hover:shadow-xl transition duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 bg-amber-100 rounded-xl">
+                        <i class="fas fa-map-marker-alt text-2xl text-amber-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600">Hábitats</p>
+                        <p class="text-3xl font-bold text-gray-900">12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Frutos Table -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            {% if object_list %}
+            <!-- Desktop Table -->
+            <div class="hidden lg:block">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-orange-600 to-red-600">
+                            <tr>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-image mr-2"></i>Imagen
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-microscope mr-2"></i>Nombre Científico
+
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-tag mr-2"></i>Nombre Común
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-sitemap mr-2"></i>Familia
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-cogs mr-2"></i>Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for fruto in object_list %}
+                            <tr class="hover:bg-orange-50 transition duration-200 group">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if fruto.imagen %}
+                                    <div class="flex-shrink-0 h-20 w-20">
+                                        <img class="h-20 w-20 rounded-xl object-cover shadow-md border-2 border-orange-200 group-hover:border-orange-400 transition duration-200 cursor-pointer hover:scale-105"
+                                            src="{{ fruto.imagen.url }}" alt="{{ fruto.nombre_cientifico }}"
+                                            onclick="openImageModal('{{ fruto.imagen.url }}')"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="h-20 w-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center border-2 border-orange-200"
+                                            style="display: none;">
+                                            <i class="fas fa-apple-alt text-orange-500 text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div
+                                        class="flex-shrink-0 h-20 w-20 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center border-2 border-orange-200">
+                                        <i class="fas fa-apple-alt text-orange-500 text-2xl"></i>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div
+                                        class="text-sm font-semibold text-gray-900 group-hover:text-orange-700 transition duration-200">
+                                        {{ fruto.nombre_cientifico|default:"Sin nombre científico" }}
+                                    </div>
+                                    <div class="text-xs text-gray-500 italic">Especie</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                        {{ fruto.nombre_comun|default:"Sin nombre común" }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
+                                        <i class="fas fa-sitemap mr-1"></i>
+                                        {{ fruto.especie.familia.nombre|default:"Sin familia" }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="{% url 'catalogo:fruto-detail' fruto.pk %}"
+                                            class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-100 transition duration-200 transform hover:scale-110"
+                                            title="Ver detalles">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:fruto-update' fruto.pk %}"
+                                            class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition duration-200 transform hover:scale-110"
+                                            title="Editar">
+                                            <i class="fas fa-edit text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:fruto-delete' fruto.pk %}"
+                                            class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
+                                            title="Eliminar">
+                                            <i class="fas fa-trash text-lg"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="lg:hidden">
+                <div class="p-4 space-y-4">
+                    {% for fruto in object_list %}
+                    <div
+                        class="bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition duration-200 group">
+                        <div class="flex items-start space-x-4">
+                            {% if fruto.imagen %}
+                            <div class="flex-shrink-0">
+                                <img class="h-24 w-24 rounded-xl object-cover border-2 border-orange-200 group-hover:border-orange-400 transition duration-200 cursor-pointer hover:scale-105"
+                                    src="{{ fruto.imagen.url }}" alt="{{ fruto.nombre_cientifico }}"
+                                    onclick="openImageModal('{{ fruto.imagen.url }}')"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="h-24 w-24 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center border-2 border-orange-200"
+                                    style="display: none;">
+                                    <i class="fas fa-apple-alt text-orange-500 text-3xl"></i>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div
+                                class="flex-shrink-0 h-24 w-24 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center border-2 border-orange-200">
+                                <i class="fas fa-apple-alt text-orange-500 text-3xl"></i>
+                            </div>
+                            {% endif %}
+
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3
+                                            class="text-lg font-semibold text-gray-900 truncate group-hover:text-orange-700 transition duration-200">
+                                            {{ fruto.nombre_cientifico|default:"Sin nombre científico" }}
+                                        </h3>
+                                        <p class="text-sm text-gray-600 mt-1">
+                                            {{ fruto.nombre_comun|default:"Sin nombre común" }}
+                                        </p>
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200 mt-2">
+                                            <i class="fas fa-sitemap mr-1"></i>
+                                            {{ fruto.especie.familia.nombre|default:"Sin familia" }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex space-x-1">
+                                        <a href="{% url 'catalogo:fruto-detail' fruto.pk %}"
+                                            class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-100 transition duration-200 transform hover:scale-110"
+                                            title="Ver detalles">
+                                            <i class="fas fa-eye text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:fruto-update' fruto.pk %}"
+                                            class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition duration-200 transform hover:scale-110"
+                                            title="Editar">
+                                            <i class="fas fa-edit text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:fruto-delete' fruto.pk %}"
+                                            class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
+                                            title="Eliminar">
+                                            <i class="fas fa-trash text-lg"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-orange-50 transition duration-200">
+                            <i class="fas fa-chevron-left mr-2"></i>Anterior
+                        </a>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}"
+                            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-orange-50 transition duration-200">
+                            Siguiente<i class="fas fa-chevron-right ml-2"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Mostrando <span class="font-medium">{{ page_obj.start_index }}</span> a
+                                <span class="font-medium">{{ page_obj.end_index }}</span> de
+                                <span class="font-medium">{{ page_obj.paginator.count }}</span> resultados
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px"
+                                aria-label="Pagination">
+                                {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-orange-50 transition duration-200">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                <a href="?page={{ num }}"
+                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {% if page_obj.number == num %}z-10 bg-orange-600 border-orange-600 text-white{% else %}bg-white border-gray-300 text-gray-500 hover:bg-orange-50{% endif %} transition duration-200">
+                                    {{ num }}
+                                </a>
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-orange-50 transition duration-200">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="mx-auto h-32 w-32 text-gray-400 mb-6">
+                    <i class="fas fa-apple-alt text-8xl text-orange-300"></i>
+                </div>
+                <h3 class="mt-2 text-xl font-semibold text-gray-900 mb-2">No hay frutos registrados</h3>
+                <p class="mt-1 text-gray-500 mb-6">Comienza agregando el primer fruto o semilla a tu colección.</p>
+                <div class="mt-6">
+                    <a href="{% url 'catalogo:fruto-create' %}"
+                        class="inline-flex items-center px-6 py-3 border border-transparent shadow-lg text-base font-medium rounded-xl text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-200 transform hover:scale-105">
+                        <i class="fas fa-plus mr-2"></i>
+                        Agregar Primer Fruto
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Imágenes -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="relative max-w-4xl max-h-full mx-4">
+        <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl z-10">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" alt="Imagen ampliada" class="max-w-full max-h-full object-contain rounded-lg">
+    </div>
+</div>
+{% endblock %}

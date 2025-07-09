@@ -1,0 +1,63 @@
+<div class="container-fluid mt-3">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Nombre científico</th>
+                    <th>Familia</th>
+                    <th>Especie</th>
+                    <th>Tipo</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for muestra in resultados %}
+                <tr>
+                    <td><strong>{{ muestra.nombre_cientifico }}</strong></td>
+                    <td>{{ muestra.especie.familia.nombre }}</td>
+                    <td>{{ muestra.especie.nombre }}</td>
+                    <td><span class="badge bg-info">{{ muestra.tipo_muestra }}</span></td>
+                    <td>
+                        {% if muestra.imagen %}
+                        <img src="{{ muestra.imagen.url }}" alt="{{ muestra.nombre_cientifico }}"
+                            style="width: 80px; height: 80px; object-fit: cover;" class="img-lista-muestra">
+                        {% else %}
+                        <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if muestra.tipo_muestra == 'ALGA' %}
+                        <a href="{% url 'catalogo:alga-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% elif muestra.tipo_muestra == 'PLANTA' %}
+                        <a href="{% url 'catalogo:planta-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% elif muestra.tipo_muestra == 'HONGO' %}
+                        <a href="{% url 'catalogo:hongo-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% elif muestra.tipo_muestra == 'HELECHO' %}
+                        <a href="{% url 'catalogo:helecho-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% elif muestra.tipo_muestra == 'FRUTOSEMILLA' %}
+                        <a href="{% url 'catalogo:fruto-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% elif muestra.tipo_muestra == 'POLEN' %}
+                        <a href="{% url 'catalogo:polen-detail' muestra.pk %}"
+                            class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">
+                        <i class="bi bi-database-exclamation me-2"></i>
+                        No hay registros que coincidan con tu búsqueda
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

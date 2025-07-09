@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block container %}
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <i class="fa fa-list"></i> Usuarios / <span class="text text-warning"> Listado</span>
+            <a href="{% url 'catalogos:usuario-add' %}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Nuevo
+                usuario</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Nombre</th>
+                        <th>Usuario</th>
+                        <th>Activo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ obj.first_name }} {{ obj.last_name }}</td>
+                        <td>{{ obj.username }}</td>
+                        <td>
+                            {% if obj.is_active %}
+                            <i class="fa fa-check-circle text-info"></i>
+                            {% endif %}
+
+                        </td>
+                        <td>
+                            {% if request.user.is_superuser %}
+                            <a href="{% url 'catalogos:usuario-edit'  obj.pk %}" class="btn btn-danger"><i
+                                    class="fa fa-edit"></i>Editar</a>
+                            <a href="{% url 'catalogos:usuario-change-pwd'  obj.pk %}" class="btn btn-success"><i
+                                    class="fa fa-lock"></i>Cambio de contraseña</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    $(function () {
+        /*
+        $.toast({
+            heading: 'Bienvenido al',
+            text: 'Escuela de la Fiscalía - Fiscalía General del Estado de Tabasco',
+            position: 'top-right',
+            loaderBg: '#ff6849',
+            icon: 'info',
+            hideAfter: 3500,
+            stack: 6,
+        })*/
+    });
+</script>
+{% endblock %}

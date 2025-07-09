@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block container %}
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <i class="fa fa-file-text"></i> Catálogo de Usuarios / <span class="text text-success">{% if edit %} Editar
+                {% else %} Nuevo {% endif %}
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    {% if reset %}
+    <div class="col-12">
+        <h4>Nombre : {{ usuario.first_name }} {{ usuario.last_name }}</h4>
+        <h4>usuario : {{ usuario.username }}</h4>
+    </div>
+    {% endif %}
+    <form action="" class="" method="POST" name="form-usuario" id="form-usuario">
+
+        {% csrf_token %}
+        {% include 'form_snippet_general.html' %}
+        <hr>
+        <button class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+        <a class="btn btn-danger" href="{% url 'catalogos:usuario-list' %}"><i class="fa fa-arrow-left"></i>Ir a la
+            lista de usuarios</a>
+    </form>
+</div>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{% static 'assets/plugins/bower_components/clockpicker/dist/jquery-clockpicker.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+{% endblock %}

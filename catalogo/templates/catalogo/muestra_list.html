@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Muestras Biológicas</h1>
+<a href="{% url 'catalogo:muestra-create' %}" class="btn btn-primary">Nueva Muestra</a>
+
+<div class="filters">
+    <form method="get">
+        <select name="tipo" class="form-select">
+            <option value="">Todos los tipos</option>
+            {% for tipo in tipos %}
+            <option value="{{ tipo.0 }}" {% if request.GET.tipo == tipo.0%}selected{% endif %}>
+                {{ tipo.1 }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-secondary mt-2">Filtrar</button>
+    </form>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for muestra in muestras %}
+        <tr>
+            <td>{{ muestra.codigo|default:"-" }}</td>
+            <td>{{ muestra.get_tipo_muestra_display }}</td>
+            <td>{{ muestra.fecha|date:"d/m/Y" }}</td>
+            <td>{{ muestra.descripcion|truncatechars:50 }}</td>
+            <td>
+                <a href="{% url 'catalogo:muestra-detail' muestra.id %}" class="btn btn-sm btn-info">Ver</a>
+                <a href="{% url 'catalogo:muestra-update' muestra.id %}" class="btn btn-sm btn-warning">Editar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">No hay muestras registradas</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+                href="?page={{ page_obj.previous_page_number }}&tipo={{ request.GET.tipo }}">&laquo;</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&tipo={{ request.GET.tipo }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&tipo={{ request.GET.tipo }}">&raquo;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

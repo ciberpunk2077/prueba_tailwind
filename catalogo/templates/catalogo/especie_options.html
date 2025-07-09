@@ -1,0 +1,6 @@
+<!-- catalogo/templates/catalogo/especie_options.html -->
+{% for especie in especies %}
+<option value="{{ especie.pk }}">{{ especie.nombre }}</option>
+{% empty %}
+<option value="">---------</option>
+{% endfor %}
