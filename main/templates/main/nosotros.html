@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+    <!-- Hero Section -->
+    <div class="relative bg-gradient-to-r from-green-600 to-emerald-700 text-white py-20">
+        <div class="absolute inset-0 bg-black opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-2/3 mb-8 lg:mb-0">
+                    <h1 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                        Herbario UJAT
+                    </h1>
+                    <p class="text-xl lg:text-2xl mb-8 text-green-100">
+                        Preservando el patrimonio natural de Tabasco desde 1980
+                    </p>
+                    <div class="flex flex-wrap gap-8">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-200">48,000+</div>
+                            <div class="text-green-100">Muestras científicas</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-200">7</div>
+                            <div class="text-green-100">Colecciones especializadas</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-200">1987</div>
+                            <div class="text-green-100">Registro internacional</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 text-center">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                        <i class="fas fa-seedling text-8xl text-green-200 mb-4"></i>
+                        <h3 class="text-xl font-semibold">Patrimonio Natural</h3>
+                        <p class="text-green-100 mt-2">Conservando la biodiversidad de Tabasco</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introducción -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border-l-4 border-green-500">
+                        <h2 class="text-3xl font-bold text-green-800 mb-6 flex items-center gap-3">
+                            <i class="fas fa-leaf text-green-600"></i>
+                            Sobre Nosotros
+                        </h2>
+                        <p class="text-lg text-green-700 font-semibold mb-6 leading-relaxed">
+                            Las 48 mil muestras que alberga forman parte del patrimonio natural y biocultural de Tabasco
+                        </p>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Conformado por más de siete colecciones científicas que concentran 48 mil muestras de plantas vasculares, 
+                            hongos, algas, briofitas, granos de polen, frutos y semillas, el Herbario de la Universidad Juárez 
+                            Autónoma de Tabasco (UJAT) representa un archivo histórico que lo distingue y posiciona a nivel internacional.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            Así lo expresó la directora del Herbario UJAT, Silvia Cappello García, quien dio detalles del trabajo 
+                            que realiza junto a un equipo interdisciplinario de colaboradores, en este recinto de conservación 
+                            ambiental ubicado en la División Académica de Ciencias Biológicas (DACBiol).
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:col-span-1">
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-l-4 border-green-500">
+                        <h3 class="text-xl font-bold text-green-800 mb-6 text-center">Datos Clave</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-green-50 rounded-xl">
+                                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-calendar-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-green-800">Fundación</div>
+                                    <div class="text-green-600">1980</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-emerald-50 rounded-xl">
+                                <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-globe text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-emerald-800">Registro internacional</div>
+                                    <div class="text-emerald-600">1987</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-teal-50 rounded-xl">
+                                <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-seedling text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-teal-800">Muestras totales</div>
+                                    <div class="text-teal-600">48,000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historia -->
+    <section class="py-16 bg-white/60">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-green-800 mb-4">Historia del Herbario</h2>
+                <div class="w-24 h-1 bg-green-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-3">
+                        <i class="fas fa-history text-green-600"></i>
+                        Nuestros Orígenes
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Los inicios del herbario de la máxima casa de estudios se remontan a 1980, año en que fue fundado 
+                        con el propósito de aportar conocimientos para beneficio de la sociedad, a través del estudio y 
+                        concentración de colecciones de la flora y los hongos que existen en la entidad.
+                    </p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-3">
+                        <i class="fas fa-award text-green-600"></i>
+                        Reconocimiento Internacional
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        En 1987 se obtuvo el registro en el Index Herbariorum del New York Botanical Garden, recibiendo 
+                        el acrónimo UJAT, por lo que internacionalmente ahora es conocido como Herbario UJAT.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué es un herbario? -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-green-800 mb-6">¿Qué es un herbario?</h2>
+                    <p class="text-xl text-green-700 mb-6 leading-relaxed">
+                        La doctora en Ciencias Biológicas explicó que un herbario funciona como un museo de plantas, 
+                        donde se protege, investiga y conserva material botánico procesado, junto con sus flores, 
+                        frutos y semillas, incluyendo ejemplares de hongos y algas.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-xl">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-green-800">Protección</h4>
+                            <p class="text-green-600 text-sm">Conservación de especies</p>
+                        </div>
+                        <div class="bg-emerald-50 p-4 rounded-xl">
+                            <i class="fas fa-microscope text-emerald-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-emerald-800">Investigación</h4>
+                            <p class="text-emerald-600 text-sm">Estudio científico</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <div class="aspect-video bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-seedling text-8xl text-green-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colecciones -->
+    <section class="py-16 bg-white/60">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-green-800 mb-4">Nuestras Colecciones</h2>
+                <div class="w-24 h-1 bg-green-500 mx-auto"></div>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-2xl font-bold text-green-800 mb-6">Distribución de Muestras</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-seedling text-green-600 mr-3"></i>
+                                <span class="font-semibold text-green-800">Plantas vasculares</span>
+                            </div>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full font-semibold">35,000</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-amber-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-mushroom text-amber-600 mr-3"></i>
+                                <span class="font-semibold text-amber-800">Hongos</span>
+                            </div>
+                            <span class="bg-amber-500 text-white px-3 py-1 rounded-full font-semibold">5,000</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-water text-blue-600 mr-3"></i>
+                                <span class="font-semibold text-blue-800">Algas</span>
+                            </div>
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full font-semibold">1,000</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-leaf text-purple-600 mr-3"></i>
+                                <span class="font-semibold text-purple-800">Helechos</span>
+                            </div>
+                            <span class="bg-purple-500 text-white px-3 py-1 rounded-full font-semibold">500</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-apple-alt text-red-600 mr-3"></i>
+                                <span class="font-semibold text-red-800">Frutos y semillas</span>
+                            </div>
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full font-semibold">1,000</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-dot-circle text-yellow-600 mr-3"></i>
+                                <span class="font-semibold text-yellow-800">Polen</span>
+                            </div>
+                            <span class="bg-yellow-500 text-white px-3 py-1 rounded-full font-semibold">300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
+                    <h3 class="text-2xl font-bold text-green-800 mb-6">Impacto Internacional</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-globe-americas text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-800 mb-2">Reconocimiento Global</h4>
+                                <p class="text-gray-700">Nuestras muestras se encuentran en herbarios nacionales e internacionales, 
+                                como el Museo de Historia Natural de Londres y el Jardín Botánico Kew en Reino Unido.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-university text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-emerald-800 mb-2">Formación Académica</h4>
+                                <p class="text-gray-700">Contribuimos a la formación de recursos humanos especializados en 
+                                botánica y conservación ambiental.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <i class="fas fa-leaf text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-teal-800 mb-2">Conservación</h4>
+                                <p class="text-gray-700">Protegemos y conservamos el patrimonio natural y biocultural de Tabasco.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Importancia Ecológica -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 shadow-xl border-l-4 border-amber-500">
+                <h2 class="text-3xl font-bold text-amber-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-exclamation-triangle text-amber-600"></i>
+                    Importancia Ecológica
+                </h2>
+                <p class="text-gray-700 mb-6 leading-relaxed">
+                    Cabe hacer énfasis en que el legado ambiental y cultural del Herbario UJAT cobra relevancia debido a 
+                    que desde 1944 la deforestación, la expansión ganadera excesiva, la intensificación agrícola, la 
+                    urbanización y la explotación petrolera, transformaron el paisaje de Tabasco, provocando la reducción 
+                    del 95 por ciento del millón de hectáreas de comunidades de selva que originalmente existían.
+                </p>
+                <div class="bg-amber-100 border border-amber-300 rounded-xl p-6">
+                    <p class="text-amber-800 font-semibold italic">
+                        "Es por eso que tenemos una mayor responsabilidad, que implica tomar medidas para la protección, 
+                        conservación y aprovechamiento sustentable de lo que aún existe; por tanto, es una satisfacción 
+                        contar con un acervo que tiene un impacto no sólo estatal y nacional sino internacional", 
+                        concluyó Cappello García.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ejemplares Destacados -->
+    <section class="py-16 bg-white/60">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-green-800 mb-4">Ejemplares Destacados</h2>
+                <div class="w-24 h-1 bg-green-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                    <div class="h-48 bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center">
+                        <i class="fas fa-seedling text-6xl text-green-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Mariguana (Mota)</h3>
+                        <p class="text-green-600 italic mb-3">Cannabis sativa L.</p>
+                        <p class="text-gray-700 mb-4">Hierba anual de 65 cm de alta con brotes blanquesinas.</p>
+                        <button class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                    <div class="h-48 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+                        <i class="fas fa-leaf text-6xl text-emerald-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-emerald-800 mb-2">Cola de caballo</h3>
+                        <p class="text-emerald-600 italic mb-3">Equisetum giganteum L.</p>
+                        <p class="text-gray-700 mb-4">Planta vascular sin semillas del grupo de los helechos.</p>
+                        <button class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                    <div class="h-48 bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center">
+                        <i class="fas fa-tree text-6xl text-teal-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-teal-800 mb-2">Jonote</h3>
+                        <p class="text-teal-600 italic mb-3">Heliocarpus appendiculatus</p>
+                        <p class="text-gray-700 mb-4">Árbol nativo de la región con propiedades medicinales.</p>
+                        <button class="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition duration-200 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-seedling mr-2"></i>
+                    Ver más ejemplares
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

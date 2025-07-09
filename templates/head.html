@@ -1,4 +1,8 @@
 {% load static %}
+
+<!-- Carrusel -->
+{% include 'carusel.html' %}
+
 <!-- Featured Plants -->
 <section class="bg-white shadow-md py-8">
     <div class="container mx-auto px-6">
@@ -41,11 +45,21 @@
                 </div>
 
                 <!-- Buscador -->
-                <div class="relative">
-                    <input type="text" placeholder="Buscar planta..."
-                        class="border border-light-green rounded-lg px-4 py-2 text-botanical-green pl-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                </div>
+                <form id="search-form" method="get" action="{% url 'catalogo:buscar_muestras' %}" class="flex">
+                    <div class="relative">
+                        <input type="text" 
+                               id="search-input" 
+                               name="q" 
+                               placeholder="Buscar especie, familia, nombre..." 
+                               value="{{ request.GET.q }}"
+                               class="border border-light-green rounded-l-lg px-4 py-2 text-botanical-green pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-64">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <button type="submit" 
+                            class="bg-primary hover:bg-dark text-white px-4 py-2 rounded-r-lg transition duration-300 flex items-center">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -65,5 +79,37 @@
         if (!button || !button.onclick) {
             dropdown.classList.add('hidden');
         }
+    });
+
+    // Función para manejar la búsqueda
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchForm = document.getElementById('search-form');
+        const searchInput = document.getElementById('search-input');
+
+        // Validación del formulario
+        searchForm.addEventListener('submit', function(e) {
+            if (searchInput.value.trim() === '') {
+                e.preventDefault();
+                alert('Por favor, ingresa un término de búsqueda');
+                searchInput.focus();
+            }
+        });
+
+        // Búsqueda en tiempo real con debounce
+        let searchTimeout;
+        searchInput.addEventListener('input', function (e) {
+            const query = e.target.value.trim();
+            
+            // Limpiar timeout anterior
+            clearTimeout(searchTimeout);
+            
+            // Si hay texto, hacer búsqueda después de 1 segundo de inactividad
+            if (query.length >= 2) {
+                searchTimeout = setTimeout(function() {
+                    // Redirigir a la página de resultados con el término de búsqueda
+                    window.location.href = `{% url 'catalogo:buscar_muestras' %}?q=${encodeURIComponent(query)}`;
+                }, 1000);
+            }
+        });
     });
 </script>

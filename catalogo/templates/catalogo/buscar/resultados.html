@@ -2,70 +2,127 @@
 {% load static %}
 
 {% block content %}
-<!-- <h2>Resultados para "{{ query }}"</h2> -->
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-8">
+    <div class="container mx-auto px-4">
+        <!-- Header de búsqueda -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-green-800 mb-4">
+                {% if query %}
+                    Resultados para "{{ query }}"
+                {% else %}
+                    Búsqueda de Muestras Biológicas
+                {% endif %}
+            </h1>
+            {% if total_resultados %}
+                <p class="text-lg text-green-600">Se encontraron {{ total_resultados }} resultado{{ total_resultados|pluralize }}</p>
+            {% endif %}
+        </div>
 
-<main class="main-content" id="mainContent" style="margin-top: 70px;">
+        <!-- Estadísticas -->
+        {% if estadisticas and total_resultados > 0 %}
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold text-green-800 mb-4">Distribución por tipo</h2>
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-seedling text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-green-600">{{ estadisticas.plantas }}</div>
+                    <div class="text-sm text-gray-600">Plantas</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-water text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-blue-600">{{ estadisticas.algas }}</div>
+                    <div class="text-sm text-gray-600">Algas</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-mushroom text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-amber-600">{{ estadisticas.hongos }}</div>
+                    <div class="text-sm text-gray-600">Hongos</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-leaf text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-purple-600">{{ estadisticas.helechos }}</div>
+                    <div class="text-sm text-gray-600">Helechos</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-apple-alt text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-red-600">{{ estadisticas.frutos }}</div>
+                    <div class="text-sm text-gray-600">Frutos</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-dot-circle text-white"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-yellow-600">{{ estadisticas.polen }}</div>
+                    <div class="text-sm text-gray-600">Polen</div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
-    <div class="container">
-        <h2>Resultados para "{{ query }}"</h2>
+        <!-- Sin resultados -->
+        {% if sin_resultados %}
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
+            <div class="text-center mb-6">
+                <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">No se encontraron resultados</h2>
+                <p class="text-gray-600">Intenta con otros términos de búsqueda</p>
+            </div>
+            
+            <!-- Sugerencias -->
+            {% if especies_similares or familias_similares %}
+            <div class="grid md:grid-cols-2 gap-6">
+                {% if especies_similares %}
+                <div>
+                    <h3 class="text-lg font-semibold text-green-800 mb-3">Especies similares</h3>
+                    <div class="space-y-2">
+                        {% for especie in especies_similares %}
+                        <a href="{% url 'catalogo:buscar_muestras' %}?q={{ especie.nombre }}" 
+                           class="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition duration-200">
+                            <div class="font-semibold text-green-800">{{ especie.nombre }}</div>
+                            {% if especie.familia %}
+                            <div class="text-sm text-green-600">{{ especie.familia.nombre }}</div>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if familias_similares %}
+                <div>
+                    <h3 class="text-lg font-semibold text-green-800 mb-3">Familias similares</h3>
+                    <div class="space-y-2">
+                        {% for familia in familias_similares %}
+                        <a href="{% url 'catalogo:buscar_muestras' %}?q={{ familia.nombre }}" 
+                           class="block p-3 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition duration-200">
+                            <div class="font-semibold text-emerald-800">{{ familia.nombre }}</div>
+                            {% if familia.descripcion %}
+                            <div class="text-sm text-emerald-600">{{ familia.descripcion|truncatechars:100 }}</div>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
 
-
+        <!-- Resultados -->
         <div id="resultados">
             {% include 'catalogo/buscar/partials/lista_resultados.html' %}
         </div>
     </div>
-</main>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.querySelector('#sidebar-search input[name="q"]');  // Selecciona el input del sidebar
-        const familiaSelect = document.getElementById('id_familia');
-        const especieSelect = document.getElementById('id_especie');
-        const tipoSelect = document.getElementById('id_tipo');
-
-        // Actualizar especies cuando cambia la familia
-        familiaSelect.addEventListener('change', function () {
-            const familiaId = this.value;
-            if (familiaId) {
-                fetch(`/catalogo/get_especies/?familia_id=${familiaId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        especieSelect.innerHTML = '<option value="">---------</option>';
-                        data.forEach(especie => {
-                            const option = document.createElement('option');
-                            option.value = especie.id;
-                            option.textContent = especie.nombre;
-                            especieSelect.appendChild(option);
-                        });
-                    });
-            } else {
-                especieSelect.innerHTML = '<option value="">---------</option>';
-            }
-            realizarBusqueda();
-        });
-
-        // Función para búsqueda en tiempo real
-        function realizarBusqueda() {
-            const params = new URLSearchParams({
-                q: searchInput ? searchInput.value : '',
-                familia: familiaSelect.value,
-                especie: especieSelect.value,
-                tipo: tipoSelect.value
-            });
-
-            fetch(`{% url 'catalogo:buscar_muestras' %}?${params}`)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('resultados').innerHTML = html;
-                });
-        }
-
-        // Eventos para búsqueda en tiempo real
-        if (searchInput) {
-            searchInput.addEventListener('input', realizarBusqueda);
-        }
-        especieSelect.addEventListener('change', realizarBusqueda);
-        tipoSelect.addEventListener('change', realizarBusqueda);
-    });
-</script>
+</div>
 {% endblock %}

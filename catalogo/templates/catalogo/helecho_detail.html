@@ -2,150 +2,176 @@
 {% load static %}
 
 {% block content %}
-<main class="main-content" id="mainContent" style="margin-top: 70px;">
-    <div class="container">
-        {% include 'head.html' %}
-
-        <!-- empieza------------------------ -->
-        <div class="container-fluid py-4">
-            <div class="row">
-                <!-- Columna de información -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-header bg-primary text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-water me-2"></i>Detalle del Helecho
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <th class="w-25">Nombre Científico</th>
-                                            <td>{{ helecho.nombre_cientifico }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Nombre Común</th>
-                                            <td>{{ helecho.nombre_comun|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Familia</th>
-                                            <td>{{ helecho.especie.familia.nombre|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Especie</th>
-                                            <td>{{ helecho.especie|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Fecha de Recolección</th>
-                                            <td>{{ helecho.fecha|date:"d/m/Y"|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Número de Recolecta</th>
-                                            <td>
-                                                <span class="badge bg-secondary">{{ helecho.numero_recolecta }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ubicación</th>
-                                            <td>
-                                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
-                                                {{ helecho.localidad|default:"-" }},
-                                                {{ helecho.colonia|default:"-" }},
-                                                {{ helecho.municipio|default:"-" }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Colector</th>
-                                            <td>
-                                                <i class="fas fa-user text-info me-1"></i>
-                                                {{ helecho.nombre_colector|default:"-" }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Descripción</th>
-                                            <td>{{ helecho.descripcion|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Coordenadas</th>
-                                            <td>
-                                                {% if helecho.latitud and helecho.longitud %}
-                                                <i class="fas fa-globe-americas text-success me-1"></i>
-                                                Lat: {{ helecho.latitud }}, Long: {{ helecho.longitud }}
-                                                {% else %}
-                                                -
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="{% url 'catalogo:helecho-list' %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-left me-1"></i> Volver al listado
-                                </a>
-                                <div>
-                                    <a href="{% url 'catalogo:helecho-update' pk=helecho.pk %}"
-                                        class="btn btn-primary me-2">
-                                        <i class="fas fa-edit me-1"></i> Editar
-                                    </a>
-                                    <a href="{% url 'catalogo:helecho-delete' pk=helecho.pk %}"
-                                        class="btn btn-outline-danger"
-                                        onclick="return confirm('¿Está seguro que desea eliminar este helecho?')">
-                                        <i class="fas fa-trash-alt me-1"></i> Eliminar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+<div class="min-h-screen bg-gradient-to-br from-purple-50 to-fuchsia-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <i class="fas fa-leaf text-fuchsia-500"></i>
+                        {{ helecho.nombre_cientifico }}
+                    </h1>
+                    <p class="text-gray-600 text-lg">{{ helecho.nombre_comun|default:"Sin nombre común" }}</p>
+                    <div class="flex items-center gap-4 mt-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-fuchsia-100 text-fuchsia-800">
+                            <i class="fas fa-sitemap mr-1"></i>
+                            {{ helecho.especie.familia.nombre|default:"Sin familia" }}
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                            <i class="fas fa-leaf mr-1"></i>
+                            {{ helecho.especie|default:"Sin especie" }}
+                        </span>
                     </div>
                 </div>
-
-                <!-- Columna de imagen y mapa -->
-                <div class="col-lg-6">
-                    <!-- Tarjeta de Imagen -->
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-header bg-info text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-image me-2"></i>Imagen de la Muestra
-                            </h4>
-                        </div>
-                        <div class="card-body text-center p-0">
-                            {% if helecho.imagen %}
-                            <img src="{{ helecho.imagen.url }}" alt="{{ helecho.nombre_cientifico }}"
-                                class="img-fluid rounded-top"
-                                style="max-height: 300px; width: 300px; object-fit: cover;">
-                            {% else %}
-                            <div class="p-4">
-                                <i class="fas fa-image fa-5x text-muted mb-3"></i>
-                                <p class="text-muted">No hay imagen disponible</p>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta de Mapa -->
-                    {% if helecho.get_map %}
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-success text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-map-marked-alt me-2"></i>Ubicación Geográfica
-                            </h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="map-container" style="height: 400px;">
-                                {{ helecho.get_map|safe }}
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                <div class="flex gap-3">
+                    <a href="{% url 'catalogo:helecho-list' %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </a>
+                    <a href="{% url 'catalogo:helecho-update' pk=helecho.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-fuchsia-500 hover:bg-fuchsia-600 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a href="{% url 'catalogo:helecho-delete' pk=helecho.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold gap-2 transition"
+                        onclick="return confirm('¿Está seguro que desea eliminar este helecho?')">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column - Information -->
+            <div class="space-y-6">
+                <!-- Basic Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-bold text-fuchsia-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Información Básica
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Científico</span>
+                            <span class="text-gray-900 font-medium">{{ helecho.nombre_cientifico }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Común</span>
+                            <span class="text-gray-900">{{ helecho.nombre_comun|default:"No especificado" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Número de Recolecta</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-fuchsia-100 text-fuchsia-800">
+                                {{ helecho.numero_recolecta }}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Fecha de Recolección</span>
+                            <span class="text-gray-900">{{ helecho.fecha|date:"d/m/Y"|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Colector</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-user text-fuchsia-500"></i>
+                                {{ helecho.nombre_colector|default:"No especificado" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Location Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-bold text-fuchsia-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Ubicación
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Localidad</span>
+                            <span class="text-gray-900">{{ helecho.localidad|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Colonia</span>
+                            <span class="text-gray-900">{{ helecho.colonia|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Municipio</span>
+                            <span class="text-gray-900">{{ helecho.municipio|default:"No especificado" }}</span>
+                        </div>
+                        {% if helecho.latitud and helecho.longitud %}
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Coordenadas</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-globe-americas text-purple-500"></i>
+                                {{ helecho.latitud|floatformat:6 }}, {{ helecho.longitud|floatformat:6 }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description Card -->
+                {% if helecho.descripcion %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-bold text-fuchsia-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-file-alt"></i>
+                        Descripción
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">{{ helecho.descripcion }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right Column - Image and Map -->
+            <div class="space-y-6">
+                <!-- Image Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-bold text-fuchsia-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-image"></i>
+                        Fotografía de la Muestra
+                    </h3>
+                    <div class="flex items-center justify-center h-80">
+                        {% if helecho.imagen %}
+                        <img src="{{ helecho.imagen.url }}" 
+                             alt="{{ helecho.nombre_cientifico }}"
+                             class="max-w-full max-h-full w-auto h-auto object-contain rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+                             onclick="openImageModal('{{ helecho.imagen.url }}', '{{ helecho.nombre_cientifico }}')">
+                        {% else %}
+                        <div class="flex flex-col items-center justify-center py-12 text-gray-400">
+                            <i class="fas fa-leaf text-6xl mb-4 text-fuchsia-300"></i>
+                            <p class="text-lg">No hay imagen disponible</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if helecho.imagen %}
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Haz clic en la imagen para verla en tamaño completo
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Map Card -->
+                {% if helecho.get_map %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-fuchsia-500">
+                    <h3 class="text-xl font-bold text-fuchsia-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Ubicación Geográfica
+                    </h3>
+                    <div class="rounded-xl overflow-hidden shadow-lg" style="height: 400px;">
+                        {{ helecho.get_map|safe }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-</main>
+</div>
+
+{% include 'partials/image-modal.html' %}
 
 {% endblock %}

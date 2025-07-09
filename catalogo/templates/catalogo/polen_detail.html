@@ -2,150 +2,167 @@
 {% load static %}
 
 {% block content %}
-<main class="main-content" id="mainContent" style="margin-top: 70px;">
-    <div class="container">
-        {% include 'head.html' %}
-
-        <!-- empieza------------------------ -->
-        <div class="container-fluid py-4">
-            <div class="row">
-                <!-- Columna de información -->
-                <div class="col-lg-6 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-header bg-primary text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-water me-2"></i>Detalle del Polen
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <th class="w-25">Nombre Científico</th>
-                                            <td>{{ polen.nombre_cientifico }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Nombre Común</th>
-                                            <td>{{ polen.nombre_comun|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Familia</th>
-                                            <td>{{ polen.especie.familia.nombre|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Especie</th>
-                                            <td>{{ polen.especie|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Fecha de Recolección</th>
-                                            <td>{{ polen.fecha|date:"d/m/Y"|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Número de Recolecta</th>
-                                            <td>
-                                                <span class="badge bg-secondary">{{ polen.numero_recolecta }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ubicación</th>
-                                            <td>
-                                                <i class="fas fa-map-marker-alt text-danger me-1"></i>
-                                                {{ polen.localidad|default:"-" }},
-                                                {{ polen.colonia|default:"-" }},
-                                                {{ polen.municipio|default:"-" }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Colector</th>
-                                            <td>
-                                                <i class="fas fa-user text-info me-1"></i>
-                                                {{ polen.nombre_colector|default:"-" }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Descripción</th>
-                                            <td>{{ polen.descripcion|default:"-" }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Coordenadas</th>
-                                            <td>
-                                                {% if polen.latitud and alga.longitud %}
-                                                <i class="fas fa-globe-americas text-success me-1"></i>
-                                                Lat: {{ polen.latitud }}, Long: {{ polen.longitud }}
-                                                {% else %}
-                                                -
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="{% url 'catalogo:polen-list' %}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-arrow-left me-1"></i> Volver al listado
-                                </a>
-                                <div>
-                                    <a href="{% url 'catalogo:polen-update' pk=polen.pk %}"
-                                        class="btn btn-primary me-2">
-                                        <i class="fas fa-edit me-1"></i> Editar
-                                    </a>
-                                    <a href="{% url 'catalogo:polen-delete' pk=polen.pk %}"
-                                        class="btn btn-outline-danger"
-                                        onclick="return confirm('¿Está seguro que desea eliminar este polen?')">
-                                        <i class="fas fa-trash-alt me-1"></i> Eliminar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+<div class="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <i class="fas fa-pollen text-yellow-500"></i>
+                        {{ polen.nombre_cientifico }}
+                    </h1>
+                    <p class="text-gray-600 text-lg">{{ polen.nombre_comun|default:"Sin nombre común" }}</p>
+                    <div class="flex items-center gap-4 mt-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                            <i class="fas fa-sitemap mr-1"></i>
+                            {{ polen.especie.familia.nombre|default:"Sin familia" }}
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                            <i class="fas fa-microscope mr-1"></i>
+                            {{ polen.especie|default:"Sin especie" }}
+                        </span>
                     </div>
                 </div>
-
-                <!-- Columna de imagen y mapa -->
-                <div class="col-lg-6">
-                    <!-- Tarjeta de Imagen -->
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-header bg-info text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-image me-2"></i>Imagen de la Muestra
-                            </h4>
-                        </div>
-                        <div class="card-body text-center p-0">
-                            {% if polen.imagen %}
-                            <img src="{{ polen.imagen.url }}" alt="{{ polen.nombre_cientifico }}"
-                                class="img-fluid rounded-top"
-                                style="max-height: 300px; width: 300px; object-fit: cover;">
-                            {% else %}
-                            <div class="p-4">
-                                <i class="fas fa-image fa-5x text-muted mb-3"></i>
-                                <p class="text-muted">No hay imagen disponible</p>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta de Mapa -->
-                    {% if polen.get_map %}
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-success text-white">
-                            <h4 class="mb-0">
-                                <i class="fas fa-map-marked-alt me-2"></i>Ubicación Geográfica
-                            </h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="map-container" style="height: 400px;">
-                                {{ polen.get_map|safe }}
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                <div class="flex gap-3">
+                    <a href="{% url 'catalogo:polen-list' %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </a>
+                    <a href="{% url 'catalogo:polen-update' pk=polen.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a href="{% url 'catalogo:polen-delete' pk=polen.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold gap-2 transition"
+                        onclick="return confirm('¿Está seguro que desea eliminar este polen?')">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column - Information -->
+            <div class="space-y-6">
+                <!-- Basic Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Información Básica
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Científico</span>
+                            <span class="text-gray-900 font-medium">{{ polen.nombre_cientifico }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Común</span>
+                            <span class="text-gray-900">{{ polen.nombre_comun|default:"No especificado" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Número de Recolecta</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                {{ polen.numero_recolecta }}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Fecha de Recolección</span>
+                            <span class="text-gray-900">{{ polen.fecha|date:"d/m/Y"|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Colector</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-user text-yellow-500"></i>
+                                {{ polen.nombre_colector|default:"No especificado" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Location Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Ubicación
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Localidad</span>
+                            <span class="text-gray-900">{{ polen.localidad|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Colonia</span>
+                            <span class="text-gray-900">{{ polen.colonia|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Municipio</span>
+                            <span class="text-gray-900">{{ polen.municipio|default:"No especificado" }}</span>
+                        </div>
+                        {% if polen.latitud and polen.longitud %}
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Coordenadas</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-globe-americas text-orange-500"></i>
+                                {{ polen.latitud|floatformat:6 }}, {{ polen.longitud|floatformat:6 }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description Card -->
+                {% if polen.descripcion %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-file-alt"></i>
+                        Descripción
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">{{ polen.descripcion }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right Column - Image and Map -->
+            <div class="space-y-6">
+                <!-- Image Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-image"></i>
+                        Fotografía de la Muestra
+                    </h3>
+                    <div class="flex items-center justify-center">
+                        {% if polen.imagen %}
+                        <img src="{{ polen.imagen.url }}" 
+                             alt="{{ polen.nombre_cientifico }}"
+                             class="rounded-xl shadow-lg max-h-96 w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                             onclick="openImageModal('{{ polen.imagen.url }}', '{{ polen.nombre_cientifico }}')">
+                        {% else %}
+                        <div class="flex flex-col items-center justify-center py-12 text-gray-400">
+                            <i class="fas fa-pollen text-6xl mb-4 text-yellow-300"></i>
+                            <p class="text-lg">No hay imagen disponible</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Map Card -->
+                {% if polen.get_map %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Ubicación Geográfica
+                    </h3>
+                    <div class="rounded-xl overflow-hidden shadow-lg" style="height: 400px;">
+                        {{ polen.get_map|safe }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-</main>
+</div>
 
+{% include 'partials/image-modal.html' %}
 {% endblock %}

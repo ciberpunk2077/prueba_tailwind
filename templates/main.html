@@ -4,6 +4,163 @@
     <!-- head -->
     {% include 'head.html' %}
 
+    <!-- Estadísticas del Herbario -->
+    <section class="py-16 bg-gradient-to-br from-green-50 to-emerald-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Estadísticas del Herbario</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Conoce la diversidad de especies que alberga nuestra colección científica.</p>
+            </div>
+
+            <!-- Tarjetas de estadísticas generales -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total de Muestras</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ total_muestras }}</p>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-seedling text-2xl text-green-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Especies Únicas</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ total_especies }}</p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-leaf text-2xl text-blue-600"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Familias Botánicas</p>
+                            <p class="text-3xl font-bold text-gray-900">{{ total_familias }}</p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fas fa-sitemap text-2xl text-purple-600"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfica de distribución por tipo -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <i class="fas fa-chart-pie text-green-600"></i>
+                        Distribución por Tipo de Muestra
+                    </h3>
+                    
+                    {% if datos_grafica %}
+                        <div class="space-y-4">
+                            {% for dato in datos_grafica %}
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-4 h-4 rounded-full" style="background-color: 
+                                        {% if forloop.counter == 1 %}#10B981
+                                        {% elif forloop.counter == 2 %}#3B82F6
+                                        {% elif forloop.counter == 3 %}#F59E0B
+                                        {% elif forloop.counter == 4 %}#8B5CF6
+                                        {% elif forloop.counter == 5 %}#EF4444
+                                        {% else %}#6B7280{% endif %}">
+                                    </div>
+                                    <span class="font-medium text-gray-700">{{ dato.tipo }}</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full" style="width: {{ dato.porcentaje }}%; background-color: 
+                                            {% if forloop.counter == 1 %}#10B981
+                                            {% elif forloop.counter == 2 %}#3B82F6
+                                            {% elif forloop.counter == 3 %}#F59E0B
+                                            {% elif forloop.counter == 4 %}#8B5CF6
+                                            {% elif forloop.counter == 5 %}#EF4444
+                                            {% else %}#6B7280{% endif %}">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-600 w-12 text-right">
+                                        {{ dato.total }}
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                            <p>No hay datos disponibles para mostrar</p>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Gráfica Circular -->
+                    {% if datos_grafica %}
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 text-center flex items-center justify-center gap-2">
+                            <i class="fas fa-chart-pie text-green-600"></i>
+                            Gráfica Circular de Distribución
+                        </h4>
+                        <div class="flex justify-center">
+                            <div class="relative" style="width: 280px; height: 280px;">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Hover sobre las secciones para ver detalles
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                        <i class="fas fa-chart-bar text-blue-600"></i>
+                        Top 10 Familias Más Representadas
+                    </h3>
+                    
+                    {% if estadisticas_familia %}
+                        <div class="space-y-3">
+                            {% for familia in estadisticas_familia %}
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <span class="text-sm font-bold text-blue-600">{{ forloop.counter }}</span>
+                                    </div>
+                                    <span class="font-medium text-gray-700">{{ familia.especie__familia__nombre }}</span>
+                                </div>
+                                <span class="text-lg font-bold text-blue-600">{{ familia.total }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-sitemap text-4xl mb-4"></i>
+                            <p>No hay datos de familias disponibles</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Botón para explorar -->
+            <div class="text-center mt-8">
+                <a href="{% url 'catalogo:buscar_muestras' %}" 
+                   class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition duration-300 gap-2">
+                    <i class="fas fa-search"></i>
+                    Explorar Todas las Muestras
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
@@ -88,10 +245,11 @@
             </div>
 
             <div class="text-center mt-10">
-                <button
-                    class="bg-primary hover:bg-dark text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                <a href="{% url 'catalogo:buscar_muestras' %}"
+                   class="inline-flex items-center bg-primary hover:bg-dark text-white font-bold py-3 px-8 rounded-full transition duration-300 gap-2">
+                    <i class="fas fa-search"></i>
                     Ver Todas las Especies
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -191,3 +349,89 @@
         </div>
     </section>
 </main>
+
+<!-- Script para la gráfica circular -->
+{% if datos_grafica %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    
+    // Datos para la gráfica
+    const data = {
+        labels: [
+            {% for dato in datos_grafica %}
+                '{{ dato.tipo }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            data: [
+                {% for dato in datos_grafica %}
+                    {{ dato.total }},
+                {% endfor %}
+            ],
+            backgroundColor: [
+                '#10B981', // Verde
+                '#3B82F6', // Azul
+                '#F59E0B', // Amarillo
+                '#8B5CF6', // Púrpura
+                '#EF4444', // Rojo
+                '#6B7280'  // Gris
+            ],
+            borderColor: [
+                '#059669',
+                '#2563EB',
+                '#D97706',
+                '#7C3AED',
+                '#DC2626',
+                '#4B5563'
+            ],
+            borderWidth: 2,
+            hoverBorderWidth: 3
+        }]
+    };
+    
+    // Configuración de la gráfica
+    const config = {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        font: {
+                            size: 12,
+                            weight: 'bold'
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${label}: ${value} (${percentage}%)`;
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 2000,
+                easing: 'easeOutQuart'
+            }
+        }
+    };
+    
+    // Crear la gráfica
+    new Chart(ctx, config);
+});
+</script>
+{% endif %}

@@ -3,14 +3,17 @@
 <header class="bg-white shadow-md">
     <div class="container mx-auto px-4 py-6 flex justify-between items-center">
         <div class="flex items-center space-x-2">
-            <i class="fas fa-leaf text-3xl text-primary"></i>
-            <h1 class="text-2xl font-bold text-gray-800">Herbario<span class="text-primary">Moderno</span></h1>
+            <i class="fas fa-leaf text-3xl text-herbario-green"></i>
+            <h1 class="text-2xl font-bold text-gray-800">Herbario<span class="text-herbario-green">Moderno</span></h1>
         </div>
         <nav class="hidden md:flex space-x-8">
             <a href="{% url 'home' %}" class="text-gray-700 hover:text-primary font-medium">Inicio</a>
-            <a href="{% url 'catalogo:planta-list' %}" class="text-blue-600 font-semibold">Planta</a>
-            <a href="#" class="text-gray-700 hover:text-primary font-medium">Especies</a>
-            <a href="#" class="text-gray-700 hover:text-primary font-medium">Galería</a>
+            <a href="{% url 'nosotros' %}" class="text-gray-700 hover:text-primary font-medium">Nosotros</a>
+            <a href="{% url 'datos' %}" class="text-gray-700 hover:text-primary font-medium">Datos</a>
+            <a href="{% url 'presentacion' %}" class="text-gray-700 hover:text-primary font-medium">Presentación</a>
+            <a href="{% url 'catalogo:buscar_muestras' %}" class="text-gray-700 hover:text-primary font-medium flex items-center">
+                <i class="fas fa-search mr-1"></i>Buscar
+            </a>
             <a href="#" class="text-gray-700 hover:text-primary font-medium">Investigación</a>
             <a href="#" class="text-gray-700 hover:text-primary font-medium">Contacto</a>
         </nav>

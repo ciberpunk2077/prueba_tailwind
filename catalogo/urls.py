@@ -16,7 +16,7 @@ from .views.familia import (  # Cambia este import
     EspecieCreateView, EspecieUpdateView, EspecieListView, ajax_add_familia, ajax_add_especie
 )
 from .views.muestra import MuestraListView
-from catalogo.views.buscar import buscar_muestras, get_especies
+from catalogo.views.buscar import buscar_muestras, get_especies, buscar_sugerencias
 
 
 app_name = 'catalogo'
@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('buscar/', buscar_muestras, name='buscar_muestras'),
     path('get_especies/', get_especies, name='get_especies'),
+    path('buscar_sugerencias/', buscar_sugerencias, name='buscar_sugerencias'),
 
     # URLs para Familia
     path('familia/', FamiliaListView.as_view(), name='familia_list'),

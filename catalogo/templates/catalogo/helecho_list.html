@@ -110,7 +110,7 @@
                                         class="text-sm font-semibold text-gray-900 group-hover:text-fuchsia-700 transition duration-200">
                                         {{ helecho.nombre_cientifico|default:"Sin nombre científico" }}
                                     </div>
-                                    <div class="text-xs text-gray-500 italic">Helecho</div>
+                                    <div class="text-xs text-gray-500 italic">{{ helecho.especie.nombre|default:"Sin familia" }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900">

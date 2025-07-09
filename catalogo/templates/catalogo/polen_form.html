@@ -3,213 +3,259 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<main class="main-content" id="mainContent" style="margin-top: 70px;">
-    <div class="container">
-        {% include 'head.html' %}
-        <div class="row g-4">
-            <!-- Columna del formulario -->
-            <div class="col-lg-6 col-md-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4">{% if object %}Editar{% else %}Nuevo{% endif %} Polen</h4>
-                        <form action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form.tipo_muestra }}
-
-                            {% if form.errors %}
-                            <div class="alert alert-danger">
-                                {% for field, errors in form.errors.items %}
-                                {{ field }}: {{ errors|join:", " }}
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-
-                            <div class="mb-3">
-                                <label for="{{ form.nombre_cientifico.id_for_label }}" class="form-label fw-bold">Nombre
-                                    Científico</label>
-                                {% render_field form.nombre_cientifico class="form-control" %}
-                                {% if form.nombre_cientifico.errors %}
-                                <div class="text-danger">{{ form.nombre_cientifico.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="mb-3">
-                                <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">Imagen</label>
-                                {% render_field form.imagen class="form-control" %}
-                                <small class="text-muted">Formatos soportados: JPG, PNG, GIF</small>
-                                {% if form.imagen.errors %}
-                                <div class="alert alert-danger mt-2">
-                                    {% for error in form.imagen.errors %}
-                                    {{ error }}
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                <small class="text-muted">Formatos soportados: JPG, PNG, GIF</small>
-                            </div>
-                            <div class="mb-3">
-                                <label for="{{ form.nombre_comun.id_for_label }}" class="form-label fw-bold">Nombre
-                                    Común</label>
-                                {% render_field form.nombre_comun class="form-control" %}
-                                {% if form.nombre_comun.errors %}
-                                <div class="text-danger">{{ form.nombre_comun.errors }}</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.fecha.id_for_label }}" class="form-label fw-bold">Fecha de
-                                    Recolección</label>
-                                {% render_field form.fecha class="form-control" %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.numero_recolecta.id_for_label }}" class="form-label fw-bold">Número
-                                    de Recolecta</label>
-                                {% render_field form.numero_recolecta class="form-control" %}
-                                {% if form.numero_recolecta.errors %}
-                                <div class="text-danger">{{ form.numero_recolecta.errors }}</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="row g-2">
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.colonia.id_for_label }}"
-                                        class="form-label fw-bold">Colonia</label>
-                                    {% render_field form.colonia class="form-control" %}
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.localidad.id_for_label }}"
-                                        class="form-label fw-bold">Localidad</label>
-                                    {% render_field form.localidad class="form-control" %}
-                                </div>
-                            </div>
-
-                            <div class="row g-2">
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.latitud.id_for_label }}"
-                                        class="form-label fw-bold">Latitud</label>
-                                    {% render_field form.latitud class="form-control" %}
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="{{ form.longitud.id_for_label }}"
-                                        class="form-label fw-bold">Longitud</label>
-                                    {% render_field form.longitud class="form-control" %}
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.descripcion.id_for_label }}"
-                                    class="form-label fw-bold">Descripción</label>
-                                {% render_field form.descripcion class="form-control" %}
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="{{ form.nombre_colector.id_for_label }}" class="form-label fw-bold">Nombre
-                                    del Recolector</label>
-                                {% render_field form.nombre_colector class="form-control" %}
-
-                            </div>
-
-
-
-                            <div class="row g-2">
-                                <div class="col-md-6 mb-3">
-                                    <label for="id_familia" class="form-label fw-bold">Familia</label>
-                                    <div class="input-group">
-                                        {% render_field form.familia class="form-select" %}
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#addFamiliaModal">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    {% if form.familia.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.familia.errors %}
-                                        {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                    {% endif %}
-                                    {% if object and object.familia %}
-                                    <small class="text-muted">Familia actual: {{ object.familia.nombre }}</small>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="id_especie" class="form-label fw-bold">Especie</label>
-                                    <div class="input-group">
-                                        {% render_field form.especie class="form-select" %}
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#addEspecieModal">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    {% if form.especie.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.especie.errors %}
-                                        {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <div class="row g-2">
-                                <div class="col-md-6 mb-3">
-                                    <label for="id_especie" class="form-label fw-bold">Municipio</label>
-                                    {% render_field form.municipio class="form-control" %}
-                                    {% if form.municipio.errors %}
-                                    <div class="text-danger">{{ form.municipio.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-
-
-                            <div class="d-flex justify-content-between mt-4">
-                                <a href="{% url 'catalogo:polen-list' %}" class="btn btn-outline-danger">
-                                    <i class="fas fa-arrow-left me-2"></i>Regresar
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Guardar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<div class="flex flex-col lg:flex-row min-h-screen items-start justify-center bg-gradient-to-br from-yellow-50 to-orange-100 py-8">
+    <div class="w-full max-w-2xl mx-auto lg:w-[45%] flex-shrink-0 flex-grow-0">
+        <div class="bg-white/90 rounded-2xl shadow-xl p-8 border-l-4 border-yellow-500">
+            <h2 class="text-3xl font-extrabold text-yellow-700 mb-8 text-center tracking-tight flex items-center gap-2">
+                <i class="fas fa-pollen text-yellow-500"></i>
+                {% if object %}Editar{% else %}Nuevo{% endif %} Polen
+            </h2>
+            <div class="mb-8">
+                <h3 class="text-lg font-bold text-yellow-800 mb-2 border-b border-yellow-100 pb-1">Datos generales</h3>
             </div>
-
-            <!-- Columna de imagen y mapa -->
-            <div class="col-lg-6 col-md-12">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Fotografía</h5>
-                        <div class="border rounded p-3 text-center bg-light">
-                            <img id="imagePreview"
-                                src="{% if form.imagen.value %}{{ form.imagen.value.url }}{% else %}{% static 'img/placeholder.jpeg' %}{% endif %}"
-                                class="img-fluid mb-3" style="max-height: 300px;">
-
-                        </div>
-
-
+            <form action="" method="POST" enctype="multipart/form-data" id="polenForm" class="space-y-5">
+                {% csrf_token %}
+                {{ form.tipo_muestra }}
+                {% if form.errors %}
+                <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded mb-2 text-sm">
+                    {% for field, errors in form.errors.items %}
+                    <strong>{{ field|capfirst }}:</strong> {{ errors|join:", " }}<br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div>
+                    <label for="{{ form.nombre_cientifico.id_for_label }}"
+                        class="block text-yellow-900 font-semibold mb-1">Nombre Científico</label>
+                    {% render_field form.nombre_cientifico class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    {% if form.nombre_cientifico.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.nombre_cientifico.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.imagen.id_for_label }}"
+                        class="block text-yellow-900 font-semibold mb-1">Imagen de la muestra</label>
+                    {% render_field form.imagen class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    <small class="text-gray-500">Formatos soportados: JPG, PNG, GIF</small>
+                    {% if form.imagen.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.imagen.errors }}</div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.nombre_comun.id_for_label }}"
+                        class="block text-yellow-900 font-semibold mb-1">Nombre Común</label>
+                    {% render_field form.nombre_comun class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    {% if form.nombre_comun.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.nombre_comun.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.fecha.id_for_label }}" class="block text-yellow-900 font-semibold mb-1">Fecha de Recolección</label>
+                        {% render_field form.fecha class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.numero_recolecta.id_for_label }}"
+                            class="block text-yellow-900 font-semibold mb-1">Número de Recolecta</label>
+                        {% render_field form.numero_recolecta class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                        {% if form.numero_recolecta.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.numero_recolecta.errors }}</div>
+                        {% endif %}
                     </div>
                 </div>
-
-
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Ubicación</h5>
-                        <div id="map" class="rounded" style="width: 100%; height: 400px;  position: relative;"></div>
-                        <div class="mt-3">
-                            <button type="button" id="locateBtn" class="btn btn-sm btn-outline-success">
-                                <i class="fas fa-map-marker-alt me-2"></i>Marcar ubicación
-                            </button>
-                            <button type="button" id="resetMapBtn" class="btn btn-sm btn-outline-secondary ms-2">
-                                <i class="fas fa-sync-alt me-2"></i>Reiniciar
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.colonia.id_for_label }}"
+                            class="block text-yellow-900 font-semibold mb-1">Colonia</label>
+                        {% render_field form.colonia class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.localidad.id_for_label }}"
+                            class="block text-yellow-900 font-semibold mb-1">Localidad</label>
+                        {% render_field form.localidad class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.latitud.id_for_label }}"
+                            class="block text-yellow-900 font-semibold mb-1">Latitud</label>
+                        {% render_field form.latitud class="form-control px-3 py-2 rounded-lg border border-yellow-200  focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.longitud.id_for_label }}"
+                            class="block text-yellow-900 font-semibold mb-1">Longitud</label>
+                        {% render_field form.longitud class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.descripcion.id_for_label }}"
+                        class="block text-yellow-900 font-semibold mb-1">Descripción</label>
+                    {% render_field form.descripcion class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                </div>
+                <div>
+                    <label for="{{ form.nombre_colector.id_for_label }}"
+                        class="block text-yellow-900 font-semibold mb-1">Nombre del Recolector</label>
+                    {% render_field form.nombre_colector class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="id_familia" class="block text-yellow-900 font-semibold mb-1">Familia</label>
+                        <div class="flex gap-2">
+                            {% render_field form.familia class="form-select px-3 py-2 rounded-lg border border-orange-200 focus:ring-2 focus:ring-orange-400 focus:border-orange-400" %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#addFamiliaModal" title="Agregar nueva familia">
+                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
+                        {% if form.familia.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.familia.errors }}</div>
+                        {% endif %}
+                        {% if object and object.familia %}
+                        <small class="text-gray-500">Familia actual: {{ object.familia.nombre }}</small>
+                        {% endif %}
                     </div>
+                    <div>
+                        <label for="id_especie" class="block text-yellow-900 font-semibold mb-1">Especie</label>
+                        <div class="flex gap-2">
+                            {% render_field form.especie class="form-select w-full px-3 py-2 rounded-lg border border-orange-200 focus:ring-2 focus:ring-orange-400 focus:border-orange-400" %}
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#addEspecieModal" title="Agregar nueva especie">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        {% if form.especie.errors %}
+                        <div class="text-red-600 text-sm mt-1">{{ form.especie.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div>
+                    <label for="id_municipio" class="block text-yellow-900 font-semibold mb-1">Municipio</label>
+                    {% render_field form.municipio class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    {% if form.municipio.errors %}
+                    <div class="text-red-600 text-sm mt-1">{{ form.municipio.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="my-8">
+                    <h3 class="text-lg font-bold text-yellow-800 mb-2 border-b border-yellow-100 pb-1">Ubicación y colecta
+                    </h3>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between gap-4 mt-10">
+                    <a href="{% url 'catalogo:polen-list' %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-yellow-400 text-yellow-700 bg-white hover:bg-yellow-50 font-semibold gap-2 transition">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center px-6 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-bold gap-2 shadow transition">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modales para agregar Familia y Especie -->
+    {% include 'catalogo/modal_familia.html' %}
+    {% include 'catalogo/modal_especie.html' %}
+    <!-- Columna de imagen y mapa -->
+    <div class="w-full max-w-lg mx-auto mt-4 lg:mt-0 lg:ml-4 lg:w-[40%] flex-shrink-0 flex-grow-0">
+        <div class="bg-white/90 rounded-2xl shadow-xl mb-4 p-4 border-l-4 border-yellow-500">
+            <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2"><i class="fas fa-image text-yellow-500"></i>Fotografías</h3>
+            <div id="imagePreviewContainer" class="border-2 border-yellow-200 rounded-xl p-4 text-center bg-yellow-50" style="min-height: 300px;">
+                <div class="flex items-center justify-center h-full">
+                    <img id="imagePreview"
+                        src="{% if object and object.imagen %}{{ object.imagen.url }}{% else %}{% static 'catalogo/img/placeholder-plant.jpeg' %}{% endif %}"
+                        class="rounded-lg shadow-lg w-auto object-contain" style="max-height: 300px;">
                 </div>
             </div>
         </div>
+        <div class="bg-white/90 rounded-2xl shadow-xl p-4 border-l-4 border-yellow-500">
+            <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2"><i class="fas fa-map-marker-alt text-yellow-500"></i>Ubicación</h3>
+            <div id="map" class="rounded-xl border-2 border-yellow-200 bg-yellow-50 shadow-lg"
+                style="width: 100%; height: 250px; position: relative;"></div>
+            <div class="mt-4 flex gap-3">
+                <button type="button" id="locateBtn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Marcar ubicación</span>
+                </button>
+                <button type="button" id="resetMapBtn" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Reiniciar</span>
+                </button>
+            </div>
+        </div>
+       
     </div>
-    {% include 'catalogo/modal_familia.html' %}
-    {% include 'catalogo/modal_especie.html' %}
-</main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Vista previa de imagen
+    const inputImagen = document.querySelector('input[type="file"]');
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    if (inputImagen) {
+        inputImagen.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    imagePreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Mapa interactivo con Leaflet
+    var map = L.map('map').setView([19.4326, -99.1332], 6); // Coordenadas iniciales (CDMX)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+    function setMarker(lat, lng) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker([lat, lng]).addTo(map);
+    }
+
+    // Si ya hay latitud y longitud en el formulario, mostrar el marcador
+    var latInput = document.getElementById('id_latitud');
+    var lngInput = document.getElementById('id_longitud');
+    if (latInput && lngInput && latInput.value && lngInput.value) {
+        setMarker(latInput.value, lngInput.value);
+        map.setView([latInput.value, lngInput.value], 14);
+    }
+
+    document.getElementById('locateBtn').addEventListener('click', function () {
+        map.locate({ setView: true, maxZoom: 16 });
+    });
+
+    map.on('locationfound', function (e) {
+        setMarker(e.latitude, e.longitude);
+        if (latInput && lngInput) {
+            latInput.value = e.latitude;
+            lngInput.value = e.longitude;
+        }
+    });
+
+    document.getElementById('resetMapBtn').addEventListener('click', function () {
+        if (marker) {
+            map.removeLayer(marker);
+            marker = null;
+        }
+        map.setView([19.4326, -99.1332], 6);
+        if (latInput && lngInput) {
+            latInput.value = '';
+            lngInput.value = '';
+        }
+    });
+});
+</script>
 {% endblock %}

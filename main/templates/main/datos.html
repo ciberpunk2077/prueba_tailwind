@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-12">
+    <div class="container mx-auto px-4">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-green-800 mb-2 flex items-center justify-center gap-3">
+                <i class="fas fa-seedling text-green-500"></i>
+                Herbario UJAT
+            </h1>
+            <p class="text-xl text-green-700">Universidad Juárez Autónoma de Tabasco</p>
+        </div>
+
+        <!-- Información de colección -->
+        <section class="mb-12">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border-l-4 border-green-500 mb-8">
+                <h2 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-info-circle text-green-600"></i>
+                    Información de colección
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p><span class="font-semibold text-green-700">Nombre:</span> Herbario</p>
+                        <p><span class="font-semibold text-green-700">Siglas:</span> UJAT</p>
+                        <p><span class="font-semibold text-green-700">Año de fundación:</span> 1985</p>
+                    </div>
+                    <div>
+                        <p><span class="font-semibold text-green-700">Clasificaciones:</span> Alfabético</p>
+                        <p><span class="font-semibold text-green-700">Áreas:</span> Botánica</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Directorio -->
+        <section class="mb-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-green-500">
+                    <h3 class="text-xl font-bold text-green-800 mb-4 flex items-center gap-2"><i class="fas fa-user-tie text-green-600"></i>Investigador-profesor</h3>
+                    <p class="text-green-700">Lic. Ma. de los Ángeles Guadarrama Olivera</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-emerald-500">
+                    <h3 class="text-xl font-bold text-emerald-800 mb-4 flex items-center gap-2"><i class="fas fa-users text-emerald-600"></i>Personal Activo</h3>
+                    <p class="text-emerald-700">Salome López Casanova</p>
+                    <p class="text-emerald-700">P. de Biól. María del Carmen Jesús Garíca</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-l-4 border-teal-500">
+                    <h3 class="text-xl font-bold text-teal-800 mb-4 flex items-center gap-2"><i class="fas fa-flask text-teal-600"></i>Técnico académico</h3>
+                    <p class="text-teal-700">Nahum Muñiz Chavarría</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cobertura taxonómica -->
+        <section class="mb-12">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border-l-4 border-green-500 mb-8">
+                <h2 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-dna text-green-600"></i>
+                    Cobertura taxonómica
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p><span class="font-semibold text-green-700">Reino:</span> Plantae</p>
+                        <p><span class="font-semibold text-green-700">Phylum:</span> Magnoliophyta, Pteridophyta</p>
+                        <p><span class="font-semibold text-green-700">Clase:</span> Filicopsida, Liliopsida, Magnoliopsida</p>
+                    </div>
+                    <div>
+                        <p><span class="font-semibold text-green-700">Orden:</span> Arecales, Asparagales, Asterales, Fabales, Poales, Polypodiales, Solanales</p>
+                        <p><span class="font-semibold text-green-700">Familia:</span> Arecaceae, Asteraceae, Fabaceae, Orchidaceae, Poaceae, Solanaceae, Vittariaceae</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ejemplares -->
+        <section class="mb-12">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border-l-4 border-green-500 mb-8">
+                <h2 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-leaf text-green-600"></i>
+                    Ejemplares
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <p><span class="font-semibold text-green-700">Total de ejemplares:</span> 18,906</p>
+                        <p><span class="font-semibold text-green-700">Porcentaje de confiabilidad:</span> 1%</p>
+                        <p><span class="font-semibold text-green-700">Ejemplares montados sin etiqueta:</span> 1,200</p>
+                    </div>
+                    <div>
+                        <p><span class="font-semibold text-green-700">Ejemplares determinados:</span> 800</p>
+                        <p><span class="font-semibold text-green-700">Ejemplares digitalizados:</span> 5,295</p>
+                        <p><span class="font-semibold text-green-700">Ejemplares públicos:</span> 16,906</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cobertura geográfica -->
+        <section class="mb-12">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border-l-4 border-green-500 mb-8">
+                <h2 class="text-2xl font-bold text-green-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-globe-americas text-green-600"></i>
+                    Cobertura geográfica
+                </h2>
+                <ul class="space-y-6">
+                    <li class="bg-green-50 rounded-xl p-4">
+                        <div class="font-bold text-green-800">México, Tabasco</div>
+                        <ul class="list-disc list-inside text-green-700 mt-2">
+                            <li>Componente: Lótico superficial.</li>
+                        </ul>
+                    </li>
+                    <li class="bg-green-50 rounded-xl p-4">
+                        <div class="font-bold text-green-800">México, Tabasco</div>
+                        <ul class="list-disc list-inside text-green-700 mt-2">
+                            <li>Región: Pacífico Sur y Zona Istmica.</li>
+                            <li>Ambiente: Dulceacuícola.</li>
+                            <li>Componente: Necton.</li>
+                        </ul>
+                    </li>
+                    <li class="bg-green-50 rounded-xl p-4">
+                        <div class="font-bold text-green-800">México, Tabasco</div>
+                        <ul class="list-disc list-inside text-green-700 mt-2">
+                            <li>Componente: Necton.</li>
+                        </ul>
+                    </li>
+                    <li class="bg-green-50 rounded-xl p-4">
+                        <div class="font-bold text-green-800">México, Tabasco</div>
+                        <ul class="list-disc list-inside text-green-700 mt-2">
+                            <li>Región: Pacífico Sur y Zona Istmica.</li>
+                            <li>Ambiente: Dulceacuícola.</li>
+                            <li>Componente: Bentos.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

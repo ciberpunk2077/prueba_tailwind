@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-8">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-green-800 mb-4">Prueba del Buscador</h1>
+            <p class="text-lg text-green-600">Verificando que el buscador funcione correctamente</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold text-green-800 mb-4">Datos en la Base de Datos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-database text-white text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-green-600">{{ total_muestras }}</div>
+                    <div class="text-lg text-gray-600">Muestras</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-white text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-blue-600">{{ total_especies }}</div>
+                    <div class="text-lg text-gray-600">Especies</div>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sitemap text-white text-2xl"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-purple-600">{{ total_familias }}</div>
+                    <div class="text-lg text-gray-600">Familias</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enlaces de prueba -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Muestras -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-green-800 mb-4">Muestras Disponibles</h3>
+                {% if muestras %}
+                <div class="space-y-3">
+                    {% for muestra in muestras %}
+                    <div class="p-3 bg-green-50 rounded-lg border border-green-200">
+                        <div class="font-semibold text-green-800">{{ muestra.nombre_cientifico|default:"Sin nombre" }}</div>
+                        <div class="text-sm text-green-600">{{ muestra.get_tipo_muestra_display }}</div>
+                        <div class="text-xs text-gray-500">Recolecta #{{ muestra.numero_recolecta }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-gray-600">No hay muestras disponibles</p>
+                {% endif %}
+            </div>
+
+            <!-- Especies -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6">
+                <h3 class="text-xl font-bold text-blue-800 mb-4">Especies Disponibles</h3>
+                {% if especies %}
+                <div class="space-y-3">
+                    {% for especie in especies %}
+                    <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                        <div class="font-semibold text-blue-800">{{ especie.nombre }}</div>
+                        {% if especie.familia %}
+                        <div class="text-sm text-blue-600">{{ especie.familia.nombre }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-gray-600">No hay especies disponibles</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Botones de prueba -->
+        <div class="mt-8 text-center">
+            <a href="{% url 'catalogo:buscar_muestras' %}" 
+               class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200 mr-4">
+                <i class="fas fa-search mr-2"></i>
+                Ir al Buscador
+            </a>
+            <a href="{% url 'home' %}" 
+               class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition duration-200">
+                <i class="fas fa-home mr-2"></i>
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

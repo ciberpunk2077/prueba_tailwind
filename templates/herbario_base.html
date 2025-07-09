@@ -24,36 +24,66 @@
     <!-- Carousel Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            console.log('Carousel script loaded');
+            
             const carousel = document.querySelector('.carousel');
             const slides = document.querySelectorAll('.carousel-slide');
             const prevBtn = document.querySelector('.carousel-prev');
             const nextBtn = document.querySelector('.carousel-next');
             const indicators = document.querySelectorAll('.carousel-indicator');
 
+            console.log('Carousel elements found:', {
+                carousel: !!carousel,
+                slides: slides.length,
+                prevBtn: !!prevBtn,
+                nextBtn: !!nextBtn,
+                indicators: indicators.length
+            });
+
+            if (!carousel || slides.length === 0) {
+                console.error('Carousel elements not found');
+                return;
+            }
+
             let currentIndex = 0;
             const totalSlides = slides.length;
 
             // Function to update carousel display
             function updateCarousel() {
+                console.log('Updating carousel, currentIndex:', currentIndex);
+                
                 slides.forEach((slide, index) => {
-                    slide.style.opacity = index === currentIndex ? '1' : '0';
+                    if (index === currentIndex) {
+                        slide.style.opacity = '1';
+                        slide.style.zIndex = '1';
+                    } else {
+                        slide.style.opacity = '0';
+                        slide.style.zIndex = '0';
+                    }
                 });
 
                 indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('bg-white', index === currentIndex);
-                    indicator.classList.toggle('bg-white/50', index !== currentIndex);
+                    if (index === currentIndex) {
+                        indicator.classList.add('bg-white');
+                        indicator.classList.remove('bg-white/50');
+                    } else {
+                        indicator.classList.remove('bg-white');
+                        indicator.classList.add('bg-white/50');
+                    }
                 });
             }
 
             // Next slide function
             function nextSlide() {
                 currentIndex = (currentIndex + 1) % totalSlides;
+                console.log('Next slide, new index:', currentIndex);
                 updateCarousel();
             }
 
             // Previous slide function
             function prevSlide() {
                 currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                console.log('Prev slide, new index:', currentIndex);
                 updateCarousel();
             }
 
@@ -62,29 +92,38 @@
 
             // Pause on hover
             carousel.addEventListener('mouseenter', () => {
+                console.log('Pausing carousel');
                 clearInterval(interval);
             });
 
             carousel.addEventListener('mouseleave', () => {
+                console.log('Resuming carousel');
                 interval = setInterval(nextSlide, 5000);
             });
 
             // Button controls
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                clearInterval(interval);
-                interval = setInterval(nextSlide, 5000);
-            });
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    console.log('Next button clicked');
+                    nextSlide();
+                    clearInterval(interval);
+                    interval = setInterval(nextSlide, 5000);
+                });
+            }
 
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                clearInterval(interval);
-                interval = setInterval(nextSlide, 5000);
-            });
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    console.log('Prev button clicked');
+                    prevSlide();
+                    clearInterval(interval);
+                    interval = setInterval(nextSlide, 5000);
+                });
+            }
 
             // Indicator controls
             indicators.forEach((indicator, index) => {
                 indicator.addEventListener('click', () => {
+                    console.log('Indicator clicked, index:', index);
                     currentIndex = index;
                     updateCarousel();
                     clearInterval(interval);
@@ -93,7 +132,14 @@
             });
 
             // Initialize carousel
+            console.log('Initializing carousel');
             updateCarousel();
+            
+            // Force first slide to be visible initially
+            setTimeout(() => {
+                console.log('Forcing initial state');
+                updateCarousel();
+            }, 100);
         });
     </script>
 </body>

@@ -91,42 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </a>
             </div>
         </div>
-        <!-- Menú de Categorías -->
-        <div class="flex justify-end mb-6">
-            <div class="relative inline-block text-left">
-                <button onclick="toggleDropdown()"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-300 flex items-center">
-                    Categorías <i class="fas fa-chevron-down ml-2"></i>
-                </button>
-                <div id="dropdown"
-                    class="hidden absolute z-10 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
-                    <a href="{% url 'catalogo:planta-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-seedling mr-2"></i>Plantas
-                    </a>
-                    <a href="{% url 'catalogo:alga-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-water mr-2"></i>Algas
-                    </a>
-                    <a href="{% url 'catalogo:fruto-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-apple-alt mr-2"></i>Frutos
-                    </a>
-                    <a href="{% url 'catalogo:polen-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-wind mr-2"></i>Polen
-                    </a>
-                    <a href="{% url 'catalogo:helecho-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-leaf mr-2"></i>Helechos
-                    </a>
-                    <a href="{% url 'catalogo:hongo-list' %}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition duration-200">
-                        <i class="fas fa-mushroom mr-2"></i>Hongos
-                    </a>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -170,37 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
 
-        <!-- Filtros -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-gray-100">
-            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <label for="familia-filter" class="text-sm font-semibold text-gray-700 flex items-center gap-2">
-                        <i class="fas fa-filter text-blue-600"></i>
-                        Filtrar por Familia:
-                    </label>
-                    <select id="familia-filter" name="familia" class="form-select px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
-                        <option value="">Todas las familias</option>
-                        {% for familia in familias %}
-                        <option value="{{ familia.id }}" {% if familia_seleccionada == familia.id|stringformat:"s" %}selected{% endif %}>
-                            {{ familia.nombre }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-sm text-gray-600">
-                        <i class="fas fa-info-circle text-blue-500"></i>
-                        {{ object_list.count }} algas encontradas
-                    </span>
-                    {% if familia_seleccionada %}
-                    <a href="{% url 'catalogo:alga-list' %}" class="text-sm text-red-600 hover:text-red-800 flex items-center gap-1">
-                        <i class="fas fa-times"></i>
-                        Limpiar filtro
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Algas Table -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
