@@ -78,21 +78,53 @@
                         <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.longitud|default:"Sin longitud" }}</p>
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row justify-between gap-4 mt-10">
-                    <a href="{% url 'catalogo:hongo-list' %}"
-                        class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
-                        <i class="fas fa-arrow-left"></i> Regresar
-                    </a>
-                    <div class="flex gap-2">
-                        <a href="{% url 'catalogo:hongo-update' pk=hongo.pk %}"
-                            class="inline-flex items-center px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2 transition">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                        <a href="{% url 'catalogo:hongo-delete' pk=hongo.pk %}"
-                            class="inline-flex items-center px-4 py-2 rounded-lg border border-red-400 text-red-700 bg-white hover:bg-red-50 font-semibold gap-2 transition"
-                            onclick="return confirm('¿Está seguro que desea eliminar este hongo?')">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </a>
+                <div class="mb-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                                <i class="fas fa-mushroom text-amber-500"></i>
+                                {{ hongo.nombre_cientifico }}
+                            </h1>
+                            <p class="text-gray-600 text-lg">{{ hongo.nombre_comun|default:"Sin nombre común" }}</p>
+                            <div class="flex items-center gap-4 mt-2">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                                    <i class="fas fa-sitemap mr-1"></i>
+                                    {{ hongo.especie.familia.nombre|default:"Sin familia" }}
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                                    <i class="fas fa-microscope mr-1"></i>
+                                    {{ hongo.especie|default:"Sin especie" }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="{% url 'catalogo:hongo-list' %}" data-href="{% url 'catalogo:hongo-list' %}" onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
+                                class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
+                                <i class="fas fa-arrow-left"></i> Regresar
+                            </a>
+                            {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=is_favorited %}
+                            <button onclick="showQRModal()" 
+                                    class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
+                                <i class="fas fa-qrcode"></i> QR
+                            </button>
+                            <a href="{% url 'catalogo:hongo-update' pk=hongo.pk %}"
+                                class="inline-flex items-center px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2 transition">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a href="{% url 'catalogo:hongo-delete' pk=hongo.pk %}"
+                                class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold gap-2 transition"
+                                onclick="return confirm('¿Está seguro que desea eliminar este hongo?')">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.especie.id }}"
+                                class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
+                                <i class="fas fa-compare"></i> Comparar (A)
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.especie.id }}"
+                                class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
+                                <i class="fas fa-compare"></i> Comparar (B)
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,7 +168,13 @@
     </div>
 </div>
 {% include 'partials/image-modal.html' %}
+{% include 'catalogo/partials/qr_modal.html' %}
 
+<script>
+function showQRModal() {
+  document.getElementById('qrModal').classList.remove('hidden');
+}
+</script>
 {% endblock %}
 
 {% block extra_js %}
