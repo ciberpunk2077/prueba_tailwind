@@ -82,6 +82,10 @@
                             <tr>
                                 <th
                                     class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
+                                    <i class="fas fa-image mr-2"></i>Imagen
+                                </th>
+                                <th
+                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
                                     <i class="fas fa-microscope mr-2"></i>Nombre Científico
                                 </th>
                                 <th
@@ -94,10 +98,6 @@
                                 </th>
                                 <th
                                     class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
-                                    <i class="fas fa-image mr-2"></i>Imagen
-                                </th>
-                                <th
-                                    class="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">
                                     <i class="fas fa-cogs mr-2"></i>Acciones
                                 </th>
                             </tr>
@@ -105,6 +105,25 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             {% for hongo in object_list %}
                             <tr class="hover:bg-amber-50 transition duration-200 group">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if hongo.imagen %}
+                                    <div class="flex-shrink-0 h-20 w-20 relative group">
+                                        <img class="h-20 w-20 rounded-xl object-cover shadow-md border-2 border-amber-200 group-hover:border-amber-400 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50 cursor-pointer hover:scale-105"
+                                            src="{{ hongo.imagen.url }}" alt="{{ hongo.nombre_cientifico }}"
+                                            onclick="openImageModal('{{ hongo.imagen.url }}')"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="h-20 w-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center border-2 border-amber-200 transition-all duration-300 transform group-hover:scale-150 group-hover:z-50"
+                                            style="display: none;">
+                                            <i class="fas fa-mushroom text-amber-500 text-2xl"></i>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div
+                                        class="flex-shrink-0 h-20 w-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center border-2 border-amber-200">
+                                        <i class="fas fa-mushroom text-amber-500 text-2xl"></i>
+                                    </div>
+                                    {% endif %}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div
                                         class="text-sm font-semibold text-gray-900 group-hover:text-amber-700 transition duration-200">
@@ -122,25 +141,6 @@
                                         {{ hongo.especie.familia.nombre|default:"Sin familia" }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    {% if hongo.imagen %}
-                                    <div class="flex-shrink-0 h-20 w-20">
-                                        <img class="h-20 w-20 rounded-xl object-cover shadow-md border-2 border-amber-200 group-hover:border-amber-400 transition duration-200 cursor-pointer hover:scale-105"
-                                            src="{{ hongo.imagen.url }}" alt="{{ hongo.nombre_cientifico }}"
-                                            onclick="openImageModal('{{ hongo.imagen.url }}')"
-                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                        <div class="h-20 w-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center border-2 border-amber-200"
-                                            style="display: none;">
-                                            <i class="fas fa-mushroom text-amber-500 text-2xl"></i>
-                                        </div>
-                                    </div>
-                                    {% else %}
-                                    <div
-                                        class="flex-shrink-0 h-20 w-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center border-2 border-amber-200">
-                                        <i class="fas fa-mushroom text-amber-500 text-2xl"></i>
-                                    </div>
-                                    {% endif %}
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
                                         <a href="{% url 'catalogo:hongo-detail' hongo.pk %}"
@@ -157,6 +157,26 @@
                                             class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
                                             title="Eliminar">
                                             <i class="fas fa-trash text-lg"></i>
+                                        </a>
+                                        {% if hongo.pk in favorited_ids %}
+                                            {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=True %}
+                                        {% else %}
+                                            {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=False %}
+                                        {% endif %}
+                                        <button data-qr-url="{% url 'catalogo:muestra-qr-modal' pk=hongo.pk %}" onclick="openQRModal(this.dataset.qrUrl)"
+                                            class="text-gray-600 hover:text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition duration-200 transform hover:scale-110"
+                                            title="QR">
+                                            <i class="fas fa-qrcode text-lg"></i>
+                                        </button>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.especie.id }}"
+                                            class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar A">
+                                            <i class="fas fa-exchange-alt text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.especie.id }}"
+                                            class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar B">
+                                            <i class="fas fa-exchange-alt text-lg"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -223,6 +243,16 @@
                                             title="Eliminar">
                                             <i class="fas fa-trash text-lg"></i>
                                         </a>
+                                            {% if hongo.pk in favorited_ids %}
+                                                {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=True %}
+                                            {% else %}
+                                                {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=False %}
+                                            {% endif %}
+                                        <button data-qr-url="{% url 'catalogo:muestra-qr-modal' pk=hongo.pk %}" onclick="openQRModal(this.dataset.qrUrl)"
+                                            class="text-gray-600 hover:text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition duration-200 transform hover:scale-110"
+                                            title="QR">
+                                            <i class="fas fa-qrcode text-lg"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -309,13 +339,77 @@
     </div>
 </div>
 
-<!-- Modal para Imágenes -->
-<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
-    <div class="relative max-w-4xl max-h-full mx-4">
-        <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white hover:text-gray-300 text-2xl z-10">
-            <i class="fas fa-times"></i>
+<!-- Modal para mostrar imagen en pantalla completa -->
+<div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+    <div class="relative w-full h-full flex items-center justify-center">
+        <!-- Botón de cerrar -->
+        <button id="closeModal"
+            class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2 transition duration-200">
+            <i class="fas fa-times text-2xl"></i>
         </button>
-        <img id="modalImage" src="" alt="Imagen ampliada" class="max-w-full max-h-full object-contain rounded-lg">
+
+        <!-- Contenedor de la imagen con tamaño fijo -->
+        <div class="relative w-full h-full flex items-center justify-center p-8">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                style="min-height: 400px; min-width: 400px;">
+        </div>
+
+        <!-- Información de la imagen -->
+        <div id="modalInfo" class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-75 text-white p-4 rounded-lg">
+            <h3 id="modalTitle" class="text-lg font-semibold mb-1"></h3>
+            <p id="modalSubtitle" class="text-sm opacity-90"></p>
+        </div>
     </div>
 </div>
 {% endblock %}
+
+<script>
+async function openQRModal(url){
+    try{
+        const res = await fetch(url);
+        if(!res.ok) throw new Error('Network error');
+        const html = await res.text();
+        let container = document.getElementById('qrModalContainer');
+        if(!container){
+            container = document.createElement('div');
+            container.id = 'qrModalContainer';
+            document.body.appendChild(container);
+        }
+        container.innerHTML = html;
+        if(typeof showQRModal === 'function') showQRModal();
+    }catch(e){
+        console.error('Error loading QR modal', e);
+    }
+}
+</script>
+
+<script>
+function openImageModal(url){
+    const modal = document.getElementById('imageModal');
+    const img = document.getElementById('modalImage');
+    const title = document.getElementById('modalTitle');
+    const subtitle = document.getElementById('modalSubtitle');
+    if(modal && img){
+        img.src = url;
+        title.textContent = '';
+        subtitle.textContent = '';
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeImageModal(){
+    const modal = document.getElementById('imageModal');
+    const img = document.getElementById('modalImage');
+    if(modal && img){
+        modal.classList.add('hidden');
+        img.src = '';
+    }
+}
+
+// bind close button
+document.addEventListener('click', function(e){
+    if(e.target && (e.target.id === 'closeModal' || e.target.closest('#closeModal'))){
+        closeImageModal();
+    }
+});
+</script>

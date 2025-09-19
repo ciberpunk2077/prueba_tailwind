@@ -107,10 +107,20 @@ class AlgaDetailView(MuestraDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         alga = self.get_object()
+        # Favoritos: estado inicial
+        is_favorited = False
+        user = self.request.user
+        if getattr(user, 'is_authenticated', False):
+            from catalogo.models import Collection, CollectionItem
+            default_collection = Collection.objects.filter(owner=user, is_default=True).first()
+            if default_collection:
+                is_favorited = CollectionItem.objects.filter(collection=default_collection, muestra=alga).exists()
         context.update({
             'titulo_pagina': f"Detalle de {alga.nombre_cientifico}",
             'es_alga': True,
-            'subtitulo': "Información detallada de la planta"
+            'subtitulo': "Información detallada de la planta",
+            'is_favorited': is_favorited,
+            'muestra': alga,
         })
         return context
 

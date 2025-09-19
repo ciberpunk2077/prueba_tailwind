@@ -216,6 +216,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                             title="Ver detalles">
                                             <i class="fas fa-eye text-lg"></i>
                                         </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'ALGA' %}?s1={{ alga.especie.id }}"
+                                            class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar A">
+                                            <i class="fas fa-compare text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'ALGA' %}?s2={{ alga.especie.id }}"
+                                            class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar B">
+                                            <i class="fas fa-compare text-lg"></i>
+                                        </a>
                                         <a href="{% url 'catalogo:alga-update' alga.pk %}"
                                             class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-100 transition duration-200 transform hover:scale-110"
                                             title="Editar">

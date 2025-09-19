@@ -18,6 +18,10 @@
                 {{ form.tipo_muestra }}
                 {% if form.errors %}
                 <div class="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded mb-2 text-sm">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Hábitat</label>
+                    {% render_field form.habitat class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                </div>
                     {% for field, errors in form.errors.items %}
                     <strong>{{ field|capfirst }}:</strong> {{ errors|join:", " }}<br>
                     {% endfor %}
@@ -91,6 +95,24 @@
                         class="block text-yellow-900 font-semibold mb-1">Descripción</label>
                     {% render_field form.descripcion class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
                 </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700">Datos morfológicos</label>
+                        {% render_field form.datos_morfologicos class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Época de floración</label>
+                            {% render_field form.epoca_floracion class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Época de fructificación</label>
+                            {% render_field form.epoca_fructificacion class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700">Usos tradicionales</label>
+                        {% render_field form.usos_tradicionales class="form-control px-3 py-2 rounded-lg border border-yellow-200 focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400" %}
+                    </div>
                 <div>
                     <label for="{{ form.nombre_colector.id_for_label }}"
                         class="block text-yellow-900 font-semibold mb-1">Nombre del Recolector</label>

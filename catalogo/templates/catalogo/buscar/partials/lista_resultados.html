@@ -109,11 +109,31 @@
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
                             </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'ALGA' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'ALGA' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
                             {% elif muestra.tipo_muestra == 'PLANTA' %}
                             <a href="{% url 'catalogo:planta-detail' muestra.pk %}"
                                 class="text-green-600 hover:text-green-900 p-2 rounded-lg hover:bg-green-100 transition duration-200 transform hover:scale-110"
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
                             </a>
                             {% elif muestra.tipo_muestra == 'HONGO' %}
                             <a href="{% url 'catalogo:hongo-detail' muestra.pk %}"
@@ -121,11 +141,31 @@
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
                             </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
                             {% elif muestra.tipo_muestra == 'HELECHO' %}
                             <a href="{% url 'catalogo:helecho-detail' muestra.pk %}"
                                 class="text-green-600 hover:text-green-900 p-2 rounded-lg hover:bg-green-100 transition duration-200 transform hover:scale-110"
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HELECHO' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'HELECHO' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
                             </a>
                             {% elif muestra.tipo_muestra == 'FRUTOSEMILLA' %}
                             <a href="{% url 'catalogo:fruto-detail' muestra.pk %}"
@@ -133,11 +173,31 @@
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
                             </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'FRUTOSEMILLA' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'FRUTOSEMILLA' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
                             {% elif muestra.tipo_muestra == 'POLEN' %}
                             <a href="{% url 'catalogo:polen-detail' muestra.pk %}"
                                 class="text-green-600 hover:text-green-900 p-2 rounded-lg hover:bg-green-100 transition duration-200 transform hover:scale-110"
                                 title="Ver detalles">
                                 <i class="fas fa-eye text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'POLEN' %}?s1={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar A">
+                                <i class="fas fa-compare text-lg"></i>
+                            </a>
+                            <a href="{% url 'catalogo:comparador-tipo' 'POLEN' %}?s2={{ muestra.especie.id }}"
+                                class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
+                                title="Comparar B">
+                                <i class="fas fa-compare text-lg"></i>
                             </a>
                             {% endif %}
                         </div>

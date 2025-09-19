@@ -77,6 +77,18 @@ class HelechoListView(MuestraListView):
         return queryset.filter(tipo_muestra='HELECHO').select_related(
             'especie', 'especie__familia', 'municipio'
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        favorited_ids = set()
+        if getattr(user, 'is_authenticated', False):
+            from catalogo.models import Collection, CollectionItem
+            default_collection = Collection.objects.filter(owner=user, is_default=True).first()
+            if default_collection:
+                favorited_ids = set(CollectionItem.objects.filter(collection=default_collection).values_list('muestra_id', flat=True))
+        context.update({'favorited_ids': favorited_ids})
+        return context
     
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
@@ -95,10 +107,19 @@ class HelechoDetailView(MuestraDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         helecho = self.get_object()
+        is_favorited = False
+        user = self.request.user
+        if getattr(user, 'is_authenticated', False):
+            from catalogo.models import Collection, CollectionItem
+            default_collection = Collection.objects.filter(owner=user, is_default=True).first()
+            if default_collection:
+                is_favorited = CollectionItem.objects.filter(collection=default_collection, muestra=helecho).exists()
         context.update({
             'titulo_pagina': f"Detalle del {helecho.nombre_cientifico}",
             'es_helecho': True,
-            'subtitulo': "Información detallada del helecho"
+            'subtitulo': "Información detallada del helecho",
+            'is_favorited': is_favorited,
+            'muestra': helecho,
         })
         return context
 

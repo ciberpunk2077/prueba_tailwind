@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">Mis colecciones</h1>
+    <div class="flex gap-2">
+      <a href="{% url 'catalogo:collection-create' %}" 
+         class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm">
+        <i class="fas fa-plus mr-1"></i>Nueva Colección
+      </a>
+      <a href="{% url 'catalogo:my-collection' %}" 
+         class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm">
+        <i class="fas fa-star mr-1"></i>Mi herbario
+      </a>
+    </div>
+  </div>
+
+  {% if collections %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for col in collections %}
+    <div class="bg-white rounded-lg border hover:shadow-lg transition-shadow">
+      <a href="{% url 'catalogo:collection-detail' pk=col.pk %}" class="block p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-semibold text-lg">{{ col.name }}</h2>
+          {% if col.is_default %}
+          <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Por defecto</span>
+          {% endif %}
+        </div>
+        <p class="text-sm text-gray-500 mb-2">{{ col.description|default:'Sin descripción' }}</p>
+        <p class="text-xs text-gray-400">{{ col.items.count }} elementos</p>
+      </a>
+      
+      <div class="px-4 pb-4 flex gap-2">
+        <a href="{% url 'catalogo:collection-update' pk=col.pk %}" 
+           class="text-blue-600 hover:text-blue-800 text-sm">
+          <i class="fas fa-edit mr-1"></i>Editar
+        </a>
+        {% if not col.is_default %}
+        <a href="{% url 'catalogo:collection-delete' pk=col.pk %}" 
+           class="text-red-600 hover:text-red-800 text-sm"
+           onclick="return confirm('¿Eliminar esta colección?')">
+          <i class="fas fa-trash mr-1"></i>Eliminar
+        </a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="text-center py-12">
+    <i class="fas fa-folder-open text-6xl text-gray-300 mb-4"></i>
+    <p class="text-gray-500 text-lg mb-4">No tienes colecciones aún.</p>
+    <a href="{% url 'catalogo:collection-create' %}" 
+       class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+      <i class="fas fa-plus mr-1"></i>Crear tu primera colección
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+

@@ -6,6 +6,7 @@ from .views.planta import (
     PlantaDetailView,
     PlantaUpdateView,
     PlantaDeleteView, load_especies,)
+from .views.planta import comparador_especies
 from .views.alga import *
 from .views.fruto import *
 from .views.polen import *
@@ -17,6 +18,19 @@ from .views.familia import (  # Cambia este import
 )
 from .views.muestra import MuestraListView
 from catalogo.views.buscar import buscar_muestras, get_especies, buscar_sugerencias
+from catalogo.views.qr import generate_qr_code, show_qr_modal
+from .views.collection import (
+    CollectionListView,
+    CollectionDetailView,
+    CollectionCreateView,
+    CollectionUpdateView,
+    CollectionDeleteView,
+    toggle_favorite,
+    move_item_to_collection,
+    remove_item_from_collection,
+    create_collection_quick,
+    my_default_collection_redirect,
+)
 
 
 app_name = 'catalogo'
@@ -26,6 +40,22 @@ urlpatterns = [
     path('buscar/', buscar_muestras, name='buscar_muestras'),
     path('get_especies/', get_especies, name='get_especies'),
     path('buscar_sugerencias/', buscar_sugerencias, name='buscar_sugerencias'),
+
+    # Colecciones / Herbario personal
+    path('colecciones/', CollectionListView.as_view(), name='collection-list'),
+    path('colecciones/nueva/', CollectionCreateView.as_view(), name='collection-create'),
+    path('colecciones/<int:pk>/', CollectionDetailView.as_view(), name='collection-detail'),
+    path('colecciones/<int:pk>/editar/', CollectionUpdateView.as_view(), name='collection-update'),
+    path('colecciones/<int:pk>/eliminar/', CollectionDeleteView.as_view(), name='collection-delete'),
+    path('mi-herbario/', my_default_collection_redirect, name='my-collection'),
+    path('favorito/toggle/', toggle_favorite, name='toggle-favorite'),
+    path('colecciones/mover-item/', move_item_to_collection, name='move-item'),
+    path('colecciones/quitar-item/', remove_item_from_collection, name='remove-item'),
+    
+    # URLs para códigos QR
+    path('muestra/<int:pk>/qr/', generate_qr_code, name='muestra-qr'),
+    path('muestra/<int:pk>/qr-modal/', show_qr_modal, name='muestra-qr-modal'),
+    path('colecciones/crear-rapido/', create_collection_quick, name='collection-create-quick'),
 
     # URLs para Familia
     path('familia/', FamiliaListView.as_view(), name='familia_list'),
@@ -50,6 +80,8 @@ urlpatterns = [
     path('plantas/<int:pk>/', PlantaDetailView.as_view(), name='planta-detail'),
     path('plantas/<int:pk>/editar/', PlantaUpdateView.as_view(), name='planta-update'),
     path('plantas/<int:pk>/eliminar/', PlantaDeleteView.as_view(), name='planta-delete'),
+    path('plantas/comparador/', comparador_especies, name='planta-comparador'),
+    path('comparador/<str:tipo>/', comparador_especies, name='comparador-tipo'),
 
     # URLs frutos y semillas
     path('frutosemilla/', FrutoListView.as_view(), name='fruto-list'),

@@ -7,6 +7,28 @@
     class="flex flex-col lg:flex-row min-h-screen items-start justify-center bg-gradient-to-br from-green-50 to-emerald-100 py-8">
     <div class="w-full max-w-2xl mx-auto lg:w-[45%] flex-shrink-0 flex-grow-0">
         <div class="bg-white/90 rounded-2xl shadow-xl p-8 border-l-4 border-green-500">
+                <!-- <div>
+                    <label for="{{ form.habitat.id_for_label }}" class="block text-amber-900 font-semibold mb-1">Hábitat</label>
+                    {% render_field form.habitat class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                </div>
+                <div>
+                    <label for="{{ form.datos_morfologicos.id_for_label }}" class="block text-amber-900 font-semibold mb-1">Datos morfológicos</label>
+                    {% render_field form.datos_morfologicos class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.epoca_floracion.id_for_label }}" class="block text-amber-900 font-semibold mb-1">Época de floración</label>
+                        {% render_field form.epoca_floracion class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.epoca_fructificacion.id_for_label }}" class="block text-amber-900 font-semibold mb-1">Época de fructificación</label>
+                        {% render_field form.epoca_fructificacion class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.usos_tradicionales.id_for_label }}" class="block text-amber-900 font-semibold mb-1">Usos tradicionales</label>
+                    {% render_field form.usos_tradicionales class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                </div> -->
             <h2 class="text-3xl font-extrabold text-green-700 mb-8 text-center tracking-tight flex items-center gap-2">
                 <i class="fas fa-seedling text-green-600"></i>
                 {% if object %}Editar{% else %}Nueva{% endif %} Planta
@@ -96,6 +118,32 @@
                     <label for="{{ form.nombre_colector.id_for_label }}"
                         class="block text-green-900 font-semibold mb-1">Nombre del Recolector</label>
                     {% render_field form.nombre_colector class="form-control px-3 py-2 rounded-lg border border-green-200 focus:ring-2 focus:ring-green-400 focus:border-green-400" %}
+                </div>
+                <div>
+                    <label for="{{ form.habitat.id_for_label }}" class="block text-green-900 font-semibold mb-1">Hábitat</label>
+                    {% render_field form.habitat class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                </div>
+                <div>
+                    <label for="{{ form.datos_morfologicos.id_for_label }}" class="block text-green-900 font-semibold mb-1">Datos
+                        morfológicos</label>
+                    {% render_field form.datos_morfologicos class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.epoca_floracion.id_for_label }}" class="block text-green-900 font-semibold mb-1">Época de
+                            floración</label>
+                        {% render_field form.epoca_floracion class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.epoca_fructificacion.id_for_label }}" class="block text-green-900 font-semibold mb-1">Época
+                            de fructificación</label>
+                        {% render_field form.epoca_fructificacion class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.usos_tradicionales.id_for_label }}" class="block text-green-900 font-semibold mb-1">Usos
+                        tradicionales</label>
+                    {% render_field form.usos_tradicionales class="form-control px-3 py-2 rounded-lg border border-amber-200" %}
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>

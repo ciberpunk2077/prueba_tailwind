@@ -3,170 +3,228 @@
 
 {% block content %}
 <div class="flex flex-col lg:flex-row min-h-screen items-start justify-center bg-gradient-to-br from-amber-50 to-orange-100 py-8">
-    <div class="w-full max-w-2xl mx-auto lg:w-[45%] flex-shrink-0 flex-grow-0">
-        <div class="bg-white/90 rounded-2xl shadow-xl p-8 border-l-4 border-amber-500">
-            <h2 class="text-3xl font-extrabold text-amber-700 mb-8 text-center tracking-tight flex items-center gap-2">
-                <i class="fas fa-mushroom text-amber-500"></i>
-                Detalle del Hongo
-            </h2>
-            <div class="mb-8">
-                <h3 class="text-lg font-bold text-amber-800 mb-2 border-b border-amber-100 pb-1">Información general</h3>
-            </div>
-            <div class="space-y-5">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Nombre Científico</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.nombre_cientifico|default:"Sin nombre científico" }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Nombre Común</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.nombre_comun|default:"Sin nombre común" }}</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Familia</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.especie.familia.nombre|default:"Sin familia" }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Especie</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.especie|default:"Sin especie" }}</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Fecha de Recolección</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.fecha|date:"d/m/Y"|default:"Sin fecha" }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Número de Recolecta</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.numero_recolecta|default:"Sin número" }}</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Colonia</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.colonia|default:"Sin colonia" }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Localidad</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.localidad|default:"Sin localidad" }}</p>
-                    </div>
-                </div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <label class="block text-amber-900 font-semibold mb-1">Municipio</label>
-                    <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.municipio|default:"Sin municipio" }}</p>
-                </div>
-                <div>
-                    <label class="block text-amber-900 font-semibold mb-1">Descripción</label>
-                    <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.descripcion|default:"Sin descripción" }}</p>
-                </div>
-                <div>
-                    <label class="block text-amber-900 font-semibold mb-1">Nombre del Recolector</label>
-                    <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.nombre_colector|default:"Sin recolector" }}</p>
-                </div>
-                <div class="my-8">
-                    <h3 class="text-lg font-bold text-amber-800 mb-2 border-b border-amber-100 pb-1">Ubicación geográfica</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Latitud</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.latitud|default:"Sin latitud" }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-amber-900 font-semibold mb-1">Longitud</label>
-                        <p class="text-gray-700 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">{{ hongo.longitud|default:"Sin longitud" }}</p>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                        <i class="fas fa-mushroom text-amber-500"></i>
+                        {{ hongo.nombre_cientifico }}
+                    </h1>
+                    <p class="text-gray-600 text-lg">{{ hongo.nombre_comun|default:"Sin nombre común" }}</p>
+                    <div class="flex items-center gap-4 mt-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                            <i class="fas fa-sitemap mr-1"></i>
+                            {{ hongo.especie.familia.nombre|default:"Sin familia" }}
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                            <i class="fas fa-microscope mr-1"></i>
+                            {{ hongo.especie|default:"Sin especie" }}
+                        </span>
                     </div>
                 </div>
-                <div class="mb-8">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <div>
-                            <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                                <i class="fas fa-mushroom text-amber-500"></i>
-                                {{ hongo.nombre_cientifico }}
-                            </h1>
-                            <p class="text-gray-600 text-lg">{{ hongo.nombre_comun|default:"Sin nombre común" }}</p>
-                            <div class="flex items-center gap-4 mt-2">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
-                                    <i class="fas fa-sitemap mr-1"></i>
-                                    {{ hongo.especie.familia.nombre|default:"Sin familia" }}
-                                </span>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
-                                    <i class="fas fa-microscope mr-1"></i>
-                                    {{ hongo.especie|default:"Sin especie" }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <a href="{% url 'catalogo:hongo-list' %}" data-href="{% url 'catalogo:hongo-list' %}" onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
-                                class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
-                                <i class="fas fa-arrow-left"></i> Regresar
-                            </a>
-                            {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=is_favorited %}
-                            <button onclick="showQRModal()" 
-                                    class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
-                                <i class="fas fa-qrcode"></i> QR
-                            </button>
-                            <a href="{% url 'catalogo:hongo-update' pk=hongo.pk %}"
-                                class="inline-flex items-center px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2 transition">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <a href="{% url 'catalogo:hongo-delete' pk=hongo.pk %}"
-                                class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold gap-2 transition"
-                                onclick="return confirm('¿Está seguro que desea eliminar este hongo?')">
-                                <i class="fas fa-trash"></i> Eliminar
-                            </a>
-                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.especie.id }}"
-                                class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
-                                <i class="fas fa-compare"></i> Comparar (A)
-                            </a>
-                            <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.especie.id }}"
-                                class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
-                                <i class="fas fa-compare"></i> Comparar (B)
-                            </a>
-                        </div>
-                    </div>
+                <div class="flex gap-3">
+                    <a href="{% url 'catalogo:hongo-list' %}" data-href="{% url 'catalogo:hongo-list' %}" onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
+                        <i class="fas fa-arrow-left"></i> Regresar
+                    </a>
+                    {% include 'catalogo/partials/favorite_button.html' with muestra=hongo is_favorited=is_favorited %}
+                    <button onclick="showQRModal()" 
+                            class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-qrcode"></i> QR
+                    </button>
+                    <a href="{% url 'catalogo:hongo-update' pk=hongo.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a href="{% url 'catalogo:hongo-delete' pk=hongo.pk %}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold gap-2 transition"
+                        onclick="return confirm('¿Está seguro que desea eliminar este hongo?')">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </a>
+                    <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.especie.id }}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
+                        <i class="fas fa-compare"></i> Comparar (A)
+                    </a>
+                    <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.especie.id }}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-amber-400 text-amber-700 bg-white hover:bg-amber-50 font-semibold gap-2 transition">
+                        <i class="fas fa-compare"></i> Comparar (B)
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Columna de imagen y mapa -->
-    <div class="w-full max-w-lg mx-auto mt-4 lg:mt-0 lg:ml-4 lg:w-[40%] flex-shrink-0 flex-grow-0">
-        <div class="bg-white/90 rounded-2xl shadow-xl mb-4 p-4 border-l-4 border-amber-500">
-            <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2"><i class="fas fa-image text-amber-500"></i>Fotografía</h3>
-            <div class="flex items-center justify-center h-80">
-                {% if hongo.imagen %}
-                <img src="{{ hongo.imagen.url }}" 
-                     alt="{{ hongo.nombre_cientifico }}"
-                     class="max-w-full max-h-full w-auto h-auto object-contain rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
-                     onclick="openImageModal('{{ hongo.imagen.url }}', '{{ hongo.nombre_cientifico }}')">
-                {% else %}
-                <div class="flex flex-col items-center justify-center py-12 text-gray-400">
-                    <i class="fas fa-mushroom text-6xl mb-4 text-amber-300"></i>
-                    <p class="text-lg">No hay imagen disponible</p>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column - Information -->
+            <div class="space-y-6">
+                <!-- Basic Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Información Básica
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Científico</span>
+                            <span class="text-gray-900 font-medium">{{ hongo.nombre_cientifico }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Nombre Común</span>
+                            <span class="text-gray-900">{{ hongo.nombre_comun|default:"No especificado" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Número de Recolecta</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800">
+                                {{ hongo.numero_recolecta }}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Fecha de Recolección</span>
+                            <span class="text-gray-900">{{ hongo.fecha|date:"d/m/Y"|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Colector</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-user text-amber-500"></i>
+                                {{ hongo.nombre_colector|default:"No especificado" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location Information Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Ubicación
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Localidad</span>
+                            <span class="text-gray-900">{{ hongo.localidad|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Colonia</span>
+                            <span class="text-gray-900">{{ hongo.colonia|default:"No especificada" }}</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Municipio</span>
+                            <span class="text-gray-900">{{ hongo.municipio|default:"No especificado" }}</span>
+                        </div>
+                        {% if hongo.latitud and hongo.longitud %}
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Coordenadas</span>
+                            <span class="text-gray-900 flex items-center gap-2">
+                                <i class="fas fa-globe-americas text-amber-500"></i>
+                                {{ hongo.latitud|floatformat:6 }}, {{ hongo.longitud|floatformat:6 }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description Card -->
+                {% if hongo.descripcion %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-file-alt"></i>
+                        Descripción
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed">{{ hongo.descripcion }}</p>
+                </div>
+                {% endif %}
+                {% if hongo.habitat or hongo.datos_morfologicos or hongo.epoca_floracion or hongo.epoca_fructificacion or hongo.usos_tradicionales %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle"></i>
+                        Datos Adicionales
+                    </h3>
+                    <div class="space-y-4">
+                        {% if hongo.habitat %}
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Hábitat</span>
+                            <span class="text-gray-900">{{ hongo.habitat }}</span>
+                        </div>
+                        {% endif %}
+                        {% if hongo.datos_morfologicos %}
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Datos morfológicos</span>
+                            <span class="text-gray-900">{{ hongo.datos_morfologicos }}</span>
+                        </div>
+                        {% endif %}
+                        {% if hongo.epoca_floracion %}
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Época de floración</span>
+                            <span class="text-gray-900">{{ hongo.epoca_floracion }}</span>
+                        </div>
+                        {% endif %}
+                        {% if hongo.epoca_fructificacion %}
+                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                            <span class="font-semibold text-gray-700">Época de fructificación</span>
+                            <span class="text-gray-900">{{ hongo.epoca_fructificacion }}</span>
+                        </div>
+                        {% endif %}
+                        {% if hongo.usos_tradicionales %}
+                        <div class="flex items-center justify-between py-3">
+                            <span class="font-semibold text-gray-700">Usos tradicionales</span>
+                            <span class="text-gray-900">{{ hongo.usos_tradicionales }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
                 {% endif %}
             </div>
-            {% if hongo.imagen %}
-            <div class="mt-4 text-center">
-                <p class="text-sm text-gray-500">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Haz clic en la imagen para verla en tamaño completo
-                </p>
+
+            <!-- Right Column - Image and Map -->
+            <div class="space-y-6">
+                <!-- Image Card -->
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-image"></i>
+                        Fotografía de la Muestra
+                    </h3>
+                    <div class="flex items-center justify-center h-80">
+                        {% if hongo.imagen %}
+                        <img src="{{ hongo.imagen.url }}" 
+                             alt="{{ hongo.nombre_cientifico }}"
+                             class="max-w-full max-h-full w-auto h-auto object-contain rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+                             onclick="openImageModal('{{ hongo.imagen.url }}', '{{ hongo.nombre_cientifico }}')">
+                        {% else %}
+                        <div class="flex flex-col items-center justify-center py-12 text-gray-400">
+                            <i class="fas fa-mushroom text-6xl mb-4 text-amber-300"></i>
+                            <p class="text-lg">No hay imagen disponible</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if hongo.imagen %}
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Haz clic en la imagen para verla en tamaño completo
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Map Card -->
+                {% if hongo.latitud and hongo.longitud %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-amber-500">
+                    <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Ubicación Geográfica
+                    </h3>
+                    <div class="rounded-xl overflow-hidden shadow-lg" style="height: 400px;">
+                        {{ hongo.get_map|safe }}
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
-        
-        {% if hongo.latitud and hongo.longitud %}
-        <div class="bg-white/90 rounded-2xl shadow-xl p-4 border-l-4 border-amber-500">
-            <h3 class="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2"><i class="fas fa-map-marker-alt text-amber-500"></i>Ubicación</h3>
-            <div id="map" class="rounded-xl border-2 border-amber-200 bg-amber-50 shadow-lg"
-                style="width: 100%; height: 250px; position: relative;"></div>
-        </div>
-        {% endif %}
     </div>
 </div>
+
 {% include 'partials/image-modal.html' %}
 {% include 'catalogo/partials/qr_modal.html' %}
 

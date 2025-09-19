@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.conf import settings
 import folium
 import os
 from catalogo.extra import *
@@ -101,6 +102,12 @@ class MuestraBase(models.Model):
         blank=True,
         help_text="Fecha de recolección de la muestra"
     )
+    # Campos nuevos solicitados
+    habitat = models.CharField(max_length=200, null=True, blank=True, help_text="Tipo de ecosistema (bosque, selva, etc.)")
+    datos_morfologicos = models.TextField(null=True, blank=True, help_text="Altura, tipo de hojas, color de flores/frutos")
+    epoca_floracion = models.CharField(max_length=100, null=True, blank=True, help_text="Meses o temporada de floración")
+    epoca_fructificacion = models.CharField(max_length=100, null=True, blank=True, help_text="Meses o temporada de fructificación")
+    usos_tradicionales = models.TextField(null=True, blank=True, help_text="Medicinales, culinarios, ornamentales, rituales")
     latitud = models.DecimalField(
         max_digits=50, 
         decimal_places=47, 
@@ -197,3 +204,47 @@ class MuestraBiologica(MuestraBase):
         from django.core.exceptions import ValidationError
         if self.fecha and self.fecha > timezone.now().date():
             raise ValidationError("La fecha no puede ser futura.")
+
+
+# Herbario personal (Colecciones/Favoritos)
+class Collection(models.Model):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='collections'
+    )
+    name = models.CharField(max_length=150)
+    description = models.TextField(blank=True, null=True)
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['owner', 'name'], name='uniq_collection_per_user_name')
+        ]
+
+    def __str__(self):
+        return f"{self.name} ({self.owner.username})"
+
+
+class CollectionItem(models.Model):
+    collection = models.ForeignKey(
+        Collection,
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+    muestra = models.ForeignKey(
+        MuestraBiologica,
+        on_delete=models.CASCADE,
+        related_name='collection_items'
+    )
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['collection', 'muestra'], name='uniq_item_per_collection')
+        ]
+
+    def __str__(self):
+        return f"{self.muestra} en {self.collection}"

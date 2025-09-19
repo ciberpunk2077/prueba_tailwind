@@ -1,0 +1,65 @@
+<!-- Modal para mostrar código QR -->
+<div id="qrModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold">Código QR - {{ muestra.nombre_cientifico }}</h3>
+        <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <div class="text-center">
+        <div class="mb-4">
+          <img src="{% url 'catalogo:muestra-qr' pk=muestra.pk %}" 
+               alt="Código QR para {{ muestra.nombre_cientifico }}"
+               class="mx-auto border border-gray-300 rounded">
+        </div>
+        
+        <p class="text-sm text-gray-600 mb-4">
+          Escanea este código para acceder a la información completa de la muestra
+        </p>
+        
+        <div class="bg-gray-50 rounded p-3 mb-4">
+          <p class="text-xs text-gray-500 mb-1">URL:</p>
+          <p class="text-xs font-mono break-all text-blue-600">{{ detail_url }}</p>
+        </div>
+        
+        <div class="flex gap-2">
+          <button onclick="copyToClipboard('{{ detail_url }}')" 
+                  class="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+            <i class="fas fa-copy mr-1"></i>Copiar URL
+          </button>
+          <button onclick="downloadQR()" 
+                  class="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700">
+            <i class="fas fa-download mr-1"></i>Descargar QR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function closeQRModal() {
+  document.getElementById('qrModal').classList.add('hidden');
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(function() {
+    alert('URL copiada al portapapeles');
+  }, function(err) {
+    console.error('Error al copiar: ', err);
+  });
+}
+
+function downloadQR() {
+  const img = document.querySelector('#qrModal img');
+  const link = document.createElement('a');
+  link.download = 'qr-{{ muestra.numero_recolecta }}.png';
+  link.href = img.src;
+  link.click();
+}
+</script>
+
+

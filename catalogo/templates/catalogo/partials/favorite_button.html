@@ -1,0 +1,40 @@
+{% load static %}
+{% if user.is_authenticated %}
+<button id="fav-btn-{{ muestra.pk }}" data-muestra-id="{{ muestra.pk }}" class="inline-flex items-center px-3 py-2 rounded border text-sm">
+  <span class="mr-2" id="fav-icon-{{ muestra.pk }}">{% if is_favorited %}★{% else %}☆{% endif %}</span>
+  <span>{% if is_favorited %}Quitar de favoritos{% else %}Añadir a favoritos{% endif %}</span>
+</button>
+<script>
+  (function(){
+    const btn = document.getElementById('fav-btn-{{ muestra.pk }}');
+    if(!btn) return;
+    btn.addEventListener('click', async function(){
+      const muestraId = this.dataset.muestraId;
+      const csrfToken = (document.querySelector('input[name=csrfmiddlewaretoken]')||{}).value || (document.cookie.match(/csrftoken=([^;]+)/)||[])[1];
+      const res = await fetch('{% url "catalogo:toggle-favorite" %}', {
+        method: 'POST',
+        headers: { 'X-CSRFToken': csrfToken },
+        body: new URLSearchParams({ muestra_id: muestraId })
+      });
+      const data = await res.json();
+      if(data.ok){
+        const icon = document.getElementById('fav-icon-{{ muestra.pk }}');
+        const text = btn.querySelector('span:last-child');
+        if(data.favorited){
+          icon.textContent = '★';
+          text.textContent = 'Quitar de favoritos';
+        } else {
+          icon.textContent = '☆';
+          text.textContent = 'Añadir a favoritos';
+        }
+      }
+    });
+  })();
+</script>
+{% else %}
+<a href="{% url 'login' %}" class="text-sm text-gray-600 underline">Inicia sesión para guardar favoritos</a>
+{% endif %}
+
+
+
+

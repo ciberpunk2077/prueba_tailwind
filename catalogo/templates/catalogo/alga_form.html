@@ -97,6 +97,28 @@
                         class="block text-blue-900 font-semibold mb-1">Nombre del Recolector</label>
                     {% render_field form.nombre_colector class="form-control px-3 py-2 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400" %}
                 </div>
+                <div>
+                    <label for="{{ form.habitat.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Hábitat</label>
+                    {% render_field form.habitat class="form-control px-3 py-2 rounded-lg border border-blue-200" %}
+                </div>
+                <div>
+                    <label for="{{ form.datos_morfologicos.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Datos morfológicos</label>
+                    {% render_field form.datos_morfologicos class="form-control px-3 py-2 rounded-lg border border-blue-200" %}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.epoca_floracion.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Época de floración</label>
+                        {% render_field form.epoca_floracion class="form-control px-3 py-2 rounded-lg border border-blue-200" %}
+                    </div>
+                    <div>
+                        <label for="{{ form.epoca_fructificacion.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Época de fructificación</label>
+                        {% render_field form.epoca_fructificacion class="form-control px-3 py-2 rounded-lg border border-blue-200" %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{ form.usos_tradicionales.id_for_label }}" class="block text-blue-900 font-semibold mb-1">Usos tradicionales</label>
+                    {% render_field form.usos_tradicionales class="form-control px-3 py-2 rounded-lg border border-blue-200" %}
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="id_familia" class="block text-blue-900 font-semibold mb-1">Familia</label>

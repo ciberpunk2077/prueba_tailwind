@@ -108,7 +108,8 @@ class FrutoForm(MuestraBiologicaForm):
     class Meta(MuestraBiologicaForm.Meta):
         fields = [
             'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'genero', 'fecha', 'numero_recolecta', 'municipio',  'imagen', 'colonia', 
-            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud', 'especie'
+            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud', 'especie',
+            'habitat', 'datos_morfologicos', 'epoca_floracion', 'epoca_fructificacion', 'usos_tradicionales'
         ]
         widgets = {
             'tipo_muestra': forms.HiddenInput(),
@@ -138,6 +139,11 @@ class FrutoForm(MuestraBiologicaForm):
             'nombre_colector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: El PEPE'}),
             'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'habitat': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Bosque húmedo'}),
+            'datos_morfologicos': forms.Textarea(attrs={'rows':4, 'class': 'form-control', 'placeholder': 'Datos morfológicos...'}),
+            'epoca_floracion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Primavera'}),
+            'epoca_fructificacion': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Otoño'}),
+            'usos_tradicionales': forms.Textarea(attrs={'rows':3, 'class': 'form-control', 'placeholder': 'Usos tradicionales...'}),
             'tipo_muestra': forms.HiddenInput(),
             
 

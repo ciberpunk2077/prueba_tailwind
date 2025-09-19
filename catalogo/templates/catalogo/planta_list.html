@@ -161,6 +161,16 @@
                                             title="Eliminar">
                                             <i class="fas fa-trash text-lg"></i>
                                         </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.especie.id }}"
+                                            class="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar esta especie como A">
+                                            <i class="fas fa-exchange-alt text-lg"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.especie.id }}"
+                                            class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar esta especie como B">
+                                            <i class="fas fa-exchange-alt text-lg"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -226,6 +236,16 @@
                                             class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-100 transition duration-200 transform hover:scale-110"
                                             title="Eliminar">
                                             <i class="fas fa-trash"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.especie.id }}"
+                                            class="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar esta especie como A">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.especie.id }}"
+                                            class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
+                                            title="Comparar esta especie como B">
+                                            <i class="fas fa-exchange-alt"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -317,15 +337,17 @@
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
     <div class="relative w-full h-full flex items-center justify-center">
         <!-- Botón de cerrar -->
-        <button id="closeModal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2 transition duration-200">
+        <button id="closeModal"
+            class="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2 transition duration-200">
             <i class="fas fa-times text-2xl"></i>
         </button>
-        
+
         <!-- Contenedor de la imagen con tamaño fijo -->
         <div class="relative w-full h-full flex items-center justify-center p-8">
-            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl" style="min-height: 400px; min-width: 400px;">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                style="min-height: 400px; min-width: 400px;">
         </div>
-        
+
         <!-- Información de la imagen -->
         <div id="modalInfo" class="absolute bottom-4 left-4 right-4 bg-black bg-opacity-75 text-white p-4 rounded-lg">
             <h3 id="modalTitle" class="text-lg font-semibold mb-1"></h3>

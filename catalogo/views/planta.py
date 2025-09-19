@@ -4,7 +4,8 @@ from django.contrib import messages
 from ..forms.planta import PlantaForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from ..models import Especie, Familia
+from django.shortcuts import render, get_object_or_404
+from ..models import Especie, Familia, MuestraBiologica
 from .muestra import MuestraCreateView, MuestraListView, MuestraDetailView, MuestraUpdateView, MuestraDeleteView
 
 logger = logging.getLogger(__name__)
@@ -88,10 +89,20 @@ class PlantaDetailView(MuestraDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         planta = self.get_object()
+        # Favoritos: estado inicial
+        is_favorited = False
+        user = self.request.user
+        if getattr(user, 'is_authenticated', False):
+            from catalogo.models import Collection, CollectionItem
+            default_collection = Collection.objects.filter(owner=user, is_default=True).first()
+            if default_collection:
+                is_favorited = CollectionItem.objects.filter(collection=default_collection, muestra=planta).exists()
         context.update({
             'titulo_pagina': f"Detalle de {planta.nombre_cientifico}",
             'es_planta': True,
-            'subtitulo': "Información detallada de la planta"
+            'subtitulo': "Información detallada de la planta",
+            'is_favorited': is_favorited,
+            'muestra': planta,
         })
         return context
 
@@ -159,5 +170,59 @@ def load_especies(request):
     except (ValueError, TypeError, Especie.DoesNotExist) as e:
         logger.error(f"Error cargando especies: {str(e)}")
         return HttpResponse('<option value="">Error cargando especies</option>')
+    
+
+def comparador_especies(request, tipo='PLANTA'):
+    """Comparador genérico por tipo de muestra (PLANTA, ALGA, FRUTOSEMILLA, POLEN, HELECHO, HONGO).
+    Se puede usar la URL con /comparador/<tipo>/ o la ruta de plantas mantiene compatibilidad.
+    """
+    especies = Especie.objects.order_by('nombre')
+    familias = Familia.objects.order_by('nombre')
+    s1 = request.GET.get('s1')
+    s2 = request.GET.get('s2')
+    filtro = request.GET.get('filtro', 'especie')  # 'especie'|'familia'|'todos'
+    familia_id = request.GET.get('familia')
+    especie1 = None
+    especie2 = None
+    muestras1 = []
+    muestras2 = []
+
+    if s1:
+        try:
+            especie1 = Especie.objects.get(pk=int(s1))
+            # Aplicar filtro: por defecto comparar por especie; si se pidió 'familia' o 'todos', ajustar
+            if filtro == 'todos':
+                muestras1 = MuestraBiologica.objects.filter(tipo_muestra=tipo)
+            elif filtro == 'familia' and familia_id:
+                muestras1 = MuestraBiologica.objects.filter(tipo_muestra=tipo, especie__familia_id=int(familia_id))
+            else:
+                muestras1 = MuestraBiologica.objects.filter(tipo_muestra=tipo, especie=especie1)
+        except (ValueError, Especie.DoesNotExist):
+            especie1 = None
+
+    if s2:
+        try:
+            especie2 = Especie.objects.get(pk=int(s2))
+            if filtro == 'todos':
+                muestras2 = MuestraBiologica.objects.filter(tipo_muestra=tipo)
+            elif filtro == 'familia' and familia_id:
+                muestras2 = MuestraBiologica.objects.filter(tipo_muestra=tipo, especie__familia_id=int(familia_id))
+            else:
+                muestras2 = MuestraBiologica.objects.filter(tipo_muestra=tipo, especie=especie2)
+        except (ValueError, Especie.DoesNotExist):
+            especie2 = None
+
+    context = {
+        'especies': especies,
+        'familias': familias,
+        'filtro': filtro,
+        'familia_selected': familia_id,
+        'especie1': especie1,
+        'especie2': especie2,
+        'muestras1': muestras1,
+        'muestras2': muestras2,
+        'tipo': tipo,
+    }
+    return render(request, 'catalogo/planta_comparator.html', context)
     
 

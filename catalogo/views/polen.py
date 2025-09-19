@@ -94,10 +94,19 @@ class PolenDetailView(MuestraDetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         polen = self.get_object()
+        is_favorited = False
+        user = self.request.user
+        if getattr(user, 'is_authenticated', False):
+            from catalogo.models import Collection, CollectionItem
+            default_collection = Collection.objects.filter(owner=user, is_default=True).first()
+            if default_collection:
+                is_favorited = CollectionItem.objects.filter(collection=default_collection, muestra=polen).exists()
         context.update({
             'titulo_pagina': f"Detalle de {polen.nombre_cientifico}",
             'es_polen': True,
-            'subtitulo': "Información detallada del polen"
+            'subtitulo': "Información detallada del polen",
+            'is_favorited': is_favorited,
+            'muestra': polen,
         })
         return context
 

@@ -25,10 +25,15 @@
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <a href="{% url 'catalogo:polen-list' %}"
+                    <a href="{% url 'catalogo:polen-list' %}" data-href="{% url 'catalogo:polen-list' %}" onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
                         class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
                         <i class="fas fa-arrow-left"></i> Regresar
                     </a>
+                    {% include 'catalogo/partials/favorite_button.html' with muestra=polen is_favorited=is_favorited %}
+                    <button onclick="showQRModal()" 
+                            class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-qrcode"></i> QR
+                    </button>
                     <a href="{% url 'catalogo:polen-update' pk=polen.pk %}"
                         class="inline-flex items-center px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-semibold gap-2 transition">
                         <i class="fas fa-edit"></i> Editar
@@ -38,15 +43,22 @@
                         onclick="return confirm('¿Está seguro que desea eliminar este polen?')">
                         <i class="fas fa-trash"></i> Eliminar
                     </a>
+                    <a href="{% url 'catalogo:comparador-tipo' 'POLEN' %}?s1={{ polen.especie.id }}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-yellow-400 text-yellow-700 bg-white hover:bg-yellow-50 font-semibold gap-2 transition">
+                        <i class="fas fa-compare"></i> Comparar (A)
+                    </a>
+                    <a href="{% url 'catalogo:comparador-tipo' 'POLEN' %}?s2={{ polen.especie.id }}"
+                        class="inline-flex items-center px-4 py-2 rounded-lg border border-yellow-400 text-yellow-700 bg-white hover:bg-yellow-50 font-semibold gap-2 transition">
+                        <i class="fas fa-compare"></i> Comparar (B)
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Left Column - Information -->
-            <div class="space-y-6">
-                <!-- Basic Information Card -->
+            <!-- Información Básica (full width on lg) -->
+            <div class="lg:col-span-2">
                 <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
                     <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
                         <i class="fas fa-info-circle"></i>
@@ -80,7 +92,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <!-- Left Column - Information -->
+            <div class="space-y-6">
                 <!-- Location Information Card -->
                 <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
                     <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
@@ -120,6 +135,46 @@
                         Descripción
                     </h3>
                     <p class="text-gray-700 leading-relaxed">{{ polen.descripcion }}</p>
+                </div>
+                {% endif %}
+                {% if polen.habitat or polen.datos_morfologicos or polen.epoca_floracion or polen.epoca_fructificacion or polen.usos_tradicionales %}
+                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-seedling"></i>
+                        Datos Adicionales
+                    </h3>
+                        <div class="space-y-4">
+                            {% if polen.habitat %}
+                            <div class="py-3 border-b border-gray-100">
+                                <h4 class="font-semibold text-gray-700">Hábitat</h4>
+                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.habitat }}</p>
+                            </div>
+                            {% endif %}
+                            {% if polen.datos_morfologicos %}
+                            <div class="py-3 border-b border-gray-100">
+                                <h4 class="font-semibold text-gray-700">Datos morfológicos</h4>
+                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.datos_morfologicos }}</p>
+                            </div>
+                            {% endif %}
+                            {% if polen.epoca_floracion %}
+                            <div class="py-3 border-b border-gray-100">
+                                <h4 class="font-semibold text-gray-700">Época de floración</h4>
+                                <p class="text-gray-900 mt-1">{{ polen.epoca_floracion }}</p>
+                            </div>
+                            {% endif %}
+                            {% if polen.epoca_fructificacion %}
+                            <div class="py-3 border-b border-gray-100">
+                                <h4 class="font-semibold text-gray-700">Época de fructificación</h4>
+                                <p class="text-gray-900 mt-1">{{ polen.epoca_fructificacion }}</p>
+                            </div>
+                            {% endif %}
+                            {% if polen.usos_tradicionales %}
+                            <div class="py-3">
+                                <h4 class="font-semibold text-gray-700">Usos tradicionales</h4>
+                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.usos_tradicionales }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
                 </div>
                 {% endif %}
             </div>
@@ -165,4 +220,11 @@
 </div>
 
 {% include 'partials/image-modal.html' %}
+{% include 'catalogo/partials/qr_modal.html' %}
+
+<script>
+function showQRModal() {
+  document.getElementById('qrModal').classList.remove('hidden');
+}
+</script>
 {% endblock %}
