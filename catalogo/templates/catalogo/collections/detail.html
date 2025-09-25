@@ -9,14 +9,14 @@
     </div>
     <div class="flex gap-2">
       {% if not collection.is_default %}
-      <a href="{% url 'catalogo:collection-update' pk=collection.pk %}"
-        class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
+      <a href="{% url 'catalogo:collection-update' pk=collection.pk %}" 
+         class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">
         <i class="fas fa-edit mr-1"></i>Editar
       </a>
       {% endif %}
-      <a href="{% url 'catalogo:collection-list' %}"
-        class="px-3 py-1 border border-gray-300 text-gray-700 rounded text-sm hover:bg-gray-50">
-        <i class="fas fa-arrow-left mr-1"></i>Lista de colecciones
+      <a href="{% url 'catalogo:collection-list' %}" 
+         class="px-3 py-1 border border-gray-300 text-gray-700 rounded text-sm hover:bg-gray-50">
+        <i class="fas fa-arrow-left mr-1"></i>Volver
       </a>
     </div>
   </div>
@@ -28,10 +28,9 @@
       <a href="{% url 'catalogo:planta-detail' pk=item.muestra.pk %}" class="block">
         <div class="h-40 bg-gray-100 flex items-center justify-center">
           {% if item.muestra.imagen %}
-          <img src="{{ item.muestra.imagen.url }}" alt="{{ item.muestra.nombre_cientifico }}"
-            class="object-cover w-full h-full">
+            <img src="{{ item.muestra.imagen.url }}" alt="{{ item.muestra.nombre_cientifico }}" class="object-cover w-full h-full">
           {% else %}
-          <span class="text-gray-400 text-sm">Sin imagen</span>
+            <span class="text-gray-400 text-sm">Sin imagen</span>
           {% endif %}
         </div>
         <div class="p-4">
@@ -40,12 +39,14 @@
           <p class="text-xs text-gray-400">{{ item.muestra.tipo_muestra }}</p>
         </div>
       </a>
-
+      
       <div class="px-4 pb-4 flex gap-2">
-        <button onclick="moveItem({{ item.pk }})" class="text-blue-600 hover:text-blue-800 text-sm">
+        <button onclick="moveItem({{ item.pk }})" 
+                class="text-blue-600 hover:text-blue-800 text-sm">
           <i class="fas fa-exchange-alt mr-1"></i>Mover
         </button>
-        <button onclick="removeItem({{ item.pk }})" class="text-red-600 hover:text-red-800 text-sm">
+        <button onclick="removeItem({{ item.pk }})" 
+                class="text-red-600 hover:text-red-800 text-sm">
           <i class="fas fa-trash mr-1"></i>Quitar
         </button>
       </div>
@@ -56,8 +57,8 @@
   <div class="text-center py-12">
     <i class="fas fa-folder-open text-6xl text-gray-300 mb-4"></i>
     <p class="text-gray-500 text-lg mb-4">La colección está vacía.</p>
-    <a href="{% url 'catalogo:buscar_muestras' %}"
-      class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+    <a href="{% url 'catalogo:buscar_muestras' %}" 
+       class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
       <i class="fas fa-search mr-1"></i>Buscar muestras para añadir
     </a>
   </div>
@@ -74,13 +75,13 @@
         <input type="hidden" id="itemId" name="item_id">
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">Colección destino</label>
-          <select id="targetCollection" name="target_collection_id"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select id="targetCollection" name="target_collection_id" 
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">Selecciona una colección</option>
             {% for col in collections %}
-            {% if col.pk != collection.pk %}
-            <option value="{{ col.pk }}">{{ col.name }}</option>
-            {% endif %}
+              {% if col.pk != collection.pk %}
+                <option value="{{ col.pk }}">{{ col.name }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>
@@ -91,21 +92,22 @@
         <div class="mb-4 p-3 bg-gray-50 rounded border">
           <div class="text-sm font-medium text-gray-700 mb-2">¿No encuentras una colección?</div>
           <div class="flex gap-2">
-            <input id="quickName" type="text" placeholder="Nombre de la nueva colección"
-              class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button type="button" onclick="createCollectionQuick()"
-              class="px-3 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 text-sm">
+            <input id="quickName" type="text" placeholder="Nombre de la nueva colección" 
+                   class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="button" onclick="createCollectionQuick()" 
+                    class="px-3 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 text-sm">
               Crear y seleccionar
             </button>
           </div>
           <div id="quickError" class="text-red-600 text-xs mt-1 hidden"></div>
         </div>
         <div class="flex justify-end gap-2">
-          <button type="button" onclick="closeMoveModal()"
-            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+          <button type="button" onclick="closeMoveModal()" 
+                  class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
             Cancelar
           </button>
-          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button type="submit" 
+                  class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
             Mover
           </button>
         </div>
@@ -115,83 +117,85 @@
 </div>
 
 <script>
-  function moveItem(itemId) {
-    document.getElementById('itemId').value = itemId;
-    document.getElementById('moveModal').classList.remove('hidden');
-  }
+function moveItem(itemId) {
+  document.getElementById('itemId').value = itemId;
+  document.getElementById('moveModal').classList.remove('hidden');
+}
 
-  function closeMoveModal() {
-    document.getElementById('moveModal').classList.add('hidden');
-  }
+function closeMoveModal() {
+  document.getElementById('moveModal').classList.add('hidden');
+}
 
-  function removeItem(itemId) {
-    if (confirm('¿Quitar este elemento de la colección?')) {
-      fetch('{% url "catalogo:remove-item" %}', {
-        method: 'POST',
-        headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
-        body: new URLSearchParams({ item_id: itemId })
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.ok) {
-            location.reload();
-          } else {
-            alert('Error: ' + data.error);
-          }
-        });
-    }
-  }
-
-  document.getElementById('moveForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    if (document.getElementById('copyOnly').checked) {
-      formData.set('copy_only', '1');
-    }
-
-    fetch('{% url "catalogo:move-item" %}', {
+function removeItem(itemId) {
+  if (confirm('¿Quitar este elemento de la colección?')) {
+    fetch('{% url "catalogo:remove-item" %}', {
       method: 'POST',
       headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
-      body: formData
+      body: new URLSearchParams({ item_id: itemId })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.ok) {
-          location.reload();
-        } else {
-          alert('Error: ' + data.error);
-        }
-      });
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        location.reload();
+      } else {
+        alert('Error: ' + data.error);
+      }
+    });
+  }
+}
+
+document.getElementById('moveForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  if (document.getElementById('copyOnly').checked) {
+    formData.set('copy_only', '1');
+  }
+  
+  fetch('{% url "catalogo:move-item" %}', {
+    method: 'POST',
+    headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.ok) {
+      location.reload();
+    } else {
+      alert('Error: ' + data.error);
+    }
   });
+});
 
-  function createCollectionQuick() {
-    const name = document.getElementById('quickName').value.trim();
-    const error = document.getElementById('quickError');
-    error.classList.add('hidden');
-    if (!name) {
-      error.textContent = 'Escribe un nombre';
-      error.classList.remove('hidden');
-      return;
-    }
-    fetch('{% url "catalogo:collection-create-quick" %}', {
-      method: 'POST',
-      headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
-      body: new URLSearchParams({ name })
-    })
-      .then(r => r.json())
-      .then(data => {
-        if (data.ok) {
-          const sel = document.getElementById('targetCollection');
-          const opt = document.createElement('option');
-          opt.value = data.id; opt.textContent = data.name;
-          sel.appendChild(opt);
-          sel.value = String(data.id);
-          document.getElementById('quickName').value = '';
-        } else {
-          error.textContent = data.error || 'Error al crear';
-          error.classList.remove('hidden');
-        }
-      })
+function createCollectionQuick(){
+  const name = document.getElementById('quickName').value.trim();
+  const error = document.getElementById('quickError');
+  error.classList.add('hidden');
+  if(!name){
+    error.textContent = 'Escribe un nombre';
+    error.classList.remove('hidden');
+    return;
   }
+  fetch('{% url "catalogo:collection-create-quick" %}', {
+    method: 'POST',
+    headers: { 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value },
+    body: new URLSearchParams({ name })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if(data.ok){
+      const sel = document.getElementById('targetCollection');
+      const opt = document.createElement('option');
+      opt.value = data.id; opt.textContent = data.name;
+      sel.appendChild(opt);
+      sel.value = String(data.id);
+      document.getElementById('quickName').value = '';
+    } else {
+      error.textContent = data.error || 'Error al crear';
+      error.classList.remove('hidden');
+    }
+  })
+}
 </script>
 {% endblock %}
+
+

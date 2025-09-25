@@ -14,24 +14,27 @@
                     </h1>
                     <p class="text-gray-600 text-lg">{{ polen.nombre_comun|default:"Sin nombre común" }}</p>
                     <div class="flex items-center gap-4 mt-2">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                             <i class="fas fa-sitemap mr-1"></i>
                             {{ polen.especie.familia.nombre|default:"Sin familia" }}
                         </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                             <i class="fas fa-microscope mr-1"></i>
                             {{ polen.especie|default:"Sin especie" }}
                         </span>
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <a href="{% url 'catalogo:polen-list' %}" data-href="{% url 'catalogo:polen-list' %}" onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
+                    <a href="{% url 'catalogo:polen-list' %}" data-href="{% url 'catalogo:polen-list' %}"
+                        onclick="event.preventDefault(); if(history.length>1){ history.back(); } else { window.location.href=this.dataset.href; }"
                         class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-400 text-gray-700 bg-white hover:bg-gray-50 font-semibold gap-2 transition">
                         <i class="fas fa-arrow-left"></i> Regresar
                     </a>
                     {% include 'catalogo/partials/favorite_button.html' with muestra=polen is_favorited=is_favorited %}
-                    <button onclick="showQRModal()" 
-                            class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
+                    <button onclick="showQRModal()"
+                        class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
                         <i class="fas fa-qrcode"></i> QR
                     </button>
                     <a href="{% url 'catalogo:polen-update' pk=polen.pk %}"
@@ -58,7 +61,7 @@
         <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Información Básica (full width on lg) -->
-            <div class="lg:col-span-2">
+            <div class="space-y-6">
                 <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
                     <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
                         <i class="fas fa-info-circle"></i>
@@ -75,7 +78,8 @@
                         </div>
                         <div class="flex items-center justify-between py-3 border-b border-gray-100">
                             <span class="font-semibold text-gray-700">Número de Recolecta</span>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                 {{ polen.numero_recolecta }}
                             </span>
                         </div>
@@ -95,89 +99,90 @@
             </div>
 
             <!-- Left Column - Information -->
-            <div class="space-y-6">
-                <!-- Location Information Card -->
-                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
-                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Ubicación
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
-                            <span class="font-semibold text-gray-700">Localidad</span>
-                            <span class="text-gray-900">{{ polen.localidad|default:"No especificada" }}</span>
-                        </div>
-                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
-                            <span class="font-semibold text-gray-700">Colonia</span>
-                            <span class="text-gray-900">{{ polen.colonia|default:"No especificada" }}</span>
-                        </div>
-                        <div class="flex items-center justify-between py-3 border-b border-gray-100">
-                            <span class="font-semibold text-gray-700">Municipio</span>
-                            <span class="text-gray-900">{{ polen.municipio|default:"No especificado" }}</span>
-                        </div>
-                        {% if polen.latitud and polen.longitud %}
-                        <div class="flex items-center justify-between py-3">
-                            <span class="font-semibold text-gray-700">Coordenadas</span>
-                            <span class="text-gray-900 flex items-center gap-2">
-                                <i class="fas fa-globe-americas text-orange-500"></i>
-                                {{ polen.latitud|floatformat:6 }}, {{ polen.longitud|floatformat:6 }}
-                            </span>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
 
-                <!-- Description Card -->
-                {% if polen.descripcion %}
-                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
-                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-file-alt"></i>
-                        Descripción
-                    </h3>
-                    <p class="text-gray-700 leading-relaxed">{{ polen.descripcion }}</p>
+            <!-- Location Information Card -->
+            <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Ubicación
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <span class="font-semibold text-gray-700">Localidad</span>
+                        <span class="text-gray-900">{{ polen.localidad|default:"No especificada" }}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <span class="font-semibold text-gray-700">Colonia</span>
+                        <span class="text-gray-900">{{ polen.colonia|default:"No especificada" }}</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <span class="font-semibold text-gray-700">Municipio</span>
+                        <span class="text-gray-900">{{ polen.municipio|default:"No especificado" }}</span>
+                    </div>
+                    {% if polen.latitud and polen.longitud %}
+                    <div class="flex items-center justify-between py-3">
+                        <span class="font-semibold text-gray-700">Coordenadas</span>
+                        <span class="text-gray-900 flex items-center gap-2">
+                            <i class="fas fa-globe-americas text-orange-500"></i>
+                            {{ polen.latitud|floatformat:6 }}, {{ polen.longitud|floatformat:6 }}
+                        </span>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-                {% if polen.habitat or polen.datos_morfologicos or polen.epoca_floracion or polen.epoca_fructificacion or polen.usos_tradicionales %}
-                <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
-                    <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-seedling"></i>
-                        Datos Adicionales
-                    </h3>
-                        <div class="space-y-4">
-                            {% if polen.habitat %}
-                            <div class="py-3 border-b border-gray-100">
-                                <h4 class="font-semibold text-gray-700">Hábitat</h4>
-                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.habitat }}</p>
-                            </div>
-                            {% endif %}
-                            {% if polen.datos_morfologicos %}
-                            <div class="py-3 border-b border-gray-100">
-                                <h4 class="font-semibold text-gray-700">Datos morfológicos</h4>
-                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.datos_morfologicos }}</p>
-                            </div>
-                            {% endif %}
-                            {% if polen.epoca_floracion %}
-                            <div class="py-3 border-b border-gray-100">
-                                <h4 class="font-semibold text-gray-700">Época de floración</h4>
-                                <p class="text-gray-900 mt-1">{{ polen.epoca_floracion }}</p>
-                            </div>
-                            {% endif %}
-                            {% if polen.epoca_fructificacion %}
-                            <div class="py-3 border-b border-gray-100">
-                                <h4 class="font-semibold text-gray-700">Época de fructificación</h4>
-                                <p class="text-gray-900 mt-1">{{ polen.epoca_fructificacion }}</p>
-                            </div>
-                            {% endif %}
-                            {% if polen.usos_tradicionales %}
-                            <div class="py-3">
-                                <h4 class="font-semibold text-gray-700">Usos tradicionales</h4>
-                                <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.usos_tradicionales }}</p>
-                            </div>
-                            {% endif %}
-                        </div>
-                </div>
-                {% endif %}
             </div>
+
+            <!-- Description Card -->
+            {% if polen.descripcion %}
+            <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-file-alt"></i>
+                    Descripción
+                </h3>
+                <p class="text-gray-700 leading-relaxed">{{ polen.descripcion }}</p>
+            </div>
+            {% endif %}
+            {% if polen.habitat or polen.datos_morfologicos or polen.epoca_floracion or polen.epoca_fructificacion or
+            polen.usos_tradicionales %}
+            <div class="bg-white/90 rounded-2xl shadow-xl p-6 border-l-4 border-yellow-500">
+                <h3 class="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
+                    <i class="fas fa-seedling"></i>
+                    Datos Adicionales
+                </h3>
+                <div class="space-y-4">
+                    {% if polen.habitat %}
+                    <div class="py-3 border-b border-gray-100">
+                        <h4 class="font-semibold text-gray-700">Hábitat</h4>
+                        <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.habitat }}</p>
+                    </div>
+                    {% endif %}
+                    {% if polen.datos_morfologicos %}
+                    <div class="py-3 border-b border-gray-100">
+                        <h4 class="font-semibold text-gray-700">Datos morfológicos</h4>
+                        <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.datos_morfologicos }}</p>
+                    </div>
+                    {% endif %}
+                    {% if polen.epoca_floracion %}
+                    <div class="py-3 border-b border-gray-100">
+                        <h4 class="font-semibold text-gray-700">Época de floración</h4>
+                        <p class="text-gray-900 mt-1">{{ polen.epoca_floracion }}</p>
+                    </div>
+                    {% endif %}
+                    {% if polen.epoca_fructificacion %}
+                    <div class="py-3 border-b border-gray-100">
+                        <h4 class="font-semibold text-gray-700">Época de fructificación</h4>
+                        <p class="text-gray-900 mt-1">{{ polen.epoca_fructificacion }}</p>
+                    </div>
+                    {% endif %}
+                    {% if polen.usos_tradicionales %}
+                    <div class="py-3">
+                        <h4 class="font-semibold text-gray-700">Usos tradicionales</h4>
+                        <p class="text-gray-900 mt-1 leading-relaxed">{{ polen.usos_tradicionales }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
 
             <!-- Right Column - Image and Map -->
             <div class="space-y-6">
@@ -189,10 +194,9 @@
                     </h3>
                     <div class="flex items-center justify-center">
                         {% if polen.imagen %}
-                        <img src="{{ polen.imagen.url }}" 
-                             alt="{{ polen.nombre_cientifico }}"
-                             class="rounded-xl shadow-lg max-h-96 w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                             onclick="openImageModal('{{ polen.imagen.url }}', '{{ polen.nombre_cientifico }}')">
+                        <img src="{{ polen.imagen.url }}" alt="{{ polen.nombre_cientifico }}"
+                            class="rounded-xl shadow-lg max-h-96 w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                            onclick="openImageModal('{{ polen.imagen.url }}', '{{ polen.nombre_cientifico }}')">
                         {% else %}
                         <div class="flex flex-col items-center justify-center py-12 text-gray-400">
                             <i class="fas fa-pollen text-6xl mb-4 text-yellow-300"></i>
@@ -223,8 +227,8 @@
 {% include 'catalogo/partials/qr_modal.html' %}
 
 <script>
-function showQRModal() {
-  document.getElementById('qrModal').classList.remove('hidden');
-}
+    function showQRModal() {
+        document.getElementById('qrModal').classList.remove('hidden');
+    }
 </script>
 {% endblock %}

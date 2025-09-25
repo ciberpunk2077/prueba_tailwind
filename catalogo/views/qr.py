@@ -83,4 +83,3 @@ def show_qr_modal(request, pk):
     from django.shortcuts import render
     return render(request, 'catalogo/partials/qr_modal.html', context)
 
-

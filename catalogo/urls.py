@@ -6,7 +6,6 @@ from .views.planta import (
     PlantaDetailView,
     PlantaUpdateView,
     PlantaDeleteView, load_especies,)
-from .views.planta import comparador_especies
 from .views.alga import *
 from .views.fruto import *
 from .views.polen import *
@@ -80,8 +79,6 @@ urlpatterns = [
     path('plantas/<int:pk>/', PlantaDetailView.as_view(), name='planta-detail'),
     path('plantas/<int:pk>/editar/', PlantaUpdateView.as_view(), name='planta-update'),
     path('plantas/<int:pk>/eliminar/', PlantaDeleteView.as_view(), name='planta-delete'),
-    path('plantas/comparador/', comparador_especies, name='planta-comparador'),
-    path('comparador/<str:tipo>/', comparador_especies, name='comparador-tipo'),
 
     # URLs frutos y semillas
     path('frutosemilla/', FrutoListView.as_view(), name='fruto-list'),

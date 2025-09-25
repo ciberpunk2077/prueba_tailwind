@@ -49,4 +49,3 @@ class MoveItemForm(forms.Form):
         if self.user:
             self.fields['target_collection'].queryset = Collection.objects.filter(owner=self.user)
 
-
