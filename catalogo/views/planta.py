@@ -69,6 +69,10 @@ class PlantaListView(MuestraListView):
         queryset = queryset.filter(tipo_muestra='PLANTA').select_related(
             'especie', 'especie__familia', 'municipio'
         )
+        # Ordenar alfabéticamente si se solicita
+        order = self.request.GET.get('order')
+        if order == 'alpha':
+            queryset = queryset.order_by('nombre_cientifico')
         print(f"DEBUG: QuerySet tiene {queryset.count()} plantas")
         for planta in queryset[:3]:
             print(f"DEBUG: Planta ID {planta.id} - {planta.nombre_cientifico}")

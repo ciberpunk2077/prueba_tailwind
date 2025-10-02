@@ -96,7 +96,7 @@ LOGOUT_REDIRECT_URL = '/login/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'planta',
+        'NAME': 'planta2',
         "USER": "postgres",
         "PASSWORD": "1234",
         "HOST": "localhost",

@@ -14,10 +14,13 @@
         <div class="mb-8">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                        <i class="fas fa-seedling text-green-600"></i>
-                        Catálogo del Herbario
-                    </h1>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h1 class="text-4xl font-bold text-gray-900 flex items-center gap-3">
+                            <i class="fas fa-seedling text-green-600"></i>
+                            Catálogo del Herbario
+                        </h1>
+                        <a href="?order=alpha" class="ml-4 bg-green-100 hover:bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-lg transition duration-200 text-sm">Ordenar alfabéticamente</a>
+                    </div>
                     <p class="text-gray-600 text-lg">Explora nuestra colección de especies botánicas</p>
                 </div>
                 <a href="{% url 'catalogo:planta-create' %}"
@@ -161,12 +164,12 @@
                                             title="Eliminar">
                                             <i class="fas fa-trash text-lg"></i>
                                         </a>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.id }}"
                                             class="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar esta especie como A">
                                             <i class="fas fa-exchange-alt text-lg"></i>
                                         </a>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.id }}"
                                             class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar esta especie como B">
                                             <i class="fas fa-exchange-alt text-lg"></i>
@@ -237,12 +240,12 @@
                                             title="Eliminar">
                                             <i class="fas fa-trash"></i>
                                         </a>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s1={{ planta.id }}"
                                             class="text-indigo-600 hover:text-indigo-900 p-2 rounded-lg hover:bg-indigo-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar esta especie como A">
                                             <i class="fas fa-exchange-alt"></i>
                                         </a>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'PLANTA' %}?s2={{ planta.id }}"
                                             class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar esta especie como B">
                                             <i class="fas fa-exchange-alt"></i>
@@ -262,13 +265,13 @@
                 <div class="flex items-center justify-between">
                     <div class="flex-1 flex justify-between sm:hidden">
                         {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}"
+                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.order == 'alpha' %}&order=alpha{% endif %}"
                             class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-green-50 transition duration-200">
                             <i class="fas fa-chevron-left mr-2"></i>Anterior
                         </a>
                         {% endif %}
                         {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}"
+                        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order == 'alpha' %}&order=alpha{% endif %}"
                             class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-green-50 transition duration-200">
                             Siguiente<i class="fas fa-chevron-right ml-2"></i>
                         </a>
@@ -286,21 +289,27 @@
                             <nav class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px"
                                 aria-label="Pagination">
                                 {% if page_obj.has_previous %}
-                                <a href="?page={{ page_obj.previous_page_number }}"
+                                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.order == 'alpha' %}&order=alpha{% endif %}"
                                     class="relative inline-flex items-center px-2 py-2 rounded-l-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-green-50 transition duration-200">
                                     <i class="fas fa-chevron-left"></i>
                                 </a>
                                 {% endif %}
 
                                 {% for num in page_obj.paginator.page_range %}
-                                <a href="?page={{ num }}"
-                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {% if page_obj.number == num %}z-10 bg-green-600 border-green-600 text-white{% else %}bg-white border-gray-300 text-gray-500 hover:bg-green-50{% endif %} transition duration-200">
-                                    {{ num }}
-                                </a>
+                                    {% if num == 1 or num == 2 or num == page_obj.paginator.num_pages or num == page_obj.paginator.num_pages|add:'-1' or num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                                        <a href="?page={{ num }}{% if request.GET.order == 'alpha' %}&order=alpha{% endif %}"
+                                            class="relative inline-flex items-center px-4 py-2 border text-sm font-medium {% if page_obj.number == num %}z-10 bg-green-600 border-green-600 text-white{% else %}bg-white border-gray-300 text-gray-500 hover:bg-green-50{% endif %} transition duration-200">
+                                            {{ num }}
+                                        </a>
+                                    {% elif num == 3 and page_obj.number|add:'-2' > 3 %}
+                                        <span class="px-2">...</span>
+                                    {% elif num == page_obj.paginator.num_pages|add:'-2' and page_obj.number|add:'2' < page_obj.paginator.num_pages|add:'-2' %}
+                                        <span class="px-2">...</span>
+                                    {% endif %}
                                 {% endfor %}
 
                                 {% if page_obj.has_next %}
-                                <a href="?page={{ page_obj.next_page_number }}"
+                                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order == 'alpha' %}&order=alpha{% endif %}"
                                     class="relative inline-flex items-center px-2 py-2 rounded-r-lg border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-green-50 transition duration-200">
                                     <i class="fas fa-chevron-right"></i>
                                 </a>

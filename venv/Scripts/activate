@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\programas\django\prueba_tailwind\venv"
+VIRTUAL_ENV="C:\programas\django\herbario\prueba_tailwind\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

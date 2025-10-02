@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <a href="{% if tipo == 'PLANTA' %}{% url 'catalogo:planta-list' %}{% elif tipo == 'ALGA' %}{% url 'catalogo:alga-list' %}{% elif tipo == 'FRUTOSEMILLA' %}{% url 'catalogo:fruto-list' %}{% elif tipo == 'POLEN' %}{% url 'catalogo:polen-list' %}{% elif tipo == 'HELECHO' %}{% url 'catalogo:helecho-list' %}{% elif tipo == 'HONGO' %}{% url 'catalogo:hongo-list' %}{% else %}#{% endif %}"
+                     class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200">
+                    ← Regresar
+                </a>
+                <h2 class="text-3xl font-bold text-gray-900 text-center flex-1">Comparador de {{ tipo|title }}</h2>
+            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-green-200 flex flex-col items-center">
+                <h3 class="text-xl font-semibold text-green-700 mb-2">Seleccionada</h3>
+                {% if muestra1 %}
+                    {% if muestra1.imagen %}
+                        <img src="{{ muestra1.imagen.url }}" alt="Imagen" class="mb-4 rounded-lg shadow w-40 h-40 object-cover">
+                    {% endif %}
+                    <p class="font-bold text-lg">{{ muestra1.nombre_cientifico }}</p>
+                    <p class="text-gray-600">{{ muestra1.nombre_comun }}</p>
+                    <p class="text-sm text-gray-500 mt-2">{{ muestra1.descripcion }}</p>
+                {% else %}
+                    <p class="text-gray-400">No hay {{ tipo|lower }} seleccionada.</p>
+                {% endif %}
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-green-200 flex flex-col items-center">
+                <h3 class="text-xl font-semibold text-green-700 mb-2">Selecciona otra {{ tipo|lower }}</h3>
+                <form method="get" class="w-full mb-4">
+                    <input type="hidden" name="s1" value="{% if muestra1 %}{{ muestra1.id }}{% endif %}">
+                    <select name="s2" class="block w-full mt-2 p-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400" style="background-color: white;">
+                        <option value="">-- Selecciona {{ tipo|lower }} --</option>
+                        {% for p in muestras %}
+                            <option value="{{ p.id }}" {% if muestra2 and p.id == muestra2.id %}selected{% endif %}>{{ p.nombre_cientifico }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">Comparar</button>
+                </form>
+                {% if muestra2 %}
+                    {% if muestra2.imagen %}
+                        <img src="{{ muestra2.imagen.url }}" alt="Imagen" class="mb-4 rounded-lg shadow w-40 h-40 object-cover">
+                    {% endif %}
+                    <p class="font-bold text-lg">{{ muestra2.nombre_cientifico }}</p>
+                    <p class="text-gray-600">{{ muestra2.nombre_comun }}</p>
+                    <p class="text-sm text-gray-500 mt-2">{{ muestra2.descripcion }}</p>
+                {% endif %}
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-green-200">
+                <h3 class="text-xl font-semibold text-green-700 mb-2 text-center">Comparación</h3>
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="bg-green-100">
+                            <th class="p-2">Campo</th>
+                            <th class="p-2">Seleccionada</th>
+                            <th class="p-2">Comparada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-2 font-semibold">Nombre científico</td>
+                            <td class="p-2">{{ muestra1.nombre_cientifico|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.nombre_cientifico|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Nombre común</td>
+                            <td class="p-2">{{ muestra1.nombre_comun|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.nombre_comun|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Familia</td>
+                            <td class="p-2">{{ muestra1.especie.familia.nombre|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.especie.familia.nombre|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Descripción</td>
+                            <td class="p-2">{{ muestra1.descripcion|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.descripcion|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Hábitat</td>
+                            <td class="p-2">{{ muestra1.habitat|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.habitat|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Época floración</td>
+                            <td class="p-2">{{ muestra1.epoca_floracion|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.epoca_floracion|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Época fructificación</td>
+                            <td class="p-2">{{ muestra1.epoca_fructificacion|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.epoca_fructificacion|default:'-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 font-semibold">Usos tradicionales</td>
+                            <td class="p-2">{{ muestra1.usos_tradicionales|default:'-' }}</td>
+                            <td class="p-2">{{ muestra2.usos_tradicionales|default:'-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

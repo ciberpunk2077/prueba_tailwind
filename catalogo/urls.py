@@ -31,6 +31,8 @@ from .views.collection import (
     my_default_collection_redirect,
 )
 
+from catalogo.views.extra import comparador_tipo
+
 
 app_name = 'catalogo'
 
@@ -120,4 +122,5 @@ urlpatterns = [
     path('muestras/<int:pk>/editar/', MuestraUpdateView.as_view(), name='muestra-update'),
     path('muestras/<int:pk>/eliminar/', MuestraDeleteView.as_view(), name='muestra-delete'),
     # ... otras URLs ...
+         path('comparador-tipo/<str:tipo>/', comparador_tipo, name='comparador-tipo'),
 ]

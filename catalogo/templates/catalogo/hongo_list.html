@@ -168,12 +168,12 @@
                                             title="QR">
                                             <i class="fas fa-qrcode text-lg"></i>
                                         </button>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s1={{ hongo.id }}"
                                             class="text-amber-600 hover:text-amber-900 p-2 rounded-lg hover:bg-amber-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar A">
                                             <i class="fas fa-exchange-alt text-lg"></i>
                                         </a>
-                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.especie.id }}"
+                                        <a href="{% url 'catalogo:comparador-tipo' 'HONGO' %}?s2={{ hongo.id }}"
                                             class="text-pink-600 hover:text-pink-900 p-2 rounded-lg hover:bg-pink-100 transition duration-200 transform hover:scale-110"
                                             title="Comparar B">
                                             <i class="fas fa-exchange-alt text-lg"></i>
