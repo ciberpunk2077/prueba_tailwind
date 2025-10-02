@@ -1,7 +1,196 @@
+
 {% extends 'base.html' %}
 {% load static %}
+{% block extra_css %}
+<style>
+@media print {
+    body, html {
+        background: #fff !important;
+        color: #222 !important;
+        font-size: 12pt;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    .print-block {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+    }
+    .min-h-screen, .bg-gradient-to-br, .container, .py-8, .px-4, .sm\:px-6, .lg\:px-8 {
+        background: #fff !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .shadow-xl, .shadow-lg, .rounded-2xl, .rounded-xl, .border-l-4, .border, .bg-white\/90 {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+        border-radius: 0.5em !important;
+    }
+    .flex, .grid, .gap-8, .gap-4, .space-y-6, .space-y-4 {
+        gap: 0.5em !important;
+        display: block !important;
+    }
+    .hidden, .print:hidden {
+        display: none !important;
+    }
+    .print\:block {
+        display: block !important;
+    }
+    .print\:w-full {
+        width: 100% !important;
+    }
+    .print\:text-left {
+        text-align: left !important;
+    }
+    .print\:text-sm {
+        font-size: 11pt !important;
+    }
+    .print\:mb-0 {
+        margin-bottom: 0 !important;
+    }
+    .print\:p-0 {
+        padding: 0 !important;
+    }
+    .print\:border-none {
+        border: none !important;
+    }
+    .print\:shadow-none {
+        box-shadow: none !important;
+    }
+    .print\:bg-white {
+        background: #fff !important;
+    }
+    .print\:font-normal {
+        font-weight: normal !important;
+    }
+    .print\:text-black {
+        color: #222 !important;
+    }
+    .print\:break-inside-avoid {
+        break-inside: avoid !important;
+    }
+    .print\:page-break {
+        page-break-after: always !important;
+    }
+    /* Ocultar botones y navegación */
+    .inline-flex, .bg-green-600, .bg-purple-600, .bg-red-600, .bg-blue-600, .border-gray-400, .border-red-400, .border-green-600, .border-green-500, .border-blue-500, .border-gray-300, .border-orange-500, .border-fuchsia-500, .border-amber-500 {
+        box-shadow: none !important;
+        border: none !important;
+        background: none !important;
+        color: #222 !important;
+    }
+    .no-print, .print\:no-print {
+        display: none !important;
+    }
+    /* Imágenes compactas */
+    img {
+        max-width: 300px !important;
+        max-height: 200px !important;
+        margin: 0.5em 0 !important;
+        page-break-inside: avoid !important;
+        border-radius: 0.5em !important;
+        box-shadow: none !important;
+    }
+    /* Compactar tarjetas */
+    .p-6, .p-8, .py-8, .px-4 {
+        padding: 0.5em !important;
+    }
+    /* Encabezado profesional */
+    h1, h2, h3 {
+        color: #222 !important;
+        font-weight: bold !important;
+        margin-bottom: 0.2em !important;
+        margin-top: 0.2em !important;
+        page-break-after: avoid !important;
+    }
+    /* Evitar saltos innecesarios */
+    .grid, .space-y-6, .space-y-4 {
+        page-break-inside: avoid !important;
+    }
+    /* Pie de página */
+    footer, .footer, .navbar, .print\:footer {
+        display: none !important;
+    }
+    #print-datos {
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important;
+        max-width: 700px !important;
+        margin: 2em auto !important;
+        padding: 2em !important;
+        background: #fff !important;
+        border: 1px solid #bbb !important;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 8px #ccc !important;
+    }
+    #print-datos h1 {
+        font-size: 2em !important;
+        font-weight: 700 !important;
+        color: #17633a !important;
+        margin-bottom: 0.5em !important;
+        border-bottom: 2px solid #17633a !important;
+        padding-bottom: 0.3em !important;
+        text-align: center !important;
+    }
+    #print-datos .dato {
+        display: flex !important;
+        flex-direction: row !important;
+        margin-bottom: 0.7em !important;
+    }
+    #print-datos .label {
+        min-width: 160px !important;
+        font-weight: 600 !important;
+        color: #17633a !important;
+        text-align: right !important;
+        padding-right: 1em !important;
+    }
+    #print-datos .value {
+        color: #222 !important;
+        text-align: left !important;
+        font-weight: 400 !important;
+    }
+    #print-datos .descripcion {
+        margin-top: 1.5em !important;
+        font-style: italic !important;
+        color: #444 !important;
+        border-top: 1px solid #bbb !important;
+        padding-top: 1em !important;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
+<!-- Print-only: solo nombre, especie y origen -->
+<div id="print-datos" style="display:none;">
+    {% if planta.imagen %}
+    <div class="foto">
+        <img src="{{ planta.imagen.url }}" alt="Fotografía de la muestra">
+        <div><small>Fotografía de la muestra</small></div>
+    </div>
+    {% endif %}
+    <h1>{{ planta.nombre_cientifico }}</h1>
+    <div class="dato"><span class="label">Nombre común:</span><span class="value">{{ planta.nombre_comun|default:"Sin nombre común" }}</span></div>
+    <div class="dato"><span class="label">Familia:</span><span class="value">{{ planta.especie.familia.nombre|default:"Sin familia" }}</span></div>
+    <div class="dato"><span class="label">Especie:</span><span class="value">{{ planta.especie|default:"Sin especie" }}</span></div>
+    <div class="dato"><span class="label">Número de recolecta:</span><span class="value">{{ planta.numero_recolecta }}</span></div>
+    <div class="dato"><span class="label">Fecha de recolección:</span><span class="value">{{ planta.fecha|date:"d/m/Y"|default:"No especificada" }}</span></div>
+    <div class="dato"><span class="label">Colector:</span><span class="value">{{ planta.nombre_colector|default:"No especificado" }}</span></div>
+    <div class="dato"><span class="label">Localidad:</span><span class="value">{{ planta.localidad|default:"No especificada" }}</span></div>
+    <div class="dato"><span class="label">Colonia:</span><span class="value">{{ planta.colonia|default:"No especificada" }}</span></div>
+    <div class="dato"><span class="label">Municipio:</span><span class="value">{{ planta.municipio|default:"No especificado" }}</span></div>
+    {% if planta.latitud and planta.longitud %}
+    <div class="dato"><span class="label">Coordenadas:</span><span class="value">{{ planta.latitud|floatformat:6 }}, {{ planta.longitud|floatformat:6 }}</span></div>
+    {% endif %}
+    {% if planta.descripcion %}
+    <div class="descripcion"><strong>Descripción:</strong> {{ planta.descripcion }}</div>
+    {% endif %}
+</div>
+<style>@media print { #print-datos { display: block !important; } .min-h-screen, .container, .no-print { display: none !important; } }</style>
+
 <div class="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 py-8">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header Section -->
@@ -33,6 +222,10 @@
                     <button onclick="showQRModal()" 
                             class="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold gap-2 transition">
                         <i class="fas fa-qrcode"></i> QR
+                    </button>
+                    <button onclick="window.print()"
+                            class="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold gap-2 transition">
+                        <i class="fas fa-print"></i> Imprimir
                     </button>
                     <a href="{% url 'catalogo:planta-update' pk=planta.pk %}"
                         class="inline-flex items-center px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold gap-2 transition">
